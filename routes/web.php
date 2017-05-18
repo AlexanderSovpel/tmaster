@@ -73,7 +73,7 @@ Route::match(['get', 'post'], '/{id}/run/{part}/{stage}/{currentSquad?}',
                         $playedGames[$player->id] = $player->games
                             ->where('p_id', $player->id)
                             ->where('t_id', $tournament->id)
-                            ->where('stage', $part)
+                            ->where('part', $part)
                             ->where('s_id', $currentSquadId);
                     }
 
@@ -101,7 +101,8 @@ Route::match(['get', 'post'], '/{id}/run/{part}/{stage}/{currentSquad?}',
                     return view('tournament.run.results', ['tournament' => $tournament,
                         'part' => $part,
                         'stage' => $stage,
-                        'currentSquad' => $currentSquad,
+                        'players' => $currentSquad->players,
+                        'currentSquadId' => $currentSquad->id,
                         'squadFinished' => $request->input('squadFinished'),
                         'playedGames' => $playedGames
                     ]);
@@ -133,12 +134,6 @@ Route::match(['get', 'post'], '/{id}/run/{part}/{stage}/{currentSquad?}',
             foreach ($playerResult as $key => $value) {
                 $finalists[] = \App\User::find($key);
             }
-
-//        $finalistsIds = array_keys($playerResult);
-//        foreach ($finalistsIds as $finalistsId) {
-//            $finalist = \App\User::find($finalistsId);
-//            $finalists[] = $finalist;
-//        }
 
             switch ($stage) {
                 case 'conf':
@@ -182,31 +177,45 @@ Route::match(['get', 'post'], '/{id}/run/{part}/{stage}/{currentSquad?}',
                     break;
 
                 case 'rest':
+                    foreach ($finalists as $player) {
+                        $playedGames[$player->id] = $player->games
+                            ->where('p_id', $player->id)
+                            ->where('t_id', $tournament->id)
+                            ->where('part', $part);
+                    }
+
+//                    return $playedGames;
+                    return view('tournament.run.results-rr', ['tournament' => $tournament,
+                        'part' => $part,
+                        'stage' => $stage,
+                        'players' => $finalists,
+                        'roundCount' => $tournament->rr_players - 1,
+                        'playedGames' => $playedGames
+                    ]);
                     break;
             }
         }
     });
 
-Route::get('/{id}/run/q', function ($id) {
+Route::post('/{id}/run/{part}', function (Request $request, $id, $part) {
     $tournament = \App\Tournament::find($id);
 
+    $players = array();
     foreach ($tournament->squads as $squad) {
         foreach ($squad->players as $player) {
-            $playerGames = $player->games()->where('t_id', $tournament->id)
+            $players[] = $player;
+            $playedGames[$player->id] = $player->games()
+                ->where('t_id', $tournament->id)
                 ->where('part', 'q')->get();
-            $gamesSum = 0;
-            foreach ($playerGames as $game) {
-                $gamesSum += $game->result;
-            }
-            $playerResult[$player->id] = $gamesSum;
-//            $playerResult[$player->surname . ' ' . $player->name] = $gamesSum;
         }
     }
-    arsort($playerResult);
+    arsort($playedGames);
 
-    return view('tournament.run.qualification',
-        ['tournament' => $tournament,
-            'playerResult' => $playerResult]);
+    return view('tournament.run.qualification', ['tournament' => $tournament,
+        'part' => $part,
+        'stage' => '',
+        'players' => $players,
+        'playedGames' => $playedGames]);
 });
 
 Route::get('/setGameResult', 'GameController@setResult');

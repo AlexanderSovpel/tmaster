@@ -93,8 +93,10 @@ class TournamentController extends Controller
         return redirect('/');
     }
 
+    public function countRoundRobin(Request $request)
+    {
 
-
+    }
 // part -- qualification or round-robin
 //stage -- confirmation, drawing, game, results
     public function runTournament($id)

@@ -1,9 +1,40 @@
-.game_result {
-    width: 100px;
+.player-result {
+    width: 50px;
 }
 
 .part-nav {
     width: 15%;
     float: left;
-    margin-right: 10%;
+    /*margin-right: 10%;*/
+}
+
+.bonus {
+    width: 50px;
+}
+
+.opponent {
+    width: 300px;
+    float: left;
+    margin-left: 10px;
+}
+
+.opponent-name {
+    width: 150px;
+}
+
+.opponent-bonus {
+    width: 50px;
+}
+
+.opponents {
+    height: 40px;
+}
+
+.game-process {
+    width: 75%;
+    margin-left: 25%;
+}
+
+.round {
+    height: 200px;
 }

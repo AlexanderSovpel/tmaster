@@ -2,38 +2,46 @@
 
 @section('process')
     <h2>Игра</h2>
-    {{--<form action="/{{$tournament->id}}/run/{{$part}}/rest/{{$currentSquad->id}}?squadFinished=1" method="post">--}}
-    <form action="/{{$tournament->id}}/run/{{$part}}/rest" method="post">
+    <form action="/{{$tournament->id}}/run/{{$part}}/rest/{{$currentSquadId}}?squadFinished=1" method="post">
         {{ csrf_field() }}
         <table>
             <tr>
                 <td>№</td>
                 <td>Участник</td>
-                @for ($j = 1; $j <= 6; ++$j)
-                    <td>{{$j}}</td>
+                @for ($j = 0; $j < $tournament->qualification_entries; ++$j)
+                    <td>{{$j + 1}}</td>
                 @endfor
                 <td>Гандикап</td>
                 <td>Сумма</td>
                 <td>Средний</td>
             </tr>
             @for($i = 0; $i < count($players); ++$i)
-                <tr>
+                <tr class="player">
+                    <input type="hidden" class="player-id" value="{{$players[$i]->id}}">
                     <td>{{$i + 1}}</td>
                     <td>{{$players[$i]->surname ." ". $players[$i]->name}}</td>
                     @for ($j = 0; $j < $tournament->qualification_entries; ++$j)
-                        <td><input type="text"
-                                   class="game_result"
-                                   name="result_{{$players[$i]->id
-                    ."_".$tournament->id
-                    ."_".$part
-                    ."_".$currentSquadId}}[]"
-                                   @if(isset($playedGames[$players[$i]->id][$j]))
-                                   value="{{$playedGames[$players[$i]->id][$j]->result}}"
-                                   @endif
-                                   onfocus="this.old_value = this.value">
+                        <td>
+                            <div class="input-group result">
+                                <input type="text"
+                                       {{--class="player-result form-control"--}}
+                                       {{--name="result_{{$players[$i]->id}}"--}}
+                                       @if(isset($playedGames[$players[$i]->id][$j]))
+                                       value="{{$playedGames[$players[$i]->id][$j]->result}}"
+                                       old_value="{{$playedGames[$players[$i]->id][$j]->result}}"
+                                       class="player-result form-control played"
+                                       @else
+                                       class="player-result form-control"
+                                       @endif
+                                       onfocus="this.old_value = this.value">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-secondary post-result" type="button">set</button>
+                                </span>
+                            </div>
+
                         </td>
                     @endfor
-                    <td id="handicap_{{$players[$i]->id}}">
+                    <td id="handicap_{{$players[$i]->id}}" class="player-bonus">
                         @if($players[$i]->gender == $tournament->handicap_type)
                             {{$tournament->handicap_value}}
                         @else

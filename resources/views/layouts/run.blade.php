@@ -2,9 +2,10 @@
 
 @section('content')
     <div class="container">
+        <input type="hidden" name="tournament" value="{{$tournament->id}}">
         <input type="hidden" name="part" value="{{$part}}">
         <input type="hidden" name="stage" value="{{$stage or ''}}">
-        <input type="hidden" name="currentSquad" value="{{isset($currentSquad) ? $currentSquad->id : ''}}">
+        <input type="hidden" name="currentSquad" value="{{$currentSquadId or ''}}">
         <input type="hidden" name="squadFinished" value="{{$squadFinished or ''}}">
         <h1>{{$tournament->name}}</h1>
         <div>
@@ -36,45 +37,44 @@
                     </li>
                 </ul>
             </div>
-            <div></div>
-        </div>
-        <div>
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <li
-                            @if($stage == 'conf')
-                            class="active"
-                            @else
-                            class=""
-                            @endif
-                    ><a href="#">подтверждение</a></li>
+            <div class="game-process">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li
+                                @if($stage == 'conf')
+                                class="active"
+                                @else
+                                class=""
+                                @endif
+                        ><a href="#">подтверждение</a></li>
 
-                    <li
-                            @if($stage == 'draw')
-                            class="active"
-                            @else
-                            class=""
-                            @endif
-                    ><a href="#">жеребьёвка</a></li>
+                        <li
+                                @if($stage == 'draw')
+                                class="active"
+                                @else
+                                class=""
+                                @endif
+                        ><a href="#">жеребьёвка</a></li>
 
-                    <li
-                            @if($stage == 'game')
-                            class="active"
-                            @else
-                            class=""
-                            @endif
-                    ><a href="#">игра</a></li>
+                        <li
+                                @if($stage == 'game')
+                                class="active"
+                                @else
+                                class=""
+                                @endif
+                        ><a href="#">игра</a></li>
 
-                    <li
-                            @if($stage == 'rest')
-                            class="active"
-                            @else
-                            class=""
-                            @endif
-                    ><a href="#">результаты</a></li>
-                </ul>
-            </nav>
-            @yield('process')
+                        <li
+                                @if($stage == 'rest')
+                                class="active"
+                                @else
+                                class=""
+                                @endif
+                        ><a href="#">результаты</a></li>
+                    </ul>
+                </nav>
+                @yield('process')
+            </div>
         </div>
     </div>
 @endsection

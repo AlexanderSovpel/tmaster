@@ -2,8 +2,12 @@
 
 @section('process')
     <h2>Регистрация участников</h2>
-    {{--    <form action="/{{$tournament->id}}/run/{{$part}}/draw/{{$currentSquadId}}?squadFinished={{$squadFinished}}" method="post">--}}
+    @if(isset($currentSquadId))
+        <form action="/{{$tournament->id}}/run/{{$part}}/draw/{{$currentSquadId}}?squadFinished={{$squadFinished}}"
+              method="post">
+            @else
     <form action="/{{$tournament->id}}/run/{{$part}}/draw" method="post">
+        @endif
         {{ csrf_field() }}
         <table>
             <tr>

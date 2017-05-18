@@ -2,8 +2,12 @@
 
 @section('process')
     <h2>Жеребьёвка</h2>
-    {{--    <form action="/{{$tournament->id}}/run/{{$part}}/game/{{$currentSquad->id}}?squadFinished={{$squadFinished}}" method="post">--}}
+    @if(isset($currentSquadId))
+        <form action="/{{$tournament->id}}/run/{{$part}}/game/{{$currentSquadId}}?squadFinished={{$squadFinished}}"
+              method="post">
+            @else
     <form action="/{{$tournament->id}}/run/{{$part}}/game" method="post">
+        @endif
         {{ csrf_field() }}
         <table>
             <tr>
@@ -11,7 +15,6 @@
                 <td>Дорожка</td>
                 <td>Позиция</td>
             </tr>
-            {{--@foreach($currentSquad->players as $player)--}}
             @foreach($players as $player)
                 <tr>
                     <td>{{"$player->surname $player->name"}}</td>
