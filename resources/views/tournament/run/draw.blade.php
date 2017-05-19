@@ -2,13 +2,9 @@
 
 @section('process')
     <h2>Жеребьёвка</h2>
-    @if(isset($currentSquadId))
-        <form action="/{{$tournament->id}}/run/{{$part}}/game/{{$currentSquadId}}?squadFinished={{$squadFinished}}"
-              method="post">
-            @else
-    <form action="/{{$tournament->id}}/run/{{$part}}/game" method="post">
-        @endif
+    <form action="/{{$tournamentId}}/run/{{$part}}/game/{{$currentSquadId or ''}}" method="post">
         {{ csrf_field() }}
+        <input type="hidden" name="players" value="{{$players}}">
         <table>
             <tr>
                 <td>Участник</td>

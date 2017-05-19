@@ -109,6 +109,23 @@ function setResult(playerId, tournamentId, part, squadId, playerResult, playerOl
     }
 }
 
+var postOpponentResultButtons = document.querySelectorAll('.post-opponent-result');
+for (var i = 0; i < postOpponentResultButtons.length; ++i) {
+    postOpponentResultButtons[i].onclick = function () {
+        var player = this.closest('.opponent');
+        var playerId = player.querySelector('.opponent-id').value;
+        var playerResult = player.querySelector('.opponent-result').value;
+        var playerOldResult = player.querySelector('.opponent-result').old_value;
+        var playerBonus = player.querySelector('.opponent-bonus').innerHTML;
+        playerBonus = (playerBonus) ? playerBonus : 0;
+        var tournamentId = document.getElementsByName('tournament')[0].value;
+        var part = document.getElementsByName('part')[0].value;
+        var squadId = document.getElementsByName('currentSquad')[0].value;
+        setResult(playerId, tournamentId, part, squadId, playerResult, playerOldResult, playerBonus);
+        countBonus(player);
+    }
+}
+
 function countBonus(player) {
     var opponent;
     if (player.nextElementSibling) {
@@ -118,10 +135,19 @@ function countBonus(player) {
         opponent = player.previousElementSibling;
     }
 
+    var playerId = player.querySelector('.opponent-id').value;
     var playerResult = player.querySelector('.opponent-result').value;
     var playerBonus = player.querySelector('.opponent-bonus');
+    var playerOldBonus = playerBonus.innerHTML;
+
+    var opponentId = opponent.querySelector('.opponent-id').value;
     var opponentResult = opponent.querySelector('.opponent-result').value;
     var opponentBonus = opponent.querySelector('.opponent-bonus');
+    var opponentOldBonus = opponentBonus.innerHTML;
+
+    var tournamentId = document.getElementsByName('tournament')[0].value;
+    var part = document.getElementsByName('part')[0].value;
+    var squadId = document.getElementsByName('currentSquad')[0].value;
 
     if (opponentResult) {
         if (playerResult > opponentResult) {
@@ -136,23 +162,35 @@ function countBonus(player) {
             playerBonus.innerHTML = 0;
             opponentBonus.innerHTML = 20;
         }
+
+        updateBonus(playerId, tournamentId, part, squadId, playerResult, playerOldBonus, playerBonus.innerHTML);
+        updateBonus(opponentId, tournamentId, part, squadId, opponentResult, opponentOldBonus, opponentBonus.innerHTML);
     }
 }
 
-var postOpponentResultButtons = document.querySelectorAll('.post-opponent-result');
-for (var i = 0; i < postOpponentResultButtons.length; ++i) {
-    postOpponentResultButtons[i].onclick = function () {
-        var player = this.closest('.opponent');
-        countBonus(player);
+function updateBonus(playerId, tournamentId, part, squadId, playerResult, oldBonus, newBonus) {
+    if (oldBonus != undefined) {
+        oldBonus = (oldBonus == '') ? 0 : oldBonus;
+        if (oldBonus != newBonus) {
+            var request = '/updateBonus?';
+            var data = 'player_id=' + playerId + '&' +
+                'tournament_id=' + tournamentId + '&' +
+                'part=' + part + '&' +
+                'squad_id=' + squadId + '&' +
+                'result=' + playerResult + '&' +
+                'oldBonus=' + oldBonus + '&' +
+                'newBonus=' + newBonus;
 
-        var playerId = player.querySelector('.opponent-id').value;
-        var playerResult = player.querySelector('.opponent-result').value;
-        var playerOldResult = player.querySelector('.opponent-result').old_value;
-        var playerBonus = player.querySelector('.opponent-bonus').innerHTML;
-        var tournamentId = document.getElementsByName('tournament')[0].value;
-        var part = document.getElementsByName('part')[0].value;
-        var squadId = document.getElementsByName('currentSquad')[0].value;
-        setResult(playerId, tournamentId, part, squadId, playerResult, playerOldResult, playerBonus);
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', request + data, false);
+            xhr.send();
+
+            if (xhr.status != 200) {
+                document.getElementById('error').innerHTML = xhr.responseText;
+            } else {
+                console.log(xhr.responseText);
+            }
+        }
     }
 }
 

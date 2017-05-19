@@ -2,15 +2,16 @@
 
 @section('process')
     <h2>Результаты</h2>
-    <form action="/{{$tournamentId}}/results" method="get">
+    <form action="/{{$tournamentId}}/run/q/conf/{{$currentSquadId}}" method="post">
         {{ csrf_field() }}
         <table>
             <tr>
+                <td>№</td>
                 <td>Участник</td>
-                @for ($j = 0; $j < $roundCount; ++$j)
+                @for ($j = 0; $j < $qualificationEntries; ++$j)
                     <td>{{$j + 1}}</td>
-                    <td>bonus</td>
                 @endfor
+                <td>Гандикап</td>
                 <td>Сумма</td>
                 <td>Средний</td>
             </tr>
@@ -24,14 +25,16 @@
                                 <input type="text"
                                        class="player-result form-control played"
                                        readonly
-                                   @if(isset($game))
-                                   value="{{$game->result}}"
-                                    @endif
-                            >
+                                       @if(isset($game))
+                                       value="{{$game->result}}"
+                                        @endif
+                                >
                             </div>
                         </td>
-                        <td>{{$game->bonus}}</td>
                     @endforeach
+                    <td id="handicap_{{$player->id}}" class="player-bonus">
+                        {{$game->bonus}}
+                    </td>
                     <td id="sum_result_{{$player->id}}">{{$playersResults[$player->id]->sum}}</td>
                     <td id="avg_result_{{$player->id}}">{{$playersResults[$player->id]->avg}}</td>
                 </tr>

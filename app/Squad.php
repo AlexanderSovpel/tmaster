@@ -8,7 +8,7 @@ class Squad extends Model
 {
     public function tournament()
     {
-        return $this->belongsTo('App\Tournament', 't_id');
+        return $this->belongsTo('App\Tournament');
     }
 
     public function players()

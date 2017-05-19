@@ -2,13 +2,13 @@
 
 @section('process')
     <h2>Игра</h2>
-    <form action="/{{$tournament->id}}/run/{{$part}}/rest/{{$currentSquadId}}?squadFinished=1" method="post">
+    <form action="/{{$tournamentId}}/run/q/rest/{{$currentSquadId}}" method="get">
         {{ csrf_field() }}
         <table>
             <tr>
                 <td>№</td>
                 <td>Участник</td>
-                @for ($j = 0; $j < $tournament->qualification_entries; ++$j)
+                @for ($j = 0; $j < $qualificationEntries; ++$j)
                     <td>{{$j + 1}}</td>
                 @endfor
                 <td>Гандикап</td>
@@ -20,12 +20,10 @@
                     <input type="hidden" class="player-id" value="{{$players[$i]->id}}">
                     <td>{{$i + 1}}</td>
                     <td>{{$players[$i]->surname ." ". $players[$i]->name}}</td>
-                    @for ($j = 0; $j < $tournament->qualification_entries; ++$j)
+                    @for ($j = 0; $j < $qualificationEntries; ++$j)
                         <td>
                             <div class="input-group result">
                                 <input type="text"
-                                       {{--class="player-result form-control"--}}
-                                       {{--name="result_{{$players[$i]->id}}"--}}
                                        @if(isset($playedGames[$players[$i]->id][$j]))
                                        value="{{$playedGames[$players[$i]->id][$j]->result}}"
                                        old_value="{{$playedGames[$players[$i]->id][$j]->result}}"
@@ -50,7 +48,6 @@
                     </td>
                     <td id="sum_result_{{$players[$i]->id}}"></td>
                     <td id="avg_result_{{$players[$i]->id}}"></td>
-                    {{--<td><input type="text" name="position{{$player->id}}" value=""></td>--}}
                 </tr>
             @endfor
         </table>

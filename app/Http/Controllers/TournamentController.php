@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Result;
+use App\Squad;
 use App\SquadPlayers;
 use App\Tournament;
 use App\User;
@@ -46,7 +48,6 @@ class TournamentController extends Controller
 
     public function getApplication($id)
     {
-//        $this->tournaments = session('tournaments');
         $tournament = Tournament::find($id);
 
         return view('tournament.apply', ['tournament' => $tournament]);
@@ -54,7 +55,6 @@ class TournamentController extends Controller
 
     public function postApplication(Request $request, $id)
     {
-//        $this->tournaments = session('tournaments');
         $tournament = Tournament::find($id);
         $playerId = Auth::id();
         $squadId = $request->input('squad');
@@ -93,92 +93,274 @@ class TournamentController extends Controller
         return redirect('/');
     }
 
-    public function countRoundRobin(Request $request)
+    public function runQualificationConfirm($tournamentId, $currentSquadId)
     {
+        if ($currentSquadId != null) {
+            $currentSquad = Squad::find($currentSquadId);
+            if ($currentSquad->finished) {
+                $nextSquad = Tournament::find($tournamentId)->squads()
+                    ->where('id', '>', $currentSquadId)
+                    ->min('id');
 
-    }
-// part -- qualification or round-robin
-//stage -- confirmation, drawing, game, results
-    public function runTournament($id)
-    {
-        $this->tournaments = session('tournaments');
-        $tournament = $this->findTournamentById($id);
-
-        if (isset($tournament->state)) {
-            if ($tournament->state == 'current') {
-                $part = $tournament->part;
-                $stage = $tournament->stage;
-                $currentSquad = $tournament->currentSquad;
-
-                switch ($part) {
-                    case 'q':
-                        switch ($stage) {
-                            case 'conf':
-                                $stage = 'draw';
-                                ++$currentSquad;
-                                break;
-                            case 'draw':
-                                break;
-                            case 'game':
-                                break;
-                            case 'rest':
-                                break;
-                        }
-                        break;
-                    case 'rr':
-                        switch ($stage) {
-                            case 'conf':
-                                break;
-                            case 'draw':
-                                break;
-                            case 'game':
-                                break;
-                            case 'rest':
-                                break;
-                        }
-                        break;
+                if ($nextSquad == null) {
+                    return redirect("/$tournamentId/run/q/rest");
                 }
 
-                switch ($stage) {
-                    case 'conf':
-                        break;
-                    case 'draw':
-                        break;
-                    case 'game':
-                        break;
-                    case 'rest':
-                        break;
-                }
-                $part = $tournament->part;
-                $stage = $tournament->stage;
-            } else {
-                //TODO: ???
+                $currentSquad = $nextSquad;
+                $currentSquadId = $nextSquad->id;
             }
-        } else {
-            $tournament->state = 'current';
-            $tournament->part = 0;
-            $tournament->stage = 'q_reg';
+        }
+        return view('tournament.run.confirm', [
+            'tournamentId' => $tournamentId,
+            'part' => 'q',
+            'players' => $currentSquad->players,
+            'currentSquadId' => $currentSquadId
+        ]);
+    }
+
+    public function runQualificationDraw(Request $request, $tournamentId, $currentSquadId)
+    {
+        $currentSquad = Squad::find($currentSquadId);
+        foreach ($currentSquad->players as $player) {
+            if (!in_array($player->id, $request->input('confirmed'))) {
+                SquadPlayers::where('player_id', $player->id)
+                    ->where('squad_id', $currentSquadId)
+                    ->delete();
+                unset($player);
+            }
         }
 
-        session()->put('currentTournament', $tournament);
-
-        return redirect()->action('TournamentController@runTournamentStage',
-            ['part' => $tournament->part,
-                'stage' => $tournament->stage]);
+        return view('tournament.run.draw', [
+            'tournamentId' => $tournamentId,
+            'part' => 'q',
+            'players' => $currentSquad->players,
+            'currentSquadId' => $currentSquad->id
+        ]);
     }
 
-    public function runTournamentStage($part, $stage)
+    public function runQualificationGame(Request $request, $tournamentId, $currentSquadId)
     {
-        $tournament = session('currentTournament');
+        $currentSquad = Squad::find($currentSquadId);
+        $playedGames = array();
+        foreach ($currentSquad->players as $player) {
+            $playedGames[$player->id] = $player->games
+                ->where('player_id', $player->id)
+                ->where('tournament_id', $tournamentId)
+                ->where('part', 'q')
+                ->where('squad_id', $currentSquadId);
+        }
+
+        return view('tournament.run.game', [
+            'tournamentId' => $tournamentId,
+            'qualificationEntries' => Tournament::find($tournamentId)->qualification_entries,
+            'currentSquadId' => $currentSquadId,
+            'players' => $currentSquad->players,
+            'playedGames' => $playedGames
+        ]);
     }
 
-//    private function findTournamentById($id) {
-//        foreach($this->tournaments as $tournament) {
-//            if ($tournament->id == $id) {
-//                return $tournament;
-//            }
-//        }
-//
-//        return null;
-//    }
+    public function qualificationSquadResults($tournamentId, $currentSquadId)
+    {
+        $currentSquad = Squad::find($currentSquadId);
+        $currentSquad->finished = true;
+        $currentSquad->save();
+
+        foreach ($currentSquad->players as $player) {
+            $games = $player->games
+                ->where('player_id', $player->id)
+                ->where('tournament_id', $tournamentId)
+                ->where('part', 'q')
+                ->where('squad_id', $currentSquadId);
+
+            $sum = 0;
+            foreach ($games as $game) {
+                $playedGames[$player->id][] = $game;
+                $sum += $game->result + $game->bonus;
+            }
+            $avg = $sum / $games->count();
+
+            $playersResults = array();
+            $result = Result::firstOrNew([
+                'tournament_id' => $tournamentId,
+                'player_id' => $player->id,
+                'part' => 'q',
+                'sum' => $sum,
+                'avg' => $avg
+            ]);
+            $playersResults[$player->id] = $result;
+        }
+
+        $this->sortPlayersByResult($currentSquad->players, $tournamentId, 'q');
+
+        return view('tournament.run.results-q-s', [
+            'tournamentId' => $tournamentId,
+            'qualificationEntries' => Tournament::find($tournamentId)->qualification_entries,
+            'players' => $currentSquad->players,
+            'currentSquadId' => $currentSquadId,
+            'playedGames' => $playedGames,
+            'playersResults' => $playersResults
+        ]);
+    }
+
+    public function qualificationResults($tournamentId)
+    {
+        $tournament = Tournament::find($tournamentId);
+        $players = array();
+        foreach ($tournament->squads as $squad) {
+            foreach ($squad->players as $player) {
+                $players[] = $player;
+                $games = $player->games()
+                    ->where('t_id', $tournament->id)
+                    ->where('part', 'q')->get();
+
+                foreach ($games as $game) {
+                    $playedGames[$player->id][] = $game;
+                }
+
+                $playersResults = Result::where('tournament_id', $tournamentId)
+                    ->where('player_id', $player->id)
+                    ->where('part', 'q')
+                    ->get();
+            }
+        }
+
+        $this->sortPlayersByResult($players, $tournamentId, 'q');
+
+        return view('tournament.run.results-q', [
+            'tournamentId' => $tournamentId,
+            'qualificationEntries' => $tournament->qualification_entries,
+            'part' => 'q',
+            'players' => $players,
+            'playedGames' => $playedGames,
+            'playersResults' => $playersResults]);
+    }
+
+    public function runRoundRobinConfirm(Request $request, $tournamentId)
+    {
+        $players = $request->input('players');
+        $finalistsCount = 1;
+
+        foreach ($players as $player) {
+            if ($finalistsCount++ > Tournament::find($tournamentId)->rr_players) {
+                unset($player);
+            }
+        }
+
+        return view('tournament.run.confirm', [
+            'tournamentId' => $tournamentId,
+            'part' => 'rr',
+            'players' => $players
+        ]);
+    }
+
+    public function runRoundRobinDraw(Request $request, $tournamentId)
+    {
+        $players = $request->input('players');
+        foreach ($players as $player) {
+            if (!in_array($player->id, $request->input('confirmed'))) {
+                unset($player);
+            }
+        }
+
+        return view('tournament.run.draw', [
+            'tournamentId' => $tournamentId,
+            'part' => 'rr',
+            'players' => $players
+        ]);
+    }
+
+    public function runRoundRobinGame(Request $request, $tournamentId)
+    {
+        $players = $request->input('players');
+        $playedGames = array();
+        foreach ($players as $player) {
+            $games = $player->games
+                ->where('player_id', $player->id)
+                ->where('tournament_id', $tournamentId)
+                ->where('part', 'rr');
+
+            foreach ($games as $game) {
+                $playedGames[$player->id][] = $game;
+            }
+        }
+
+        $playersCount = count($players);
+        $roundCount = ($playersCount % 2) ? $playersCount : $playersCount - 1;
+
+        return view('tournament.run.game-rr', [
+            'tournamentId' => $tournamentId,
+            'part' => 'q',
+            'players' => $players,
+            'lastPlayerIndex' => $playersCount - 1,
+            'roundCount' => $roundCount,
+            'playedGames' => $playedGames
+        ]);
+    }
+
+    //TODO: add qualification result to round-robin results
+    public function roundRobinResults(Request $request, $tournamentId)
+    {
+        $players = $request->input('players');
+        $playedGames = array();
+        $playersResults = array();
+        foreach ($players as $player) {
+            $games = $player->games
+                ->where('player_id', $player->id)
+                ->where('tournament_id', $tournamentId)
+                ->where('part', 'rr');
+
+            $sum = 0;
+            foreach ($games as $game) {
+                $playedGames[$player->id][] = $game;
+                $sum += $game->result + $game->bonus;
+            }
+            $avg = $sum / $games->count();
+
+            $result = Result::firstOrNew([
+                'tournament_id' => $tournamentId,
+                'player_id' => $player->id,
+                'part' => 'qq',
+                'sum' => $sum,
+                'avg' => $avg
+            ]);
+            $playersResults[$player->id] = $result;
+        }
+
+        $this->sortPlayersByResult($players, $tournamentId, 'rr');
+
+        $playersCount = count($players);
+        $roundCount = ($playersCount % 2) ? $playersCount : $playersCount - 1;
+
+        return view('tournament.run.results-rr', [
+            'tournamentId' => $tournamentId,
+            'part' => 'rr',
+            'players' => $players,
+            'roundCount' => $roundCount,
+            'playedGames' => $playedGames,
+            'playersResults' => $playersResults
+        ]);
+    }
+
+    //TODO: show overall results
+    public function getResults($tournamentId)
+    {
+        return view('tournament.results');
+    }
+
+    private function sortPlayersByResult(&$players, $tournamentId, $part)
+    {
+        uasort($players, function ($playerA, $playerB) use ($tournamentId, $part) {
+            $playerAResult = $playerA
+                ->results()
+                ->where('tournament_id', $tournamentId)
+                ->where('part', $part)
+                ->first();
+            $playerBResult = $playerB
+                ->results()
+                ->where('tournament_id', $tournamentId)
+                ->where('part', $part)
+                ->first();
+            return ($playerAResult->sum < $playerBResult->sum);
+        });
+    }
 }

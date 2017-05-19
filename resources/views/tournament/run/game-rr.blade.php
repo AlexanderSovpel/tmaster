@@ -2,9 +2,9 @@
 
 @section('process')
     <h2>Игра</h2>
-    <form action="/{{$tournament->id}}/run/{{$part}}/rest" method="post">
+    <form action="/{{$tournamentId}}/run/rr/rest" method="post">
         {{ csrf_field() }}
-
+        <input type="hidden" name="players" value="{{$players}}">
         @for($i = 0; $i < $roundCount; ++$i)
             <div class="round">
                 <h3>Round {{$i+1}}</h3>
@@ -18,8 +18,12 @@
                             <input type="text"
                                    id="opponent-{{$players[$j]->id}}"
                                    class="form-control opponent-result"
+                                   value="{{$playedGames[$players[$j]->id][$i]->result or ''}}"
+                                   old_value="{{$playedGames[$players[$j]->id][$i]->result or ''}}"
                                    onfocus="this.old_value = this.value">
-                            <span class="opponent-bonus input-group-addon"></span>
+                            <span class="opponent-bonus input-group-addon">
+                                {{$playedGames[$players[$j]->id][$i]->bonus or ''}}
+                            </span>
                             <span class="input-group-btn">
                                 <button class="btn btn-secondary post-opponent-result" type="button">set</button>
                             </span>
@@ -29,11 +33,13 @@
                                 <button class="btn btn-secondary post-opponent-result" type="button">set</button>
                             </span>
                             <span class="opponent-bonus input-group-addon">
-
+                                {{$playedGames[$players[$h]->id][$i]->bonus or ''}}
                             </span>
                             <input type="text"
                                    id="opponent-{{$players[$h]->id}}"
                                    class="form-control opponent-result"
+                                   value="{{$playedGames[$players[$h]->id][$i]->result or ''}}"
+                                   old_value="{{$playedGames[$players[$h]->id][$i]->result or ''}}"
                                    onfocus="this.old_value = this.value">
                             <label for="opponent-{{$players[$h]->id}}" class="input-group-addon opponent-name">
                                 {{$players[$h]->surname.' '.$players[$h]->name}}
@@ -50,40 +56,6 @@
                 $players[$lastPlayerIndex] = $temp;
             @endphp
         @endfor
-
-        {{--<table>--}}
-        {{--<tr>--}}
-        {{--<td></td>--}}
-        {{--<td>№</td>--}}
-        {{--<td>Участник</td>--}}
-        {{--@for ($j = 0; $j < $tournament->qualification_entries - 1; ++$j)--}}
-        {{--<td>{{$j + 1}}</td>--}}
-        {{--<td>Bonus</td>--}}
-        {{--@endfor--}}
-        {{--<td>Сумма</td>--}}
-        {{--<td>Средний</td>--}}
-        {{--</tr>--}}
-        {{--@for($i = 0; $i < count($players); ++$i)--}}
-        {{--<tr class="player">--}}
-        {{--<td><input type="hidden" class="playerId" value="{{$players[$i]->id}}"></td>--}}
-        {{--<td>{{$i + 1}}</td>--}}
-        {{--<td>{{$players[$i]->surname ." ". $players[$i]->name}}</td>--}}
-        {{--@for ($j = 0; $j < $tournament->qualification_entries - 1; ++$j)--}}
-        {{--<td><input type="text"--}}
-        {{--readonly--}}
-        {{--class="game_result"--}}
-        {{--name="result[]"--}}
-        {{--value="{{isset($playedGames[$players[$i]->id][$j]) ? $playedGames[$players[$i]->id][$j]->result : ''}}"--}}
-        {{--onfocus="this.old_value = this.value">--}}
-        {{--</td>--}}
-        {{--<td class="bonus"></td>--}}
-        {{--@endfor--}}
-        {{--<td id="sum_result_{{$players[$i]->id}}"></td>--}}
-        {{--<td id="avg_result_{{$players[$i]->id}}"></td>--}}
-        {{--</tr>--}}
-        {{--@endfor--}}
-        {{--</table>--}}
-
         <button type="submit">завершить игру</button>
         <div id="error"></div>
     </form>

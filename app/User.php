@@ -34,6 +34,11 @@ class User extends Authenticatable
 
     public function games()
     {
-        return $this->hasMany('App\Game', 'p_id');
+        return $this->hasMany('App\Game', 'player_id');
+    }
+
+    public function results()
+    {
+        return $this->hasMany('App\Result', 'player_id');
     }
 }

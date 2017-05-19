@@ -8,11 +8,16 @@ class Tournament extends Model
 {
     public function squads()
     {
-        return $this->hasMany('App\Squad', 't_id');
+        return $this->hasMany('App\Squad');
     }
 
     public function games()
     {
-        return $this->hasMany('App\Games', 't_id');
+        return $this->hasMany('App\Games');
+    }
+
+    public function results()
+    {
+        return $this->hasMany('App\Result');
     }
 }

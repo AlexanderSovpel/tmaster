@@ -14,7 +14,6 @@
                 <li>Squads:
                     <ul>
                         @foreach($tournament->squads as $squad)
-                            {{--                <li>{{$squad->id}}</li>--}}
                             <li>{{$squad->date}}, {{$squad->start_time}}-{{$squad->end_time}}</li>
                         @endforeach
                     </ul>
@@ -23,7 +22,7 @@
             <a href="/{{$tournament->id}}/players">players</a>
             @if(\Illuminate\Support\Facades\Auth::check())
                 @if($user->is_admin)
-                    <a href="/{{$tournament->id}}/run/q/conf/{{$tournament->squads[0]->id}}?squadFinished=0">run</a>
+                    <a href="/{{$tournament->id}}/run/q/conf/{{$tournament->squads[0]->id}}">run</a>
                 @else
                     <a href="/{{$tournament->id}}/apply">apply</a>
                 @endif

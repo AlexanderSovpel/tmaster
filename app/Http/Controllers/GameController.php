@@ -9,7 +9,6 @@ class GameController extends Controller
 {
     public function setResult(Request $request)
     {
-//        echo $request->input('player_id');
         $game = new Game(['p_id' => $request->input('player_id'),
             't_id' => $request->input('tournament_id'),
             'part' => $request->input('part'),
@@ -19,7 +18,6 @@ class GameController extends Controller
             'date' => date("Y-m-d")]);
 
         $game->save();
-//        return $game;
         return "game created";
     }
 
@@ -56,7 +54,23 @@ class GameController extends Controller
         foreach ($games as $game) {
             $result += $game->result + $game->bonus;
         }
-//        $result = $games->sum('result') + $request->input('handicap') * $games->count();
         return $result;
+    }
+
+    public function updateBonus(Request $request)
+    {
+        $game = Game::where('p_id', $request->input('player_id'))
+            ->where('t_id', $request->input('tournament_id'))
+            ->where('part', $request->input('part'))
+            ->where('s_id', $request->input('squad_id'))
+            ->where('result', $request->input('result'))
+            ->where('bonus', $request->input('oldBonus'))
+            ->get()[0];
+
+        echo "$game\n";
+        $game->bonus = $request->input('newBonus');
+        echo "$game\n";
+        $game->save();
+        return "old bonus: " . $request->input('oldBonus') . ", new bonus: " . $request->input('newBonus');
     }
 }

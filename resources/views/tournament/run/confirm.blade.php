@@ -2,19 +2,14 @@
 
 @section('process')
     <h2>Регистрация участников</h2>
-    @if(isset($currentSquadId))
-        <form action="/{{$tournament->id}}/run/{{$part}}/draw/{{$currentSquadId}}?squadFinished={{$squadFinished}}"
-              method="post">
-            @else
-    <form action="/{{$tournament->id}}/run/{{$part}}/draw" method="post">
-        @endif
+    <form action="/{{$tournamentId}}/run/{{$part}}/draw/{{$currentSquadId or ''}}" method="post">
         {{ csrf_field() }}
+        <input type="hidden" name="players" value="{{$players}}">
         <table>
             <tr>
                 <td>Участник</td>
                 <td>Подтверждение</td>
             </tr>
-            {{--        @foreach($currentSquad->players as $player)--}}
             @foreach($players as $player)
                 <tr>
                     <td>{{"$player->surname, $player->name"}}</td>
