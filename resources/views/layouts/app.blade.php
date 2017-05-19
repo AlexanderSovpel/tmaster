@@ -87,7 +87,8 @@
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/cookie.js') }}"></script>
 <script src="{{ asset('js/apply.js') }}"></script>
-<script src="{{ asset('js/setGameResults.js') }}"></script>
+<script src="{{ asset('js/newTournament.js') }}"></script>
 </body>
 </html>

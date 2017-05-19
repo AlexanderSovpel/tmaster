@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Glyphicons Halflings';
+    src: url('../fonts/glyphicons-halflings-regular.ttf');
+}
+
 .player-result {
     width: 50px;
 }
@@ -37,4 +42,30 @@
 
 .round {
     height: 200px;
+}
+
+#description {
+    resize: none;
+}
+
+#qualification {
+    float: left;
+    width: 40%;
+}
+
+#final {
+    margin-left: 40%;
+    width: 40%;
+}
+
+.remove {
+    float: right;
+}
+
+#next-step, #save {
+    float: right;
+}
+
+.btn-file {
+    display: none;
 }

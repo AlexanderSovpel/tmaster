@@ -319,6 +319,7 @@ class TournamentController extends Controller
     }
 
     //TODO: add qualification result to round-robin results
+    // done!
     public function roundRobinResults(Request $request, $tournamentId)
     {
         $players = json_decode($request->input('players'));
@@ -381,7 +382,14 @@ class TournamentController extends Controller
         $tournament = Tournament::find($tournamentId);
         $tournament->finished = true;
         $tournament->save();
-        return view('tournament.results');
+        return view('tournament.results', [
+            'tournament' => $tournament
+        ]);
+    }
+
+    public function newTournament()
+    {
+        return view('tournament.newTournament');
     }
 
     private function sortPlayersByResult(&$players, $tournamentId, $part)

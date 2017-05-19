@@ -2,6 +2,9 @@
 
 @section('content')
     <div class="container">
+        @if($user->is_admin)
+            <a href="/newTournament">new tournament</a>
+        @endif
         @foreach($tournaments as $tournament)
             <h1>{{ $tournament->name }}</h1>
             <input type="hidden" value="{{$tournament->id}}">
@@ -21,12 +24,10 @@
             </ul>
             <a href="/{{$tournament->id}}/players">players</a>
             @if(\Illuminate\Support\Facades\Auth::check())
-                @if($user->is_admin)
-                    @if($tournament->finished)
-                        <a href="/{{$tournament->id}}/results">results</a>
-                    @else
+                @if($tournament->finished)
+                    <a href="/{{$tournament->id}}/results">results</a>
+                @elseif($user->is_admin)
                     <a href="/{{$tournament->id}}/run/q/conf/{{$tournament->squads[0]->id}}">run</a>
-                    @endif
                 @else
                     <a href="/{{$tournament->id}}/apply">apply</a>
                 @endif

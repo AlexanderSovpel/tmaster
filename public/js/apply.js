@@ -8,17 +8,17 @@ if (squad) {
     getPlayersList();
 }
 
-var players = document.querySelectorAll('.player');
-for (var i = 0; i < players.length; ++i) {
-    var playerId = players[i].querySelector('.player-id').value;
-    var tournamentId = document.getElementsByName('tournament')[0].value;
-    var part = document.getElementsByName('part')[0].value;
-    var squadId = document.getElementsByName('currentSquad')[0].value;
-
-    // var blockSum = fillBlockSum(playerId, tournamentId, part, squadId);
-    // var gamesCount = players[i].querySelectorAll(".played").length;
-    // fillBlockAvg(blockSum, gamesCount, playerId);
-}
+// var players = document.querySelectorAll('.player');
+// for (var i = 0; i < players.length; ++i) {
+//     var playerId = players[i].querySelector('.player-id').value;
+//     var tournamentId = document.getElementsByName('tournament')[0].value;
+//     var part = document.getElementsByName('part')[0].value;
+//     var squadId = document.getElementsByName('currentSquad')[0].value;
+//
+//     var blockSum = fillBlockSum(playerId, tournamentId, part, squadId);
+//     var gamesCount = players[i].querySelectorAll(".played").length;
+//     fillBlockAvg(blockSum, gamesCount, playerId);
+// }
 
 var postResultButtons = document.querySelectorAll('.post-result');
 for (var i = 0; i < postResultButtons.length; ++i) {
