@@ -1,6 +1,6 @@
-@extends('layouts.run')
+@extends('layouts.app')
 
-@section('process')
+@section('content')
     <ul class="nav nav-tabs">
         <li role="presentation" class="active"><a href="#">Квалификация</a></li>
         <li role="presentation"><a href="#">Финал</a></li>

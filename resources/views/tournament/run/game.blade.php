@@ -2,13 +2,14 @@
 
 @section('process')
     <h2>Игра</h2>
-    <form action="/{{$tournamentId}}/run/q/rest/{{$currentSquadId}}" method="get">
+    <form action="/{{$tournament->id}}/run/q/rest/{{$currentSquadId}}" method="post">
         {{ csrf_field() }}
+        <input type="hidden" name="players" value="{{$players}}">
         <table>
             <tr>
                 <td>№</td>
                 <td>Участник</td>
-                @for ($j = 0; $j < $qualificationEntries; ++$j)
+                @for ($j = 0; $j < $tournament->qualification_entries; ++$j)
                     <td>{{$j + 1}}</td>
                 @endfor
                 <td>Гандикап</td>
@@ -20,7 +21,7 @@
                     <input type="hidden" class="player-id" value="{{$players[$i]->id}}">
                     <td>{{$i + 1}}</td>
                     <td>{{$players[$i]->surname ." ". $players[$i]->name}}</td>
-                    @for ($j = 0; $j < $qualificationEntries; ++$j)
+                    @for ($j = 0; $j < $tournament->qualification_entries; ++$j)
                         <td>
                             <div class="input-group result">
                                 <input type="text"

@@ -23,14 +23,14 @@ Route::post('/{id}/sendApplication', 'TournamentController@postApplication');
 Route::post('/{id}/removeApplication', 'TournamentController@removeApplication');
 
 Route::get('/{tournamentId}/run/q/conf/{currentSquadId}', 'TournamentController@runQualificationConfirm');
-Route::post('/{tournamentId}/run/q/draw/{currentSquadId}', 'TournamentController@runQualificationDraw');
-Route::post('/{tournamentId}/run/q/game/{currentSquadId}', 'TournamentController@runQualificationGame');
-Route::get('/{tournamentId}/run/q/rest/{currentSquadId}', 'TournamentController@qualificationSquadResults');
+Route::get('/{tournamentId}/run/q/draw/{currentSquadId}', 'TournamentController@runQualificationDraw');
+Route::get('/{tournamentId}/run/q/game/{currentSquadId}', 'TournamentController@runQualificationGame');
+Route::post('/{tournamentId}/run/q/rest/{currentSquadId}', 'TournamentController@qualificationSquadResults');
 Route::get('/{tournamentId}/run/q/rest', 'TournamentController@qualificationResults');
 
-Route::post('/{tournamentId}/run/rr/conf', 'TournamentController@runRoundRobinConfirm');
-Route::post('/{tournamentId}/run/rr/draw', 'TournamentController@runRoundRobinDraw');
-Route::post('/{tournamentId}/run/rr/game', 'TournamentController@runRoundRobinGame');
+Route::get('/{tournamentId}/run/rr/conf/', 'TournamentController@runRoundRobinConfirm');
+Route::get('/{tournamentId}/run/rr/draw', 'TournamentController@runRoundRobinDraw');
+Route::get('/{tournamentId}/run/rr/game', 'TournamentController@runRoundRobinGame');
 Route::post('/{tournamentId}/run/rr/rest', 'TournamentController@roundRobinResults');
 
 Route::get('/{tournamentId}/results', 'TournamentController@getResults');

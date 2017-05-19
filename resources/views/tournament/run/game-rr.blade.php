@@ -2,9 +2,9 @@
 
 @section('process')
     <h2>Игра</h2>
-    <form action="/{{$tournamentId}}/run/rr/rest" method="post">
+    <form action="/{{$tournament->id}}/run/rr/rest" method="post">
         {{ csrf_field() }}
-        <input type="hidden" name="players" value="{{$players}}">
+        <input type="hidden" name="players" value="{{json_encode($players)}}">
         @for($i = 0; $i < $roundCount; ++$i)
             <div class="round">
                 <h3>Round {{$i+1}}</h3>

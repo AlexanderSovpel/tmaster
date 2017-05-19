@@ -2,9 +2,9 @@
 
 @section('process')
     <h2>Регистрация участников</h2>
-    <form action="/{{$tournamentId}}/run/{{$part}}/draw/{{$currentSquadId or ''}}" method="post">
+    <form action="/{{$tournament->id}}/run/{{$part}}/draw/{{$currentSquadId or ''}}" method="get">
         {{ csrf_field() }}
-        <input type="hidden" name="players" value="{{$players}}">
+        <input type="hidden" name="players" value="{{json_encode($players)}}">
         <table>
             <tr>
                 <td>Участник</td>

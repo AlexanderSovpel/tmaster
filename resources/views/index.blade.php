@@ -22,7 +22,11 @@
             <a href="/{{$tournament->id}}/players">players</a>
             @if(\Illuminate\Support\Facades\Auth::check())
                 @if($user->is_admin)
+                    @if($tournament->finished)
+                        <a href="/{{$tournament->id}}/results">results</a>
+                    @else
                     <a href="/{{$tournament->id}}/run/q/conf/{{$tournament->squads[0]->id}}">run</a>
+                    @endif
                 @else
                     <a href="/{{$tournament->id}}/apply">apply</a>
                 @endif

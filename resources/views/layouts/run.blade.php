@@ -15,8 +15,8 @@
                         <ul class="list-group">
                             @for($i = 0; $i < count($tournament->squads); ++$i)
                                 <li
-                                        @if(isset($currentSquad))
-                                        @if($currentSquad->id == $tournament->squads[$i]->id)
+                                        @if(isset($currentSquadId))
+                                        @if($currentSquadId == $tournament->squads[$i]->id)
                                         class="list-group-item active"
                                         @else
                                         class="list-group-item"
