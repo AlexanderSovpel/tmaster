@@ -7,6 +7,24 @@
     width: 50px;
 }
 
+.played {
+    background-color: transparent !important;
+    border: none;
+    box-shadow: none;
+}
+
+.results {
+    padding: 5%;
+}
+
+.results-header {
+    background-color: #dddddd !important;
+}
+
+.results > div > table > tbody > tr:nth-child(2n+1) {
+    background-color: #eeeeee;
+}
+
 .part-nav {
     width: 15%;
     float: left;

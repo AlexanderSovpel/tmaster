@@ -188,7 +188,7 @@ class TournamentController extends Controller
                 $playedGames[$player->id][] = $game;
                 $sum += $game->result + $game->bonus;
             }
-            $avg = $sum / $games->count();
+            $avg = round($sum / $games->count(), 2);
 
             $result = Result::firstOrNew([
                 'tournament_id' => $tournamentId,
@@ -218,37 +218,37 @@ class TournamentController extends Controller
     public function qualificationResults($tournamentId)
     {
         $tournament = Tournament::find($tournamentId);
-        $players = array();
-        $playedGames = array();
-        $playersResults = array();
+        $qPlayers = array();
+        $qGames = array();
+        $qResults = array();
         foreach ($tournament->squads as $squad) {
             foreach ($squad->players as $player) {
-                $players[] = $player;
+                $qPlayers[] = $player;
                 $games = $player->games()
                     ->where('tournament_id', $tournament->id)
                     ->where('part', 'q')->get();
 
                 foreach ($games as $game) {
-                    $playedGames[$player->id][] = $game;
+                    $qGames[$player->id][] = $game;
                 }
 
                 $result = Result::where('tournament_id', $tournamentId)
                     ->where('player_id', $player->id)
                     ->where('part', 'q')
                     ->first();
-                $playersResults[$player->id] = $result;
+                $qResults[$player->id] = $result;
             }
         }
 
-        $this->sortPlayersByResult($players, $tournamentId, 'q');
+        $this->sortPlayersByResult($qPlayers, $tournamentId, 'q');
 
         return view('tournament.run.results-q', [
             'tournament' => $tournament,
             'part' => 'q',
             'stage' => '',
-            'players' => $players,
-            'playedGames' => $playedGames,
-            'playersResults' => $playersResults]);
+            'qPlayers' => $qPlayers,
+            'qGames' => $qGames,
+            'qResults' => $qResults]);
     }
 
     public function runRoundRobinConfirm(Request $request, $tournamentId)
@@ -318,8 +318,6 @@ class TournamentController extends Controller
         ]);
     }
 
-    //TODO: add qualification result to round-robin results
-    // done!
     public function roundRobinResults(Request $request, $tournamentId)
     {
         $players = json_decode($request->input('players'));
@@ -337,7 +335,7 @@ class TournamentController extends Controller
                 $playedRoundRobinGames[$player->id][] = $roundRobinGame;
                 $sum += $roundRobinGame->result + $roundRobinGame->bonus;
             }
-            $avg = $sum / $roundRobinGames->count();
+            $avg = round($sum / $roundRobinGames->count(), 2);
 
             $qualificationResult = Result::where('tournament_id', $tournamentId)
                 ->where('player_id', $player->id)
@@ -354,12 +352,11 @@ class TournamentController extends Controller
                 'avg' => $avg
             ]);
             $roundRobinResult->save();
-//            echo $roundRobinResult;
             $qualificationResults[$player->id] = $qualificationResult;
             $playersResults[$player->id] = $roundRobinResult;
         }
 
-//        $this->sortPlayersByResult($players, $tournamentId, 'rr');
+        $this->sortPlayersByResult($players, $tournamentId, 'rr');
 
         $playersCount = count($players);
         $roundCount = ($playersCount % 2) ? $playersCount : $playersCount - 1;
@@ -368,11 +365,11 @@ class TournamentController extends Controller
             'tournament' => Tournament::find($tournamentId),
             'part' => 'rr',
             'stage' => '',
-            'players' => $players,
+            'fPlayers' => $players,
             'roundCount' => $roundCount,
-            'playedGames' => $playedRoundRobinGames,
-            'playersResults' => $playersResults,
-            'qualificationResults' => $qualificationResults
+            'fGames' => $playedRoundRobinGames,
+            'fResults' => $playersResults,
+            'qResults' => $qualificationResults
         ]);
     }
 
@@ -382,8 +379,80 @@ class TournamentController extends Controller
         $tournament = Tournament::find($tournamentId);
         $tournament->finished = true;
         $tournament->save();
+
+        $qPlayers = array();
+        $qGames = array();
+        $qResults = array();
+        foreach ($tournament->squads as $squad) {
+            foreach ($squad->players as $player) {
+                $qPlayers[] = $player;
+                $qualificationGames = Game::where('tournament_id', $tournament->id)
+                    ->where('player_id', $player->id)
+                    ->where('part', 'q')->get();
+
+                foreach ($qualificationGames as $game) {
+                    $qGames[$player->id][] = $game;
+                }
+
+                $qResult = Result::where('tournament_id', $tournamentId)
+                    ->where('player_id', $player->id)
+                    ->where('part', 'q')
+                    ->first();
+                $qResults[$player->id] = $qResult;
+            }
+        }
+
+        $this->sortPlayersByResult($qPlayers, $tournamentId, 'q');
+
+
+        $fGames = array();
+        $fResults = array();
+        $fPlayers = array();
+        $roundRobinGames = Game::where('tournament_id', $tournamentId)
+            ->where('part', 'rr')
+            ->get();
+        foreach ($roundRobinGames as $roundRobinGame) {
+            $fPlayer = User::find($roundRobinGame->player_id);
+            $fPlayers[$fPlayer->id] = $fPlayer;
+
+            $fGames[$fPlayer->id][] = $roundRobinGame;
+
+            $fResult = Result::where('tournament_id', $tournamentId)
+                ->where('player_id', $fPlayer->id)
+                ->where('part', 'rr')
+                ->first();
+            $fResults[$fPlayer->id] = $fResult;
+        }
+
+        $fPlayersCount = count($fPlayers);
+        $roundCount = ($fPlayersCount % 2) ? $fPlayersCount : $fPlayersCount - 1;
+
+        $this->sortPlayersByResult($fPlayers, $tournamentId, 'rr');
+
+        $allResults = $fResults;
+        foreach ($qResults as $key => $result) {
+
+            if (isset($fResults[$result->player_id])) {
+                $playerFResult = $fResults[$result->player_id];
+                $allResults[] = $playerFResult;
+//                echo "<p>$key: $result->player_id: $playerFResult</p>";
+            } else {
+                $allResults[] = $result;
+//                echo "<p>$key: $result->player_id: $result</p>";
+            }
+        }
+
+
         return view('tournament.results', [
-            'tournament' => $tournament
+            'tournament' => $tournament,
+            'qPlayers' => $qPlayers,
+            'qGames' => $qGames,
+            'qResults' => $qResults,
+            'fPlayers' => $fPlayers,
+            'fGames' => $fGames,
+            'fResults' => $fResults,
+            'roundCount' => $roundCount,
+            'allResults' => $allResults
         ]);
     }
 
@@ -396,12 +465,10 @@ class TournamentController extends Controller
     {
         uasort($players, function ($playerA, $playerB) use ($tournamentId, $part) {
             $playerAResult = $playerA['results']
-//                ->results()
                 ->where('tournament_id', $tournamentId)
                 ->where('part', $part)
                 ->first();
             $playerBResult = $playerB['results']
-//                ->results()
                 ->where('tournament_id', $tournamentId)
                 ->where('part', $part)
                 ->first();
