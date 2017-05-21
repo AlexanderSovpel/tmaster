@@ -69,23 +69,39 @@ class TournamentController extends Controller
                 $playerEntries += 1;
             }
         }
-        echo $playerEntries;
 
-        if ($tournament->qualification->allow_reentry == false) {
+        if (!$tournament->qualification->allow_reentry) {
             foreach ($tournament->squads as $squad) {
-                if ($squad->find($playerId)) {
-                    return "reentries not allowed";
+                if ($squad->players()->find($playerId)) {
+                    return view('partial.alerts.application-alert', [
+                        'type' => 'danger',
+                        'status' => 'Ошибка!',
+                        'message' => 'Переигровки не разрешены.'
+                    ]);
                 }
             }
         } else if ($tournament->squads()->find($squadId)->players()->find($playerId)) {
-            return "player has applied this squad";
+            return view('partial.alerts.application-alert', [
+                'type' => 'danger',
+                'status' => 'Ошибка!',
+                'message' => 'Вы уже подали заяку на данный поток.'
+            ]);
         } else if ($tournament->qualification->reentries + 1 > $playerEntries && $playerEntries > 0) {
-            return "max reentries already";
+            return view('partial.alerts.application-alert', [
+                'type' => 'danger',
+                'status' => 'Ошибка!',
+                'message' => 'В потоке уже зарегистрировано максимальное количество участников.'
+            ]);
         }
 
+//        return $request->input('squad');
         $tournament->squads()->find($squadId)->players()->save(User::find($playerId));
 
-        return redirect('/');
+        return view('partial.alerts.application-alert', [
+            'type' => 'success',
+            'status' => 'Успех!',
+            'message' => 'Заявка подана.'
+        ]);
     }
 
     public function removeApplication(Request $request, $id)

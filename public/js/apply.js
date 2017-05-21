@@ -8,6 +8,28 @@ if (squad) {
     getPlayersList();
 }
 
+var applyButton = document.getElementById('apply-button');
+applyButton.onclick = function (e) {
+    e.preventDefault();
+    var tournamentId = document.getElementById('tournament-id').value;
+    var squad = {
+        squad: document.getElementById('squad').value
+    };
+
+    $.ajax({
+        type: 'POST',
+        url: '/' + tournamentId + '/sendApplication',
+        data: squad,
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        success: function (data) {
+            $('#error').html(data);
+            getPlayersList();
+        }
+    }).fail(function (data) {
+        $('#error').html(data.responseText);
+    });
+};
+
 // var players = document.querySelectorAll('.player');
 // for (var i = 0; i < players.length; ++i) {
 //     var playerId = players[i].querySelector('.player-id').value;

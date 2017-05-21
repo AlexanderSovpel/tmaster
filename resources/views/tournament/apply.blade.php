@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="container">
-
         <form action="{{url("$tournament->id/sendApplication")}}" method="post">
             {{ csrf_field() }}
-            {{--<input type="hidden" value="{{$tournament->id}}" id="tId">--}}
+            <meta name="csrf-token" content="{{ csrf_token() }}">
+            <input type="hidden" value="{{$tournament->id}}" id="tournament-id">
             <div>
                 <label for="squad">Squad:</label>
                 <select id="squad" name="squad">
@@ -16,7 +16,7 @@
             </div>
             <div>
                 <label for="price">Price:</label>
-                <span id="price">{{$tournament->qualification_fee}}</span>
+                <span id="price">{{$tournament->qualification->fee}} BYN</span>
             </div>
             <div>
                 <label for="fill">Places left:</label>
@@ -26,9 +26,8 @@
                 <label for="players">Players:</label>
                 <ul id="players"></ul>
             </div>
-            <div id="error"></div>
-
-            <button type="submit" id="applyButton">APPLY</button>
+            <button type="submit" id="apply-button">APPLY</button>
         </form>
+        <div id="error"></div>
     </div>
 @endsection
