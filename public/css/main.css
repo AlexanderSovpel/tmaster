@@ -87,3 +87,20 @@
 .btn-file {
     display: none;
 }
+
+#user-photo {
+    float: left;
+    width: 200px;
+    height: 200px;
+}
+
+#statistics {
+    background-color: transparent !important;
+}
+
+#edit-link {
+    /*position: absolute;*/
+    float: right;
+    display: block;
+    /*right: 0;*/
+}

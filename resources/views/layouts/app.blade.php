@@ -20,6 +20,7 @@
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
 <div id="app">
@@ -62,11 +63,14 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
+                                <li><a href="/account">Профиль</a></li>
+                                <li><a href="/account/edit">Настройки</a></li>
+                                <li role="separator" class="divider"></li>
                                 <li>
                                     <a href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        Logout
+                                        Выход
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST"
@@ -87,9 +91,9 @@
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/cookie.js') }}"></script>
 <script src="{{ asset('js/resultTabs.js') }}"></script>
 <script src="{{ asset('js/apply.js') }}"></script>
 <script src="{{ asset('js/newTournament.js') }}"></script>
+<script src="{{ asset('js/statistics.js') }}"></script>
 </body>
 </html>

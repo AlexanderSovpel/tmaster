@@ -41,6 +41,10 @@ Route::get('getSquadFilling/{id}', 'SquadController@getSquadFilling');
 
 Route::get('/addSquadForm', 'Controller@addSquadForm');
 
+Route::get('/account', 'UserController@showAccount');
+Route::get('/account/edit', 'UserController@editAccount');
+Route::post('/account/save', 'UserController@saveAccount');
+Route::get('/getStatistic', 'UserController@getStatistic');
 Auth::routes();
 
 //Route::match(['get', 'post'], '/{id}/run/{part}/{stage}/{currentSquad?}',

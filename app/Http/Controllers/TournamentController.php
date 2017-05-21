@@ -432,11 +432,7 @@ class TournamentController extends Controller
 
         $allResults = $fResults;
         foreach ($qResults as $key => $result) {
-
-            if (isset($fResults[$result->player_id])) {
-                $playerFResult = $fResults[$result->player_id];
-                $allResults[] = $playerFResult;
-            } else {
+            if (!isset($fResults[$result->player_id])) {
                 $allResults[] = $result;
             }
         }
@@ -544,19 +540,6 @@ class TournamentController extends Controller
             $squad->save();
         }
 //
-//        echo "<h2>New tournament</h2>";
-//        echo "<p>Name: $request->name</p>";
-//        echo "<p>Place: $request->location</p>";
-//        echo "<p>Type: $request->type</p>";
-//        echo "<p>Handicap: $request->handicap_type</p>";
-//        echo "<p>Qualification: ".$request->qualification_entries."</p>";
-//        echo "<p>Final: ".$request->rr_players."</p>";
-//
-//        echo "<p>Squads: ".$request->squads_count."</p>";
-//        foreach ($newTournament->squads as $key => $squad) {
-//            echo "<p>Squad $key: " . $squad->date. ", ". $squad->start_time
-//                . " - ", $squad->end_time . "</p>";
-//        }
         return redirect('/');
     }
 }

@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="container">
-        {{--TODO: пошаговая форма--}}
         <form method="post" action="/saveTournament" id="new-tournament">
             {{csrf_field()}}
             <input type="hidden" id="step" value="0">
