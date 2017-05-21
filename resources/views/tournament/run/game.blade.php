@@ -21,7 +21,7 @@
                     <input type="hidden" class="player-id" value="{{$players[$i]->id}}">
                     <td>{{$i + 1}}</td>
                     <td>{{$players[$i]->surname ." ". $players[$i]->name}}</td>
-                    @for ($j = 0; $j < $tournament->qualification_entries; ++$j)
+                    @for ($j = 0; $j < $tournament->qualification->entries; ++$j)
                         <td>
                             <div class="input-group result">
                                 <input type="text"
@@ -41,8 +41,8 @@
                         </td>
                     @endfor
                     <td id="handicap_{{$players[$i]->id}}" class="player-bonus">
-                        @if($players[$i]->gender == $tournament->handicap_type)
-                            {{$tournament->handicap_value}}
+                        @if($players[$i]->gender == $tournament->handicap->type)
+                            {{$tournament->handicap->value}}
                         @else
                             {{0}}
                         @endif

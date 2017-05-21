@@ -19,18 +19,18 @@ class TournamentsTableSeeder extends Seeder
             'oil_file' => null,
             'description' => '',
 
-            'handicap_type' => 'women',
+//            'handicap_type' => 'women',
 
-            'qualification_fee' => 50.0,
-            'reentry_fee' => 60.0,
+//            'qualification_fee' => 50.0,
+//            'reentry_fee' => 60.0,
 
-            'rr_date' => '2017-05-14',
-            'rr_start_time' => '12:00',
-            'rr_end_time' => '14:00',
+//            'rr_date' => '2017-05-14',
+//            'rr_start_time' => '12:00',
+//            'rr_end_time' => '14:00',
 
-            'contact_person' => 'Sovpel Alex',
-            'contact_phone' => '+375296425962',
-            'contact_email' => 'Sovpel Alex',
+//            'contact_person' => 'Sovpel Alex',
+//            'contact_phone' => '+375296425962',
+//            'contact_email' => 'Sovpel Alex',
 
             'finished' => false
         ]);

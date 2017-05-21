@@ -13,7 +13,7 @@
                 <li>Location: {{ $tournament->location }}</li>
                 <li>Oil type: {{ $tournament->oil_type }}</li>
                 <li>Description: {{ $tournament->description }}</li>
-                <li>Handicap: {{ $tournament->handicap_type }}, {{$tournament->handicap_value}}</li>
+                <li>Handicap: {{ $tournament->handicap->type }}, {{$tournament->handicap->value}}</li>
                 <li>Squads:
                     <ul>
                         @foreach($tournament->squads as $squad)
@@ -21,6 +21,11 @@
                         @endforeach
                     </ul>
                 </li>
+                <li>Round Robin: {{$tournament->roundRobin->date}}, {{$tournament->roundRobin->start_time}}
+                    -{{$tournament->roundRobin->end_time}}</li>
+                <li>Contact: {{$tournament->contact->surname}} {{$tournament->contact->name}},
+                    {{$tournament->contact->phone}},
+                    {{$tournament->contact->email}}</li>
             </ul>
             <a href="/{{$tournament->id}}/players">players</a>
             @if(\Illuminate\Support\Facades\Auth::check())

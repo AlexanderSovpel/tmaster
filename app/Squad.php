@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Squad extends Model
 {
+    protected $fillable = ['tournament_id', 'date', 'start_time', 'end_time', 'max_players'];
+
     public function tournament()
     {
         return $this->belongsTo('App\Tournament');

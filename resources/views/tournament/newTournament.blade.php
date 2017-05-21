@@ -19,7 +19,7 @@
                 <div class="form-group">
                     <label>Тип турнира</label>
                     <div class="radio">
-                        <label><input type="radio" name="type" value="sport">спортивный</label>
+                        <label><input type="radio" name="type" value="sport" checked>спортивный</label>
                     </div>
                     <div class="radio">
                         <label><input type="radio" name="type" value="commercial">коммерческий</label>
@@ -75,28 +75,29 @@
                     <label>Отборочная часть</label>
                     <div class="checkbox">
                         <label><input type="checkbox" name="qualification_part[]" value="has_qualification" checked
-                                      disabled>квалификация</label>
+                            >квалификация</label>
                     </div>
                     <div class="checkbox">
-                        <label><input type="checkbox" name="qualification_part[]" value="has_desperado" disabled>десперадо</label>
+                        <label><input type="checkbox" name="qualification_part[]"
+                                      value="has_desperado">десперадо</label>
                     </div>
                 </div>
                 <div id="final" class="form-group part-choice">
                     <label>Финальная часть</label>
                     <div class="checkbox">
                         <label><input type="checkbox" name="final_part[]" value="has_commonfinal"
-                                      disabled>обычный</label>
+                            >обычный</label>
                     </div>
                     <div class="checkbox">
-                        <label><input type="checkbox" name="final_part[]" value="has_joinmatches" disabled>стыковочные
+                        <label><input type="checkbox" name="final_part[]" value="has_joinmatches">стыковочные
                             матчи</label>
                     </div>
                     <div class="checkbox">
-                        <label><input type="checkbox" name="final_part[]" value="has_roundrobin" checked disabled>round
+                        <label><input type="checkbox" name="final_part[]" value="has_roundrobin" checked>round
                             robin</label>
                     </div>
                     <div class="checkbox">
-                        <label><input type="checkbox" name="final_part[]" value="has_stepladder" disabled>step
+                        <label><input type="checkbox" name="final_part[]" value="has_stepladder">step
                             ladder</label>
                     </div>
                 </div>
@@ -225,39 +226,10 @@
             <div class="creation-step">
                 <h2>Квалификация</h2>
                 <label>Потоки квалификации</label>
-                <a href="#">добавить</a>
-                <div class="form-group well squad">
-                    <label>Поток 1</label>
-                    <a href="#"><span class="glyphicon glyphicon-remove remove remove-squad"></span></a>
-                    <div class="form-group">
-                        <label for="squad1-date">Дата проведения</label>
-                        <input type="date" id="squad1-date" name="squad1_date" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="squad1-start-time">Время начала</label>
-                        <input type="date" id="squad1-start-time" name="squad1_start_time" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="squad1-end-time">Время окончания</label>
-                        <input type="date" id="squad1-end-time" name="squad1_end_time" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group well squad">
-                    <label>Поток 2</label>
-                    <a href="#"><span class="glyphicon glyphicon-remove remove remove-squad"></span></a>
-                    <div class="form-group">
-                        <label for="squad2-date">Дата проведения</label>
-                        <input type="date" id="squad2-date" name="squad2_date" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="squad2-start-time">Время начала</label>
-                        <input type="date" id="squad2-start-time" name="squad2_start_time" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="squad2-end-time">Время окончания</label>
-                        <input type="date" id="squad2-end-time" name="squad2_end_time" class="form-control">
-                    </div>
-                </div>
+                <input type="hidden" id="squads-count" name="squads_count" value="2">
+                <a href="#" id="add-squad">добавить</a>
+                @include('partial.squad-form', ['index' => 2])
+                @include('partial.squad-form', ['index' => 1])
             </div>
 
             <div class="creation-step">
@@ -334,5 +306,6 @@
                 <input type="submit" id="save" class="btn" value="сохранить">
             </div>
         </form>
+        <div id="error"></div>
     </div>
 @endsection

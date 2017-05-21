@@ -30,7 +30,7 @@
                     </li>
                     <li class="list-group-item">Финал
                         <ul class="list-group">
-                            @for($j = 0; $j < $tournament->rr_players - 1; ++$j)
+                            @for($j = 0; $j < $tournament->roundRobin->players - 1; ++$j)
                                 <li class="list-group-item">Раунд {{$j + 1}}</li>
                             @endfor
                         </ul>

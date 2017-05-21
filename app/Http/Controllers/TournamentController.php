@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Game;
+use App\Handicap;
+use App\Qualification;
 use App\Result;
+use App\RoundRobin;
 use App\Squad;
 use App\SquadPlayers;
 use App\Tournament;
@@ -68,7 +71,7 @@ class TournamentController extends Controller
         }
         echo $playerEntries;
 
-        if ($tournament->allow_reentry == false) {
+        if ($tournament->qualification->allow_reentry == false) {
             foreach ($tournament->squads as $squad) {
                 if ($squad->find($playerId)) {
                     return "reentries not allowed";
@@ -76,7 +79,7 @@ class TournamentController extends Controller
             }
         } else if ($tournament->squads()->find($squadId)->players()->find($playerId)) {
             return "player has applied this squad";
-        } else if ($tournament->reentries_amount + 1 > $playerEntries && $playerEntries > 0) {
+        } else if ($tournament->qualification->reentries + 1 > $playerEntries && $playerEntries > 0) {
             return "max reentries already";
         }
 
@@ -207,7 +210,6 @@ class TournamentController extends Controller
             'tournament' => Tournament::find($tournamentId),
             'part' => 'q',
             'stage' => 'game',
-//            'qualificationEntries' => Tournament::find($tournamentId)->qualification_entries,
             'players' => $currentSquad->players,
             'currentSquadId' => $currentSquadId,
             'playedGames' => $playedGames,
@@ -258,7 +260,7 @@ class TournamentController extends Controller
         $finalistsCount = 1;
 
         foreach ($players as $player) {
-            if ($finalistsCount++ > $tournament->rr_players) {
+            if ($finalistsCount++ > $tournament->roundRobin->players) {
                 $playerId = array_search($player, $players);
                 unset($players[$playerId]);
             }
@@ -356,7 +358,7 @@ class TournamentController extends Controller
             $playersResults[$player->id] = $roundRobinResult;
         }
 
-        $this->sortPlayersByResult($players, $tournamentId, 'rr');
+//        $this->sortPlayersByResult($players, $tournamentId, 'rr');
 
         $playersCount = count($players);
         $roundCount = ($playersCount % 2) ? $playersCount : $playersCount - 1;
@@ -373,7 +375,6 @@ class TournamentController extends Controller
         ]);
     }
 
-    //TODO: show overall results
     public function getResults($tournamentId)
     {
         $tournament = Tournament::find($tournamentId);
@@ -435,10 +436,8 @@ class TournamentController extends Controller
             if (isset($fResults[$result->player_id])) {
                 $playerFResult = $fResults[$result->player_id];
                 $allResults[] = $playerFResult;
-//                echo "<p>$key: $result->player_id: $playerFResult</p>";
             } else {
                 $allResults[] = $result;
-//                echo "<p>$key: $result->player_id: $result</p>";
             }
         }
 
@@ -474,5 +473,90 @@ class TournamentController extends Controller
                 ->first();
             return ($playerAResult->sum < $playerBResult->sum);
         });
+    }
+
+    public function saveTournament(Request $request)
+    {
+        $handicap = new Handicap([
+            'type' => $request->handicap_type,
+            'value' => $request->handicap_value,
+            'max_game' => $request->handicap_max_value
+        ]);
+        $handicap->save();
+
+        $qualification = new Qualification([
+            'entries' => $request->qualification_entries,
+            'games' => $request->qualification_games,
+            'finalists' => $request->qualification_finalists,
+            'fee' => $request->qualification_fee,
+            'allow_reentry' => $request->allow_reentry,
+            'reentries' => $request->reentries_amount,
+            'reentry_fee' => $request->reentry_fee
+        ]);
+        $qualification->save();
+
+        $roundRobin = new RoundRobin([
+            'players' => $request->rr_players,
+            'win_bonus' => $request->rr_win_bonus,
+            'draw_bonus' => $request->rr_draw_bonus,
+            'date' => $request->rr_date,
+            'start_time' => $request->rr_start_time,
+            'end_time' => $request->rr_end_time,
+        ]);
+        $roundRobin->save();
+
+        $contact = User::where('email', $request->contact_email)
+            ->where('phone', $request->contact_phone)
+            ->first();
+
+        $newTournament = new Tournament([
+            'name' => $request->name,
+            'location' => $request->location,
+            'type' => $request->type,
+            'oil_type' => $request->oil_type,
+            'description' => $request->description,
+            'handicap_id' => $handicap->id,
+            'qualification_id' => $qualification->id,
+            'roundrobin_id' => $roundRobin->id,
+            'contact_id' => $contact->id,
+            'finished' => false
+        ]);
+        $newTournament->save();
+
+        $handicap->tournament_id = $newTournament->id;
+        $handicap->save();
+
+        $qualification->tournament_id = $newTournament->id;
+        $qualification->save();
+
+        $roundRobin->tournament_id = $newTournament->id;
+        $roundRobin->save();
+
+        for ($i = 0; $i < $request->squads_count; ++$i) {
+            $squad = new Squad([
+                'tournament_id' => $newTournament->id,
+                'date' => $request->squad_date[$i],
+                'start_time' => $request->squad_start_time[$i],
+                'end_time' => $request->squad_end_time[$i],
+                'max_players' => $request->squad_max_players[$i],
+                'finished' => false
+            ]);
+            $squad->save();
+        }
+//
+//        echo "<h2>New tournament</h2>";
+//        echo "<p>Name: $request->name</p>";
+//        echo "<p>Place: $request->location</p>";
+//        echo "<p>Type: $request->type</p>";
+//        echo "<p>Handicap: $request->handicap_type</p>";
+//        echo "<p>Qualification: ".$request->qualification_entries."</p>";
+//        echo "<p>Final: ".$request->rr_players."</p>";
+//
+//        echo "<p>Squads: ".$request->squads_count."</p>";
+//        foreach ($newTournament->squads as $key => $squad) {
+//            echo "<p>Squad $key: " . $squad->date. ", ". $squad->start_time
+//                . " - ", $squad->end_time . "</p>";
+//        }
+        return redirect('/');
     }
 }

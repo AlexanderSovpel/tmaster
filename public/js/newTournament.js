@@ -1,8 +1,8 @@
 var newTournamentForm = document.getElementById('new-tournament');
 if (newTournamentForm) {
     var currentStep = newTournamentForm.querySelector('#step');
-    if (getCookie('currentStep') != undefined)
-        currentStep.value = getCookie('currentStep');
+    // if (sessionStorage.getItem('currentStep'))
+    //     currentStep.value = sessionStorage.getItem('currentStep');
 
     var steps = newTournamentForm.querySelectorAll('.creation-step');
     var nextStepBtn = newTournamentForm.querySelector('#next-step');
@@ -14,14 +14,14 @@ if (newTournamentForm) {
 
     prevStepBtn.onclick = function () {
         --currentStep.value;
-        setCookie('currentStep', currentStep.value);
+        sessionStorage.setItem('currentStep', currentStep.value);
         showStep(steps, currentStep.value);
         toggleStepBtnVisibility();
     };
 
     nextStepBtn.onclick = function () {
         ++currentStep.value;
-        setCookie('currentStep', currentStep.value);
+        sessionStorage.setItem('currentStep', currentStep.value);
         showStep(steps, currentStep.value);
         toggleStepBtnVisibility();
     };
@@ -37,6 +37,37 @@ if (newTournamentForm) {
             }
         }
     }
+
+    var addSquadBtn = document.getElementById('add-squad');
+    var squadsCount = document.getElementById('squads-count');
+    addSquadBtn.onclick = function () {
+        var xhr = new XMLHttpRequest();
+        var params = '?' + 'index=' + (++squadsCount.value);
+
+        xhr.open('GET', '/addSquadForm' + params, false);
+        xhr.send();
+
+        if (xhr.status != 200) {
+            document.getElementById('error').innerHTML = xhr.responseText;
+        }
+        else {
+            $(this).after(xhr.responseText);
+            console.log(squadsCount.value);
+        }
+    };
+
+    var removeSquadBtns = document.querySelectorAll('.remove-squad');
+    for (var i = 0; i < removeSquadBtns.length; ++i) {
+        removeSquadBtns[i].onclick = function () {
+            removeSquad(this);
+        }
+    }
+}
+
+function removeSquad(squad) {
+    $(squad).parent().remove();
+    $('#squads-count').val($('#squads-count').val() - 1);
+    // --squadsCount.value;
 }
 
 function showStep(steps, step) {

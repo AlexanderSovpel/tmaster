@@ -24,9 +24,9 @@ class CreateTournamentsTable extends Migration
             $table->longText('description');
 
 //            handicap
-            $table->string('handicap_type')->default('women')->nullable();
-            $table->integer('handicap_value')->default(8);
-            $table->integer('handicap_max_game')->default(300);
+//            $table->string('handicap_type')->default('women')->nullable();
+//            $table->integer('handicap_value')->default(8);
+//            $table->integer('handicap_max_game')->default(300);
 //            $table->string('handicap_id')->references('id')->on('handicaps');
 
 //            stages
@@ -36,24 +36,24 @@ class CreateTournamentsTable extends Migration
             $table->boolean('has_commonfinal')->default(false);
             $table->boolean('has_joinmatches')->default(false);
 
-//             qualification stage
-            $table->integer('qualification_entries')->default(6);
-            $table->integer('qualification_games')->default(1);
-            $table->integer('qualification_finalists')->default(6);
-
-//            payment
-            $table->double('qualification_fee');
-            $table->boolean('allow_reentry')->default(true);
-            $table->integer('reentries_amount')->default(1);
-            $table->double('reentry_fee');
+////             qualification stage
+//            $table->integer('qualification_entries')->default(6);
+//            $table->integer('qualification_games')->default(1);
+//            $table->integer('qualification_finalists')->default(6);
+//
+////            payment
+//            $table->double('qualification_fee');
+//            $table->boolean('allow_reentry')->default(true);
+//            $table->integer('reentries_amount')->default(1);
+//            $table->double('reentry_fee');
 
 //            round robin
-            $table->integer('rr_players')->default(6);
-            $table->integer('rr_win_bonus')->default(20);
-            $table->integer('rr_draw_bonus')->default(10);
-            $table->date('rr_date');
-            $table->time('rr_start_time');
-            $table->time('rr_end_time');
+//            $table->integer('rr_players')->default(6);
+//            $table->integer('rr_win_bonus')->default(20);
+//            $table->integer('rr_draw_bonus')->default(10);
+//            $table->date('rr_date');
+//            $table->time('rr_start_time');
+//            $table->time('rr_end_time');
 
 //            contacts
             $table->string('contact_person');

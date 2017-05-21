@@ -29,8 +29,8 @@
                 </td>
             @endforeach
             <td id="handicap_{{$qPlayers[$i]->id}}" class="player-bonus">
-                @if($qPlayers[$i]->gender == $tournament->handicap_type)
-                    {{$tournament->handicap_value}}
+                @if($qPlayers[$i]->gender == $tournament->handicap->type)
+                    {{$tournament->handicap->value}}
                 @else
                     {{0}}
                 @endif
