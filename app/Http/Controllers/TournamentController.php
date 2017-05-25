@@ -94,7 +94,6 @@ class TournamentController extends Controller
             ]);
         }
 
-//        return $request->input('squad');
         $tournament->squads()->find($squadId)->players()->save(User::find($playerId));
 
         return view('partial.alerts.application-alert', [
@@ -106,8 +105,9 @@ class TournamentController extends Controller
 
     public function removeApplication(Request $request, $id)
     {
+        $playerId = Auth::id();
         $sp = SquadPlayers::where('squad_id', $request->input('currentSquad'))
-            ->where('player_id', $request->input('player'))->get()[0];
+            ->where('player_id', $playerId)->first();
         $sp->delete();
 
         return redirect('/');
@@ -492,7 +492,7 @@ class TournamentController extends Controller
         $handicap = new Handicap([
             'type' => $request->handicap_type,
             'value' => $request->handicap_value,
-            'max_game' => $request->handicap_max_value
+            'max_game' => $request->handicap_max_game
         ]);
         $handicap->save();
 

@@ -30,7 +30,7 @@ class GameController extends Controller
             ->where('part', $request->input('part'))
             ->where('squad_id', $request->input('squad_id'))
             ->where('result', $request->input('oldResult'))
-            ->get()[0];
+            ->first();
 
         $game->result = $request->input('newResult');
         $game->bonus = $request->input('bonus');

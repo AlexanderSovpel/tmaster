@@ -1,8 +1,8 @@
 var newTournamentForm = document.getElementById('new-tournament');
 if (newTournamentForm) {
     var currentStep = newTournamentForm.querySelector('#step');
-    // if (sessionStorage.getItem('currentStep'))
-    //     currentStep.value = sessionStorage.getItem('currentStep');
+    if (sessionStorage.getItem('currentStep'))
+        currentStep.value = sessionStorage.getItem('currentStep');
 
     var steps = newTournamentForm.querySelectorAll('.creation-step');
     var nextStepBtn = newTournamentForm.querySelector('#next-step');
@@ -11,16 +11,47 @@ if (newTournamentForm) {
 
     showStep(steps, currentStep.value);
     toggleStepBtnVisibility();
+    var wizardSteps = document.querySelectorAll('.bs-wizard-step');
+    for(var i = 0; i < wizardSteps.length; ++i) {
+      // $(wizardSteps[i]).click(function () {
+      //   var w = Array.prototype.slice.call($('.bs-wizard-step'));
+      //   var step = w.indexOf(wizardSteps[i]);
+      //   showStep(steps, step);
+      //   toggleStepBtnVisibility();
+      //   toggleWizardSteps(step);
+      //   currentStep.value = step;
+      // });
+
+      toggleWizardSteps(currentStep.value);
+    }
 
     prevStepBtn.onclick = function () {
+      var prevWizardStep = $('.bs-wizard-step')[currentStep.value];
+      $(prevWizardStep).removeClass('active');
+      $(prevWizardStep).addClass('disabled');
+
         --currentStep.value;
+
+        var currWizardStep = $('.bs-wizard-step')[currentStep.value];
+        $(currWizardStep).removeClass('complete');
+        $(currWizardStep).addClass('active');
+
         sessionStorage.setItem('currentStep', currentStep.value);
         showStep(steps, currentStep.value);
         toggleStepBtnVisibility();
     };
 
     nextStepBtn.onclick = function () {
+      var prevWizardStep = $('.bs-wizard-step')[currentStep.value];
+      $(prevWizardStep).removeClass('active');
+      $(prevWizardStep).addClass('complete');
+
         ++currentStep.value;
+
+        var currWizardStep = $('.bs-wizard-step')[currentStep.value];
+        $(currWizardStep).removeClass('disabled');
+        $(currWizardStep).addClass('active');
+
         sessionStorage.setItem('currentStep', currentStep.value);
         showStep(steps, currentStep.value);
         toggleStepBtnVisibility();
@@ -76,6 +107,24 @@ function showStep(steps, step) {
     }
 }
 
+function toggleWizardSteps(currentStep) {
+  if(i == currentStep) {
+    $(wizardSteps[i]).removeClass('complete');
+    $(wizardSteps[i]).removeClass('disabled');
+    $(wizardSteps[i]).addClass('active');
+  }
+  else if (i < currentStep) {
+    $(wizardSteps[i]).removeClass('disabled');
+    $(wizardSteps[i]).removeClass('active');
+    $(wizardSteps[i]).addClass('complete');
+  }
+  else {
+    $(wizardSteps[i]).removeClass('complete');
+    $(wizardSteps[i]).removeClass('active');
+    $(wizardSteps[i]).addClass('disabled');
+  }
+}
+
 function toggleStepBtnVisibility() {
     var currentStep = newTournamentForm.querySelector('#step').value;
     var steps = newTournamentForm.querySelectorAll('.creation-step');
@@ -83,9 +132,9 @@ function toggleStepBtnVisibility() {
     var prevStepBtn = newTournamentForm.querySelector('#prev-step');
     var saveBtn = newTournamentForm.querySelector('#save');
 
-    (currentStep == 0) ? $(prevStepBtn).addClass('hidden') : $(prevStepBtn).removeClass('hidden');
-    (currentStep == steps.length - 1) ? $(nextStepBtn).addClass('hidden') : $(nextStepBtn).removeClass('hidden');
-    (currentStep != steps.length - 1) ? $(saveBtn).addClass('hidden') : $(saveBtn).removeClass('hidden');
+    (currentStep == 0) ? $(prevStepBtn).css('visibility', 'hidden') : $(prevStepBtn).css('visibility', 'visible');
+    (currentStep == steps.length - 1) ? $(nextStepBtn).hide() : $(nextStepBtn).show();
+    (currentStep != steps.length - 1) ? $(saveBtn).hide() : $(saveBtn).show();
 }
 
 function togglePartSettingsVisibility(partName) {

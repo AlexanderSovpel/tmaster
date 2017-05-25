@@ -1,33 +1,38 @@
 @extends('layouts.app')
-
 @section('content')
-    <div class="container">
+@include('partial.breadcrumb', ['page' => 'Подача заявки'])
+    <article class="apply">
+      <h1>Подача заявки</h1>
         <form action="{{url("$tournament->id/sendApplication")}}" method="post">
             {{ csrf_field() }}
+
             <meta name="csrf-token" content="{{ csrf_token() }}">
             <input type="hidden" value="{{$tournament->id}}" id="tournament-id">
-            <div>
-                <label for="squad">Squad:</label>
-                <select id="squad" name="squad">
+            <div class="inputs">
+            <div class="form-group">
+                <label for="squad">Поток:</label>
+                <select id="squad" name="squad" class="form-control data">
                     @foreach($tournament->squads as $squad)
                         <option value="{{$squad->id}}" selected>{{"$squad->date $squad->start_time"}}</option>
                     @endforeach
                 </select>
             </div>
             <div>
-                <label for="price">Price:</label>
-                <span id="price">{{$tournament->qualification->fee}} BYN</span>
+                <label for="price">Стоимость участия:</label>
+                <span id="price" class="data">{{$tournament->qualification->fee}} BYN</span>
             </div>
             <div>
-                <label for="fill">Places left:</label>
-                <span id="fill"></span>
+                <label for="fill">Осталось мест:</label>
+                <span id="fill" class="data"></span>
             </div>
             <div>
-                <label for="players">Players:</label>
-                <ul id="players"></ul>
+                <label for="players">Участники:</label>
+                <ol class="players-list data" id="players">
+                </ol>
             </div>
-            <button type="submit" id="apply-button">APPLY</button>
+          </div>
+            <button type="submit" id="apply-button" class="tournament-btn">подать заявку</button>
         </form>
-        <div id="error"></div>
-    </div>
+    </article>
+    <div id="error"></div>
 @endsection

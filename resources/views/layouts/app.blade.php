@@ -8,9 +8,10 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'T-Master') }}</title>
 
     <!-- Styles -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Oswald" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
 
@@ -24,7 +25,7 @@
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-default navbar-static-top">
+    <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
 
@@ -39,7 +40,9 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                  <img src="{{asset('img/logo.png')}}" id="logo">
+                  БФБ
+                    <!-- {{ config('app.name', 'T-Master') }} -->
                 </a>
             </div>
 
@@ -59,7 +62,9 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                                {{ Auth::user()->name }}
+                                <span class="caret"></span>
+                                <!-- <span class="glyphicon glyphicon-user"></span> -->
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
@@ -87,6 +92,7 @@
     </nav>
 
     @yield('content')
+    <footer class="navbar-fixed-bottom">&copy; 2006-2017, Белорусская Федерация Боулинга</footer>
 </div>
 
 <!-- Scripts -->

@@ -1,5 +1,5 @@
-<div class="form-group well squad">
-    <label>Поток {{$index}}</label>
+<div class="well">
+    <h3>Поток {{$index}}</h3>
     <a href="#" class="remove-squad" onclick="removeSquad(this)"><span class="glyphicon glyphicon-remove remove"></span></a>
     <div class="form-group">
         <label>Дата проведения
