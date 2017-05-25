@@ -22,15 +22,6 @@
               @if(isset($game))
               {{$game->result}}
               @endif
-                <!-- <div class="input-group result">
-                    <input type="text"
-                           class="player-result form-control played"
-                           readonly
-                           @if(isset($game))
-                           value="{{$game->result}}"
-                           @endif
-                    >
-                </div> -->
             </td>
             @endforeach
             <td id="handicap_{{$qPlayers[$i]->id}}" class="player-bonus">
@@ -40,7 +31,6 @@
                     {{0}}
                 @endif
             </td>
-            {{--{{$qResults[$qPlayers[$i]->id]}}--}}
             <td id="sum_result_{{$qPlayers[$i]->id}}" class="player-sum">{{$qResults[$qPlayers[$i]->id]->sum}}</td>
             <td id="avg_result_{{$qPlayers[$i]->id}}" class="player-avg">{{$qResults[$qPlayers[$i]->id]->avg}}</td>
         </tr>

@@ -1,6 +1,3 @@
-// var postResultButtons = document.querySelectorAll('.post-result');
-// for (var i = 0; i < postResultButtons.length; ++i) {
-    // postResultButtons[i].onclick = function () {
 $('.post-result').click(function() {
   var player = this.closest('.player');
   var resultDiv = this.closest('.result');
@@ -13,14 +10,13 @@ $('.post-result').click(function() {
   var squadId = document.getElementsByName('currentSquad')[0].value;
   setResult(playerId, tournamentId, part, squadId, playerResult, playerOldResult, playerBonus);
 
+//выбирает все ячейки, из-за этого неправильно считается средний. Нужно, чтобы выбирал только соседнюю
   $('.player-result').addClass('played');
 
   var blockSum = fillBlockSum(playerId, tournamentId, part, squadId);
   var gamesCount = $(".played").length;
   fillBlockAvg(blockSum, gamesCount, playerId);
 });
-    // }
-// }
 
 // var postOpponentResultButtons = document.querySelectorAll('.post-opponent-result');
 // for (var i = 0; i < postOpponentResultButtons.length; ++i) {
@@ -83,7 +79,7 @@ function setResult(playerId, tournamentId, part, squadId, playerResult, playerOl
 }
 
 function fillBlockSum(playerId, tournamentId, part, squad) {
-    var getResult = new XMLHttpRequest();
+  var blockSum = 0;
     var params = '?' +
         'player_id=' + playerId + '&' +
         'tournament_id=' + tournamentId + '&' +
@@ -91,25 +87,14 @@ function fillBlockSum(playerId, tournamentId, part, squad) {
         'squad_id=' + squad;
 
     $.get('/sumBlock' + params, function (data) {
-      var blockSum = getResult.responseText;
+      blockSum = data;
       $('#sum_result_' + playerId).html(blockSum);
-      return blockSum;
+      return data;
     }).fail(function(data) {
       $('#error').html(data);
     });
 
-    // getResult.open('GET', '/sumBlock' + params, false);
-    // getResult.send();
-
-    // if (getResult.status != 200) {
-    //     document.getElementById('error').innerHTML = getResult.responseText;
-    // }
-    // else {
-    //     var blockSum = getResult.responseText;
-    //     var sum = document.getElementById('sum_result_' + playerId);
-    //     sum.innerHTML = blockSum;
-    //     return blockSum;
-    // }
+    return blockSum;
 }
 
 function fillBlockAvg(blockSum, gamesCount, playerId) {

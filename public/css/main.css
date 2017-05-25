@@ -9,6 +9,10 @@ body {
   padding-bottom: 70px;
 }
 
+.container {
+  width: 90%;
+}
+
 a {
   color: #0f1b5f;
 }
@@ -21,6 +25,11 @@ a:hover {
   margin-top: 20px;
 }
 
+input[type=date]:invalid {
+  background-color: #ffcccc;
+}
+
+/*Header*/
 .navbar {
   height: 100px;
   border: none;
@@ -82,7 +91,9 @@ a:hover {
   color: #9d0d15;
   background-color: transparent;
 }
+/*END Header*/
 
+/*Tournament*/
 .add-tournament-btn {
   display: block;
   height: 60px;
@@ -195,6 +206,20 @@ h3 {
   text-decoration: none;
 }
 
+.tournament > .dropdown {
+  /*display: inline-block;*/
+  float: right;
+  padding: 0px;
+  margin-top: -55px;
+}
+
+.tournament > .dropdown > .dropdown-toggle {
+  border: none;
+  font-size: 24px;
+}
+/*END Tournament*/
+
+/*Breadcrumb*/
 .breadcrumb {
   background-color: transparent;
   clear: both;
@@ -213,7 +238,9 @@ h3 {
 .breadcrumb > li > a {
   color: #0f1b5f;
 }
+/*END Breadcrumb*/
 
+/*Players*/
 .squad {
   width: 48%;
   padding: 30px;
@@ -261,7 +288,9 @@ h3 {
   font-size: 14px;
   color: #0f1b5f;
 }
+/*END Players*/
 
+/*Apply*/
 .apply {
   width: 50%;
   /*height: 450px;*/
@@ -288,8 +317,6 @@ label {
 .apply .data {
   width: 50%;
   float: right;
-  /*clear: both;*/
-  /*text-align: left;*/
 }
 
 .apply .players-list {
@@ -300,10 +327,10 @@ label {
   margin-top: 30px;
   margin-bottom: 0px;
   float: none;
-  /*margin-right: -30%;*/
-  /*clear: left;*/
 }
+/*END Apply*/
 
+/*Results*/
 #result-tabs {
   border: none;
   font-size: 18px;
@@ -320,7 +347,6 @@ label {
 }
 
 #result-tabs > li > a:hover {
-  /*text-decoration: underline;*/
   color: #0f1b5f;
   background-color: #dddddd;
 }
@@ -331,7 +357,6 @@ label {
 }
 
 #results {
-  /*width: 50%;*/
   padding: 30px;
   margin: auto;
   background-color: #ffffff;
@@ -345,7 +370,6 @@ label {
 }
 
 #results > div > table > thead {
-  /*padding: 10px;*/
   height: 40px;
   font-weight: 600;
 }
@@ -383,6 +407,7 @@ tr:nth-child(2n) {
 .player-sum, .player-avg, .player-bonus {
   text-align: right;
 }
+/*END Players*/
 
 /*Form Wizard*/
 .bs-wizard {margin-top: 20px; margin-bottom: 20px;}
@@ -390,7 +415,6 @@ tr:nth-child(2n) {
 .bs-wizard > .bs-wizard-step {padding: 0; position: relative;}
 .bs-wizard > .bs-wizard-step + .bs-wizard-step {}
 .bs-wizard > .bs-wizard-step .bs-wizard-stepnum {font-size: 16px; margin-bottom: 5px;}
-/*.bs-wizard > .bs-wizard-step .bs-wizard-info {color: #999; font-size: 14px;}*/
 .bs-wizard > .bs-wizard-step > .bs-wizard-dot {position: absolute; width: 30px; height: 30px; display: block; background-color: transparent; top: 45px; left: 50%; margin-top: -15px; margin-left: -15px; border-radius: 50%;}
 .bs-wizard > .bs-wizard-step > .bs-wizard-dot:after {content: ' '; width: 14px; height: 14px; background: #0f1b5f; border-radius: 50px; position: absolute; top: 8px; left: 8px; }
 .bs-wizard > .bs-wizard-step > .progress {position: relative; border-radius: 0px; height: 4px; background-color: #dddddd; box-shadow: none; margin: 18px 0;}
@@ -400,7 +424,6 @@ tr:nth-child(2n) {
 .bs-wizard > .bs-wizard-step.active > .progress > .progress-bar {width:50%;}
 .bs-wizard > .bs-wizard-step:first-child.active > .progress > .progress-bar {width:0%;}
 .bs-wizard > .bs-wizard-step:last-child.active > .progress > .progress-bar {width: 100%;}
-/*.bs-wizard > .bs-wizard-step.disabled > .bs-wizard-dot {width: 30px; height: 30px; background-color: transparent;}*/
 .bs-wizard > .bs-wizard-step.disabled > .bs-wizard-dot:after {background-color: #dddddd;}
 .bs-wizard > .bs-wizard-step:first-child  > .progress {left: 50%; width: 50%;}
 .bs-wizard > .bs-wizard-step:last-child  > .progress {width: 50%;}
@@ -409,7 +432,6 @@ tr:nth-child(2n) {
 
 /* New Tournament */
 #new-tournament {
-  /*min-height: 400px;*/
   padding: 30px;
   margin: auto;
   background-color: #ffffff;
@@ -470,7 +492,6 @@ tr:nth-child(2n) {
 
 #new-tournament > .creation-step > .well > .form-group > label {
   width: 100%;
-  /*margin: auto;*/
 }
 
 #new-tournament > .creation-step > .well > .form-group > label > .form-control {
@@ -519,13 +540,109 @@ tr:nth-child(2n) {
 }
 /* END New Tournament */
 
+/*Running Game*/
+.stages {
+  float: left;
+  width: 20%;
+  margin-top: 40px;
+  margin-right: 5%;
+  background-color: #ffffff;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 18px;
+}
 
+.stages > h3 {
+  margin: 22px 15px 11px;
+}
+
+.stages > .list-group > .list-group-item,
+.stages > .list-group > .list-group-item > .list-group > .list-group-item {
+  border: none;
+  border-radius: 0px;
+}
+
+.stages > .list-group {
+  font-weight: 600;
+  margin-bottom: 0px;
+}
+
+.stages > .list-group > .list-group-item > .list-group {
+  margin-top: 20px;
+  margin-bottom: 0px;
+  font-weight: 400;
+}
+
+.stages > .list-group > .list-group-item > .list-group > .active {
+  background-color: #0f1b5f;
+}
+
+.game-process {
+    width: 75%;
+    float: left;
+    clear: right;
+}
+
+.game-process > .bs-wizard {
+  height: 60px;
+}
+
+.game-process > .part {
+  padding: 30px;
+  margin-top: 40px;
+  background-color: #ffffff;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 18px;
+}
+
+.part > form > table {
+  width: 100%;
+}
+
+.part > form > table > thead > tr {
+  height: 40px;
+  font-weight: 600;
+  background-color: #dddddd;
+}
+
+.part > form > button[type='submit'] {
+  background-color: #9d0d15;
+  color: #ffffff;
+  border: none;
+  padding: 0px 20px;
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 55px;
+  text-align: center;
+  margin: 40px auto 0px auto;
+  display: block;
+}
+
+.input {
+  font-size: 18px;
+  background-color: transparent;
+  border: none;
+  border-bottom: solid 2px rgba(15, 27, 95, 0.5);
+  border-radius: 0px;
+  box-shadow: none;
+}
+
+.input:focus {
+  border: none;
+  border-bottom: solid 2px rgba(15, 27, 95, 1);
+  border-radius: 0px;
+  box-shadow: none;
+}
 
 .played {
-    background-color: transparent !important;
     border: none;
-    box-shadow: none;
 }
+
+.post-result {
+  border-radius: 0px;
+  background-color: transparent;
+}
+/*END Running Game*/
+
 
 .results {
     padding: 5%;
@@ -537,12 +654,6 @@ tr:nth-child(2n) {
 
 .results > div > table > tbody > tr:nth-child(2n+1) {
     background-color: #eeeeee;
-}
-
-.part-nav {
-    width: 15%;
-    float: left;
-    /*margin-right: 10%;*/
 }
 
 .bonus {
@@ -567,10 +678,6 @@ tr:nth-child(2n) {
     height: 40px;
 }
 
-.game-process {
-    width: 75%;
-    margin-left: 25%;
-}
 
 .round {
     height: 200px;

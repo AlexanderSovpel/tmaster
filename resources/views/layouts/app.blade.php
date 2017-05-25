@@ -101,5 +101,6 @@
 <script src="{{ asset('js/apply.js') }}"></script>
 <script src="{{ asset('js/newTournament.js') }}"></script>
 <script src="{{ asset('js/statistics.js') }}"></script>
+<script src="{{ asset('js/run.js') }}"></script>
 </body>
 </html>

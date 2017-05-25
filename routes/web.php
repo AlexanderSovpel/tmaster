@@ -36,6 +36,7 @@ Route::post('/{tournamentId}/run/rr/rest', 'TournamentController@roundRobinResul
 Route::get('/{tournamentId}/results', 'TournamentController@getResults');
 Route::get('/newTournament', 'TournamentController@newTournament');
 Route::post('/saveTournament', 'TournamentController@saveTournament');
+Route::get('/{tournamentId}/deleteTournament', 'TournamentController@deleteTournament');
 
 Route::get('getSquadFilling/{id}', 'SquadController@getSquadFilling');
 

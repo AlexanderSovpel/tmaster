@@ -50,7 +50,7 @@
         </div>
       </div>
      </div>
-
+     <div id="error"></div>
       <form method="post" action="/saveTournament" id="new-tournament">
           {{csrf_field()}}
           <input type="hidden" id="step" value="0">
@@ -58,11 +58,11 @@
               <h1>Общая информация</h1>
               <div class="form-group">
                   <label for="name" class="">Название</label>
-                  <input type="text" name="name" id="name" class="form-control">
+                  <input type="text" name="name" id="name" class="form-control" required>
               </div>
               <div class="form-group">
                   <label for="location" class="">Место проведения</label>
-                  <input type="text" name="location" id="location" class="form-control">
+                  <input type="text" name="location" id="location" class="form-control" required>
               </div>
               <div class="form-group">
                   <label>Тип турнира</label>
@@ -104,12 +104,12 @@
               <div class="form-group">
                   <label for="handicap-value">Значение</label>
                   <input type="number" id="handicap-value" name="handicap_value" class="form-control" value="8"
-                         min="-30" max="30">
+                         min="-30" max="30" required>
               </div>
               <div class="form-group">
                   <label for="handicap-max-game">Максимальная игра</label>
                   <input type="number" id="handicap-max-game" name="handicap_max_game" class="form-control"
-                         value="300" min="290" max="340">
+                         value="300" min="290" max="340" required>
               </div>
           </div>
 
@@ -150,20 +150,20 @@
                   <div class="form-group">
                       <label for="qualification-games" class="">Количество блоков игр</label>
                       <input type="number" name="qualification_games" id="qualification-games" class="form-control"
-                             value="1" min="1" max="5">
+                             value="1" min="1" max="5" required>
                   </div>
                   <div class="form-group">
                       <label for="qualification-entries" class="">Количество игр в блоке</label>
                       <input type="number" name="qualification_entries" id="qualification-entries"
-                             class="form-control" value="6" min="3" max="10">
+                             class="form-control" value="6" min="3" max="10" required>
                   </div>
                   <div class="form-group">
                       <label for="qualification-finalists" class="">Количество финалистов</label>
                       <input type="number" name="qualification_finalists" id="qualification-finalists"
-                             class="form-control" value="6" min="4" max="12">
+                             class="form-control" value="6" min="4" max="12" required>
                   </div>
               </div>
-              <div class="form-group desperado" hidden>
+              <!-- <div class="form-group desperado" hidden>
                   <h3>Десперадо</h3>
                   <div class="form-group">
                       <label for="desperado-games" class="">Количество блоков игр</label>
@@ -246,23 +246,23 @@
                                  class="form-control" value="4" min="1" max="6">
                       </div>
                   </div>
-              </div>
+              </div> -->
               <div class="form-group roundrobin">
                   <h3>Round Robin</h3>
                   <div class="form-group">
                       <label for="rr-players" class="">Количество участников</label>
                       <input type="number" name="rr_players" id="rr-players" class="form-control" value="6" min="4"
-                             max="12">
+                             max="12" required>
                   </div>
                   <div class="form-group">
                       <label for="rr-win-bonus" class="">Бонус за победу</label>
                       <input type="number" name="rr_win_bonus" id="rr-win-bonus" class="form-control" value="20"
-                             min="15" max="25">
+                             min="15" max="25" required>
                   </div>
                   <div class="form-group">
                       <label for="rr-draw-bonus" class="">Бонус за ничью</label>
                       <input type="number" name="rr_draw_bonus" id="rr-draw-bonus" class="form-control" value="10"
-                             min="5" max="15">
+                             min="5" max="15" required>
                   </div>
               </div>
           </div>
@@ -283,7 +283,7 @@
                       <label for="qualification-fee">Стоимость участия</label>
                       <div class="input-group">
                           <input type="text" id="qualification-fee" name="qualification_fee" class="form-control"
-                                 value="50">
+                                 value="50" required>
                           <span class="input-group-addon">BYN</span>
                       </div>
                   </div>
@@ -296,12 +296,12 @@
                   <div class="form-group">
                       <label for="reentries-amount" class="">Количество переигровок</label>
                       <input type="number" name="reentries_amount" id="reentries-amount" class="form-control"
-                             value="1" min="1" max="4">
+                             value="1" min="1" max="4" required>
                   </div>
                   <div class="form-group">
                       <label for="reentry-fee">Стоимость переигровки</label>
                       <div class="input-group">
-                          <input type="text" id="reentry-fee" name="reentry_fee" class="form-control" value="60">
+                          <input type="text" id="reentry-fee" name="reentry_fee" class="form-control" value="60" required>
                           <span class="input-group-addon">BYN</span>
                       </div>
                   </div>
@@ -314,15 +314,16 @@
                   <h3>Round Robin</h3>
                   <div class="form-group">
                       <label for="rr-date">Дата проведения</label>
-                      <input type="date" id="rr-date" name="rr_date" class="form-control">
+                      <input type="date" id="rr-date" name="rr_date" class="form-control" pattern="^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$"
+                      title="Дата в формате гггг-мм-дд">
                   </div>
                   <div class="form-group">
                       <label for="rr-start-time">Время начала</label>
-                      <input type="date" id="rr-start-time" name="rr_start_time" class="form-control">
+                      <input type="date" id="rr-start-time" name="rr_start_time" class="form-control" pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" title="Время в формате чч:мм">
                   </div>
                   <div class="form-group">
                       <label for="rr-end-time">Время окончания</label>
-                      <input type="date" id="rr-end-time" name="rr_end_time" class="form-control">
+                      <input type="date" id="rr-end-time" name="rr_end_time" class="form-control" pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" title="Время в формате чч:мм">
                   </div>
               </div>
           </div>
@@ -331,15 +332,15 @@
               <h1>Контактная информация</h1>
               <div class="form-group">
                   <label for="contact-person">Контактное лицо</label>
-                  <input type="text" id="contact-person" name="contact_person" class="form-control">
+                  <input type="text" id="contact-person" name="contact_person" class="form-control" required>
               </div>
               <div class="form-group">
                   <label for="contact-phone">Телефон</label>
-                  <input type="text" id="contact-phone" name="contact_phone" class="form-control">
+                  <input type="text" id="contact-phone" name="contact_phone" class="form-control" required>
               </div>
               <div class="form-group">
                   <label for="contact-email">Электронная почта</label>
-                  <input type="email" id="contact-email" name="contact_email" class="form-control">
+                  <input type="email" id="contact-email" name="contact_email" class="form-control" required>
               </div>
           </div>
 
@@ -349,6 +350,5 @@
               <input type="submit" id="save" class="btn" value="сохранить">
           </div>
       </form>
-      <div id="error"></div>
     </div>
 @endsection

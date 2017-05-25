@@ -453,7 +453,6 @@ class TournamentController extends Controller
             }
         }
 
-
         return view('tournament.results', [
             'tournament' => $tournament,
             'qPlayers' => $qPlayers,
@@ -469,22 +468,7 @@ class TournamentController extends Controller
 
     public function newTournament()
     {
-        return view('tournament.newTournament');
-    }
-
-    private function sortPlayersByResult(&$players, $tournamentId, $part)
-    {
-        uasort($players, function ($playerA, $playerB) use ($tournamentId, $part) {
-            $playerAResult = $playerA['results']
-                ->where('tournament_id', $tournamentId)
-                ->where('part', $part)
-                ->first();
-            $playerBResult = $playerB['results']
-                ->where('tournament_id', $tournamentId)
-                ->where('part', $part)
-                ->first();
-            return ($playerAResult->sum < $playerBResult->sum);
-        });
+        return view('tournament.new-tournament');
     }
 
     public function saveTournament(Request $request)
@@ -558,4 +542,26 @@ class TournamentController extends Controller
 //
         return redirect('/');
     }
+
+    public function deleteTournament($tournamentId) {
+      $tournament = Tournament::find($tournamentId);
+      $tournament->delete();
+      return redirect('/');
+    }
+
+    private function sortPlayersByResult(&$players, $tournamentId, $part)
+    {
+        uasort($players, function ($playerA, $playerB) use ($tournamentId, $part) {
+            $playerAResult = $playerA['results']
+                ->where('tournament_id', $tournamentId)
+                ->where('part', $part)
+                ->first();
+            $playerBResult = $playerB['results']
+                ->where('tournament_id', $tournamentId)
+                ->where('part', $part)
+                ->first();
+            return ($playerAResult->sum < $playerBResult->sum);
+        });
+    }
+
 }

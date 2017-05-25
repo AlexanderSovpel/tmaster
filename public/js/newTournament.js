@@ -1,5 +1,70 @@
 var newTournamentForm = document.getElementById('new-tournament');
 if (newTournamentForm) {
+  $('.form-control').change(function() {
+    sessionStorage.setItem(this.name, this.value);
+    console.log(sessionStorage.getItem(this.name));
+  });
+  var formFields = $('.form-control');
+  for (var i = 0; i < formFields.length; ++i) {
+    if (!formFields[i].value) {
+      formFields[i].value = sessionStorage.getItem(formFields[i].name)
+    }
+  }
+
+  $('#save').click(function(e) {
+    e.preventDefault();
+    $('#step').val(0);
+    sessionStorage.setItem('currentStep', 0);
+    $.ajax({
+        type: 'POST',
+        url: '/saveTournament',
+        data: {
+          name: $('#name').val(),
+          location: $('#location').val(),
+          type: $('input[name=type]:checked').val(),
+          oil_type: $('#oil-type').val(),
+          description: $('#description').val(),
+
+          handicap_type: $('#handicap-type').val(),
+          handicap_value: $('#handicap-value').val(),
+          handicap_max_game: $('#handicap-max-game').val(),
+
+          qualification_games: $('#qualification-games').val(),
+          qualification_entries: $('#qualification-entries').val(),
+          qualification_finalists: $('#qualification-finalists').val(),
+
+          rr_players: $('#rr-players').val(),
+          rr_win_bonus: $('#rr-win-bonus').val(),
+          rr_draw_bonus: $('#rr-draw-bonus').val(),
+
+          squads_count: $('#squads-count').val(),
+          squad_date: $('input[name="squad_date[]"]').map(function() {return this.value;}).get(),
+          squad_start_time: $('input[name="squad_start_time[]"]').map(function() {return this.value;}).get(),
+          squad_end_time: $('input[name="squad_end_time[]"]').map(function() {return this.value;}).get(),
+          squad_max_players: $('input[name="squad_max_players[]"]').map(function() {return this.value;}).get(),
+
+          qualification_fee: $('#qualification-fee').val(),
+          allow_reentry: $('#allow-reentry').val(),
+          reentries_amount: $('#reentries-amount').val(),
+          reentry_fee: $('#reentry-fee').val(),
+
+          rr_date: $('#rr-date').val(),
+          rr_start_time: $('#rr-start-time').val(),
+          rr_end_time: $('#rr-end-time').val(),
+
+          contact_person: $('#contact-person').val(),
+          contact_phone: $('#contact-phone').val(),
+          contact_email: $('#contact-email').val(),
+        },
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        success: function (data) {
+            location.replace('/');
+        }
+    }).fail(function (data) {
+        $('#error').html(data.responseText);
+    });
+  });
+
     var currentStep = newTournamentForm.querySelector('#step');
     if (sessionStorage.getItem('currentStep'))
         currentStep.value = sessionStorage.getItem('currentStep');
@@ -13,14 +78,15 @@ if (newTournamentForm) {
     toggleStepBtnVisibility();
     var wizardSteps = document.querySelectorAll('.bs-wizard-step');
     for(var i = 0; i < wizardSteps.length; ++i) {
-      // $(wizardSteps[i]).click(function () {
-      //   var w = Array.prototype.slice.call($('.bs-wizard-step'));
-      //   var step = w.indexOf(wizardSteps[i]);
-      //   showStep(steps, step);
-      //   toggleStepBtnVisibility();
-      //   toggleWizardSteps(step);
-      //   currentStep.value = step;
-      // });
+      $(wizardSteps[i]).click(function () {
+        var w = Array.prototype.slice.call($('.bs-wizard-step'));
+        var step = w.indexOf(this);
+        if (!$(this).hasClass('disabled')) {
+          currentStep.value = step;
+          showStep(steps, step);
+          toggleStepBtnVisibility();
+        }
+      });
 
       toggleWizardSteps(currentStep.value);
     }
@@ -42,6 +108,16 @@ if (newTournamentForm) {
     };
 
     nextStepBtn.onclick = function () {
+      var currentStepDiv = $('.creation-step')[currentStep.value];
+      var currentStepFields = $(currentStepDiv).find('.form-control');
+      for(var i = 0; i < currentStepFields.length; ++i) {
+        if (!currentStepFields[i].value) {
+          console.log('not all fields are filled!');
+          $('#error').html('<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><span>Заполните все поля!</span></div>');
+          return;
+        }
+      }
+
       var prevWizardStep = $('.bs-wizard-step')[currentStep.value];
       $(prevWizardStep).removeClass('active');
       $(prevWizardStep).addClass('complete');
@@ -108,20 +184,22 @@ function showStep(steps, step) {
 }
 
 function toggleWizardSteps(currentStep) {
-  if(i == currentStep) {
-    $(wizardSteps[i]).removeClass('complete');
-    $(wizardSteps[i]).removeClass('disabled');
-    $(wizardSteps[i]).addClass('active');
-  }
-  else if (i < currentStep) {
-    $(wizardSteps[i]).removeClass('disabled');
-    $(wizardSteps[i]).removeClass('active');
-    $(wizardSteps[i]).addClass('complete');
-  }
-  else {
-    $(wizardSteps[i]).removeClass('complete');
-    $(wizardSteps[i]).removeClass('active');
-    $(wizardSteps[i]).addClass('disabled');
+  for (var i = 0; i < wizardSteps.length; ++i) {
+    if(i == currentStep) {
+      $(wizardSteps[i]).removeClass('complete');
+      $(wizardSteps[i]).removeClass('disabled');
+      $(wizardSteps[i]).addClass('active');
+    }
+    else if (i < currentStep) {
+      $(wizardSteps[i]).removeClass('disabled');
+      $(wizardSteps[i]).removeClass('active');
+      $(wizardSteps[i]).addClass('complete');
+    }
+    else {
+      $(wizardSteps[i]).removeClass('complete');
+      $(wizardSteps[i]).removeClass('active');
+      $(wizardSteps[i]).addClass('disabled');
+    }
   }
 }
 

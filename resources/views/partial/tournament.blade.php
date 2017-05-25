@@ -1,6 +1,21 @@
 <article class="tournament">
 <input type="hidden" value="{{$tournament->id}}">
 <h1>{{ $tournament->name }}</h1>
+
+@if(\Illuminate\Support\Facades\Auth::check() && $user->is_admin)
+<div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <span class="glyphicon glyphicon-option-vertical"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <li><a href="/{{$tournament->id}}/run/q/conf/{{$tournament->squads[0]->id}}">Провести</a></li>
+    <li><a href="#">Редактировать</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="/{{$tournament->id}}/deleteTournament">Удалить</a></li>
+  </ul>
+</div>
+@endif
+
 <p class="date">{{$tournament->squads[0]->date}} &mdash; {{$tournament->roundRobin->date}}</p>
 @if(!$tournament->finished)
   <p class='open'>регистрация открыта</p>

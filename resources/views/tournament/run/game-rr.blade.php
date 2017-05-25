@@ -51,9 +51,7 @@
             </div>
             @php
                 array_unshift($players, array_pop($players));
-                $temp = $players[0];
-                $players[0] = $players[$lastPlayerIndex];
-                $players[$lastPlayerIndex] = $temp;
+                list($players[0], $players[$lastPlayerIndex]) = array($players[$lastPlayerIndex], $players[0]);
             @endphp
         @endfor
         <button type="submit">завершить игру</button>

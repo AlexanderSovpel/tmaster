@@ -67,9 +67,9 @@ class GameController extends Controller
             ->where('bonus', $request->input('oldBonus'))
             ->get()[0];
 
-        echo "$game\n";
+        // echo "$game\n";
         $game->bonus = $request->input('newBonus');
-        echo "$game\n";
+        // echo "$game\n";
         $game->save();
         return "old bonus: " . $request->input('oldBonus') . ", new bonus: " . $request->input('newBonus');
     }

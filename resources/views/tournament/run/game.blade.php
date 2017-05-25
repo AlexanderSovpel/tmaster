@@ -6,16 +6,18 @@
         {{ csrf_field() }}
         <input type="hidden" name="players" value="{{$players}}">
         <table>
+          <thead>
             <tr>
-                <td>№</td>
-                <td>Участник</td>
-                @for ($j = 0; $j < $tournament->qualification_entries; ++$j)
-                    <td>{{$j + 1}}</td>
+                <th>№</th>
+                <th>Участник</th>
+                @for ($j = 0; $j < $tournament->qualification->entries; ++$j)
+                    <th>{{$j + 1}}</th>
                 @endfor
-                <td>Гандикап</td>
-                <td>Сумма</td>
-                <td>Средний</td>
+                <th>Г-п</th>
+                <th>Сум.</th>
+                <th>Ср.</th>
             </tr>
+          </thead>
             @for($i = 0; $i < count($players); ++$i)
                 <tr class="player">
                     <input type="hidden" class="player-id" value="{{$players[$i]->id}}">
@@ -28,13 +30,15 @@
                                        @if(isset($playedGames[$players[$i]->id][$j]))
                                        value="{{$playedGames[$players[$i]->id][$j]->result}}"
                                        old_value="{{$playedGames[$players[$i]->id][$j]->result}}"
-                                       class="player-result form-control played"
+                                       class="player-result form-control played input"
                                        @else
-                                       class="player-result form-control"
+                                       class="player-result form-control input"
                                        @endif
                                        onfocus="this.old_value = this.value">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-secondary post-result" type="button">set</button>
+                                    <button class="btn btn-secondary post-result" type="button">
+                                      <span class="glyphicon glyphicon-ok"></span>
+                                    </button>
                                 </span>
                             </div>
 
