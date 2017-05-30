@@ -17,6 +17,7 @@ if (session()->has('tournament')) {
 }
 
 Route::get('/', 'TournamentController@index');
+Route::get('/{tournamentId}/details', 'TournamentController@details');
 Route::get('/{id}/players', 'TournamentController@getTournamentPlayers');
 Route::get('/{id}/apply', 'TournamentController@getApplication');
 Route::post('/{id}/sendApplication', 'TournamentController@postApplication');
@@ -46,6 +47,8 @@ Route::get('/account', 'UserController@showAccount');
 Route::get('/account/edit', 'UserController@editAccount');
 Route::post('/account/save', 'UserController@saveAccount');
 Route::get('/getStatistic', 'UserController@getStatistic');
+
+Route::post('saveTempImage', 'Controller@saveTempImage');
 Auth::routes();
 
 //Route::match(['get', 'post'], '/{id}/run/{part}/{stage}/{currentSquad?}',

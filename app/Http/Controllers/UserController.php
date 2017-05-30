@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -32,6 +32,8 @@ class UserController extends Controller
             }
         }
 
+//        var_dump($dates);
+
         $statistic = array();
         foreach ($dates as $date) {
             $s = new \stdClass();
@@ -55,13 +57,28 @@ class UserController extends Controller
 
     public function saveAccount(Request $request)
     {
-        $user = User::find($request->id);
+        $user = Auth::user();
         $user->name = $request->name;
         $user->surname = $request->surname;
         $user->gender = $request->gender;
         $user->birthday = $request->birthday;
         $user->phone = $request->phone;
         $user->email = $request->email;
+
+        if ($request->hasFile('avatar')) {
+            $avatarLink = 'avatar_' . $user->id . '.' . $request->file('avatar')->getClientOriginalExtension();
+            $path = $request->file('avatar')->storeAs('public', $avatarLink);
+            $url = Storage::url($avatarLink);
+            $user->avatar = $url;
+        }
+
+//        if ($request->new_password) {
+//            if (Hash::check($request->old_password, $user->getAuthPassword())) {
+//                if ($request->new_password == $request->password_confirm) {
+//                }
+//            }
+//        }
+
         $user->save();
 
         return redirect('/account');

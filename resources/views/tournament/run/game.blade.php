@@ -1,8 +1,8 @@
 @extends('layouts.run')
 
 @section('process')
-    <h2>Игра</h2>
-    <form action="/{{$tournament->id}}/run/q/rest/{{$currentSquadId}}" method="post">
+    <div class="panel-heading"><h1>Игра</h1></div>
+    <form action="/{{$tournament->id}}/run/q/rest/{{$currentSquadId}}" method="post" class="panel-body">
         {{ csrf_field() }}
         <input type="hidden" name="players" value="{{$players}}">
         <table>
@@ -24,6 +24,7 @@
                     <td>{{$i + 1}}</td>
                     <td>{{$players[$i]->surname ." ". $players[$i]->name}}</td>
                     @for ($j = 0; $j < $tournament->qualification->entries; ++$j)
+                        {{--                    @foreach ($j = 0; $j < $tournament->qualification->entries; ++$j)--}}
                         <td>
                             <div class="input-group result">
                                 <input type="text"
@@ -36,7 +37,7 @@
                                        @endif
                                        onfocus="this.old_value = this.value">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-secondary post-result" type="button">
+                                    <button class="post-result btn" type="button">
                                       <span class="glyphicon glyphicon-ok"></span>
                                     </button>
                                 </span>
@@ -44,6 +45,7 @@
 
                         </td>
                     @endfor
+                    {{--@endforeach--}}
                     <td id="handicap_{{$players[$i]->id}}" class="player-bonus">
                         @if($players[$i]->gender == $tournament->handicap->type)
                             {{$tournament->handicap->value}}
@@ -56,7 +58,7 @@
                 </tr>
             @endfor
         </table>
-        <button type="submit">завершить игру</button>
-        <div id="error"></div>
+        <button type="submit" class="btn">завершить игру</button>
+        {{--<div id="error"></div>--}}
     </form>
 @endsection

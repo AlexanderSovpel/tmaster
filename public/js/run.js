@@ -1,3 +1,51 @@
+var tournamentId = document.getElementsByName('tournament')[0].value;
+var part = document.getElementsByName('part')[0].value;
+var stage = document.getElementsByName('stage')[0].value;
+var squadId = document.getElementsByName('currentSquad')[0].value;
+var players = $('.player');
+var stages = ['conf', 'draw', 'game', 'rest'];
+var wizardSteps = $('.bs-wizard-step');
+
+if (stage == stages[2]) {
+    for (var i = 0; i < players.length; ++i) {
+        var playerId = players[i].querySelector('.player-id').value;
+        var blockSum = fillBlockSum(playerId, tournamentId, part, squadId);
+    }
+}
+
+for (var i = 0; i < wizardSteps.length; ++i) {
+    if (i == stages.indexOf(stage)) {
+        $(wizardSteps[i]).addClass('active');
+        $(wizardSteps[i]).removeClass('complete');
+        $(wizardSteps[i]).removeClass('disabled');
+    }
+    if (i < stages.indexOf(stage)) {
+        $(wizardSteps[i]).addClass('complete');
+        $(wizardSteps[i]).removeClass('active');
+        $(wizardSteps[i]).removeClass('disabled');
+    }
+}
+
+$('.player-result').focus(function () {
+    var postButton = this.nextElementSibling.children[0];
+    $(postButton).show();
+}).blur(function () {
+    if (!this.value || this.value == this.old_value) {
+        var postButton = this.nextElementSibling.children[0];
+        $(postButton).hide();
+    }
+});
+
+$('.opponent-result').focus(function () {
+    var postButton = $(this).parent().find('.post-opponent-result');
+    $(postButton).show();
+}).blur(function () {
+    if (!this.value || this.value == this.old_value) {
+        var postButton = $(this).parent().find('.post-opponent-result');
+        $(postButton).hide();
+    }
+});
+
 $('.post-result').click(function() {
   var player = this.closest('.player');
   var resultDiv = this.closest('.result');
@@ -10,17 +58,13 @@ $('.post-result').click(function() {
   var squadId = document.getElementsByName('currentSquad')[0].value;
   setResult(playerId, tournamentId, part, squadId, playerResult, playerOldResult, playerBonus);
 
-//выбирает все ячейки, из-за этого неправильно считается средний. Нужно, чтобы выбирал только соседнюю
-  $('.player-result').addClass('played');
+    $(this.parentElement.previousElementSibling).addClass('played');
 
-  var blockSum = fillBlockSum(playerId, tournamentId, part, squadId);
-  var gamesCount = $(".played").length;
-  fillBlockAvg(blockSum, gamesCount, playerId);
+    //не успевает, надо переместить в setResult()
+    // var blockSum = fillBlockSum(playerId, tournamentId, part, squadId);
+    $(this).hide();
 });
 
-// var postOpponentResultButtons = document.querySelectorAll('.post-opponent-result');
-// for (var i = 0; i < postOpponentResultButtons.length; ++i) {
-    // postOpponentResultButtons[i].onclick = function () {
 $('.post-opponent-result').click(function() {
     var player = this.closest('.opponent');
     var playerId = player.querySelector('.opponent-id').value;
@@ -33,9 +77,8 @@ $('.post-opponent-result').click(function() {
     var squadId = document.getElementsByName('currentSquad')[0].value;
     setResult(playerId, tournamentId, part, squadId, playerResult, playerOldResult, playerBonus);
     countBonus(player);
-  });
-    // }
-// }
+    $(this).hide();
+});
 
 function setResult(playerId, tournamentId, part, squadId, playerResult, playerOldResult, bonus) {
     if (playerOldResult != undefined) {
@@ -59,20 +102,11 @@ function setResult(playerId, tournamentId, part, squadId, playerResult, playerOl
                     'bonus=' + bonus;
             }
 
-            // var xhr = new XMLHttpRequest();
-            // xhr.open('GET', request + data, false);
-            // xhr.send();
-            //
-            // if (xhr.status != 200) {
-            //     document.getElementById('error').innerHTML = xhr.responseText;
-            // } else {
-            //     console.log(xhr.responseText);
-            // }
-
             $.get(request + data, function(data) {
-              console.log(data);
+                fillBlockSum(playerId, tournamentId, part, squadId);
+                console.log(data);
             }).fail(function(data) {
-              $('#error').html(data);
+                console.log(data);
             });
         }
     }
@@ -87,11 +121,13 @@ function fillBlockSum(playerId, tournamentId, part, squad) {
         'squad_id=' + squad;
 
     $.get('/sumBlock' + params, function (data) {
-      blockSum = data;
-      $('#sum_result_' + playerId).html(blockSum);
-      return data;
+        blockSum = data;
+        $('#sum_result_' + playerId).html(blockSum);
+        var gamesCount = $('.player-id[value=' + playerId + ']').parent().find(".played").length;
+        fillBlockAvg(blockSum, gamesCount, playerId);
+        // return data;
     }).fail(function(data) {
-      $('#error').html(data);
+        console.log(data);
     });
 
     return blockSum;
@@ -104,16 +140,16 @@ function fillBlockAvg(blockSum, gamesCount, playerId) {
         blockAvg = 0;
 
     var avg = $('#avg_result_' + playerId).html(blockAvg.toFixed(2));
-    // avg.innerHTML = blockAvg.toFixed(2);
 }
 
 function countBonus(player) {
     var opponent;
-    if (player.nextElementSibling) {
-        opponent = player.nextElementSibling;
-    }
-    else {
-        opponent = player.previousElementSibling;
+    if ($(player).siblings('.opponent')) {
+        //     opponent = player.nextElementSibling;
+        // }
+        // else {
+        //     opponent = player.previousElementSibling;
+        opponent = $(player).siblings('.opponent')[0];
     }
 
     var playerId = player.querySelector('.opponent-id').value;
@@ -175,7 +211,7 @@ function updateBonus(playerId, tournamentId, part, squadId, playerResult, oldBon
             $.get(request + data, function(data) {
               console.log(data);
             }).fail(function() {
-              $('#error').html(data);
+                console.log(data);
             });
         }
     }

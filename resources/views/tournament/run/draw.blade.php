@@ -1,8 +1,8 @@
 @extends('layouts.run')
 
 @section('process')
-    <h2>Жеребьёвка</h2>
-    <form action="/{{$tournament->id}}/run/{{$part}}/game/{{$currentSquadId or ''}}" method="get">
+    <div class="panel-heading"><h1>Жеребьёвка</h1></div>
+    <form action="/{{$tournament->id}}/run/{{$part}}/game/{{$currentSquadId or ''}}" method="get" class="panel-body">
         {{ csrf_field() }}
         <input type="hidden" name="players" value="{{json_encode($players)}}">
         <table>
@@ -23,6 +23,6 @@
             @endforeach
           </tbody>
         </table>
-        <button type="submit">начать игру</button>
+        <button type="submit" class="btn">начать игру</button>
     </form>
 @endsection

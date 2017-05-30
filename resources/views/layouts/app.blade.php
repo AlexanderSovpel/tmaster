@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Oswald" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/jquery.Jcrop.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -56,15 +57,14 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
-                        <li><a href="{{ route('login') }}">Login</a></li>
-                        <li><a href="{{ route('register') }}">Register</a></li>
+                        <li><a href="{{ route('login') }}" class="login">Вход</a></li>
+                        <li><a href="{{ route('register') }}" class="register">Регистрация</a></li>
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-expanded="false">
                                 {{ Auth::user()->name }}
                                 <span class="caret"></span>
-                                <!-- <span class="glyphicon glyphicon-user"></span> -->
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
@@ -91,7 +91,9 @@
         </div>
     </nav>
 
-    @yield('content')
+    <section class="container">
+        @yield('content')
+    </section>
     <footer class="navbar-fixed-bottom">&copy; 2006-2017, Белорусская Федерация Боулинга</footer>
 </div>
 
@@ -102,5 +104,7 @@
 <script src="{{ asset('js/newTournament.js') }}"></script>
 <script src="{{ asset('js/statistics.js') }}"></script>
 <script src="{{ asset('js/run.js') }}"></script>
+<script src="{{ asset('js/jquery.Jcrop.js') }}"></script>
+<script src="{{ asset('js/account.js') }}"></script>
 </body>
 </html>

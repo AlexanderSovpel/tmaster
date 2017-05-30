@@ -7,6 +7,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Storage;
 
 class Controller extends BaseController
 {
@@ -15,5 +16,13 @@ class Controller extends BaseController
     public function addSquadForm(Request $request)
     {
         return view('partial.squad-form', ['index' => $request->index]);
+    }
+
+    public function saveTempImage(Request $request)
+    {
+//        echo 'hello';
+        $tempName = 'tempAvatar.' . $request->file('tempImg')->getClientOriginalExtension();;
+        $request->file('tempImg')->storeAs('public', $tempName);
+        return Storage::url($tempName);
     }
 }

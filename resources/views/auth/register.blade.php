@@ -1,17 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Register</div>
+                    <div class="panel-heading"><h1>Регистрация</h1></div>
                     <div class="panel-body">
                         <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
                             {{ csrf_field() }}
 
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                <label for="name" class="col-md-4 control-label">Name</label>
+                                <label for="name" class="col-md-4 control-label">Имя</label>
 
                                 <div class="col-md-6">
                                     <input id="name" type="text" class="form-control" name="name"
@@ -26,7 +25,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('surname') ? ' has-error' : '' }}">
-                                <label for="surname" class="col-md-4 control-label">Surname</label>
+                                <label for="surname" class="col-md-4 control-label">Фамилия</label>
 
                                 <div class="col-md-6">
                                     <input id="surname" type="text" class="form-control" name="surname"
@@ -41,16 +40,22 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
-                                <label class="col-md-4 control-label">Gender</label>
+                                <label class="col-md-4 control-label">Пол</label>
 
                                 <div class="col-md-6">
-                                    <input type="radio" name="gender" value="male" checked>male
-                                    <input type="radio" name="gender" value="female">female
+                                    <label>
+                                        <input type="radio" name="gender" value="мужской" checked>мужской
+                                    </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>
+                                        <input type="radio" name="gender" value="женский">женский
+                                    </label>
                                 </div>
                             </div>
 
                             <div class="form-group{{ $errors->has('birthday') ? ' has-error' : '' }}">
-                                <label for="birthday" class="col-md-4 control-label">Birthday</label>
+                                <label for="birthday" class="col-md-4 control-label">Дата рождения</label>
 
                                 <div class="col-md-6">
                                     <input id="birthday" type="date" name="birthday" class="form-control" required>
@@ -58,7 +63,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+                                <label for="email" class="col-md-4 control-label">Электронная почта</label>
 
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control" name="email"
@@ -73,7 +78,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                <label for="password" class="col-md-4 control-label">Password</label>
+                                <label for="password" class="col-md-4 control-label">Пароль</label>
 
                                 <div class="col-md-6">
                                     <input id="password" type="password" class="form-control" name="password" required>
@@ -87,7 +92,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
+                                <label for="password-confirm" class="col-md-4 control-label">Подтверждение
+                                    пароля</label>
 
                                 <div class="col-md-6">
                                     <input id="password-confirm" type="password" class="form-control"
@@ -98,7 +104,7 @@
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary">
-                                        Register
+                                        Зарегистрироваться
                                     </button>
                                 </div>
                             </div>
@@ -107,5 +113,4 @@
                 </div>
             </div>
         </div>
-    </div>
 @endsection

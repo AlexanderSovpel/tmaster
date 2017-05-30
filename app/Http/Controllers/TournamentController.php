@@ -35,12 +35,22 @@ class TournamentController extends Controller
      */
     public function index()
     {
-        $tournaments = Tournament::all();
+        $tournaments = Tournament::all()->sortByDesc('id');
         session()->put('tournaments', $tournaments);
 
         $user = Auth::user();
 
         return view('index', ['tournaments' => $tournaments, 'user' => $user]);
+    }
+
+    public function details($tournamentId)
+    {
+        $tournament = Tournament::find($tournamentId);
+//        echo $tournament;
+        return view('tournament.tournament-details', [
+            'tournament' => $tournament,
+//            'user' => Auth::user()
+        ]);
     }
 
     public function getTournamentPlayers($id)
@@ -146,23 +156,27 @@ class TournamentController extends Controller
 
     public function runQualificationDraw(Request $request, $tournamentId, $currentSquadId)
     {
-        $currentSquad = Squad::find($currentSquadId);
-        foreach ($currentSquad->players as $player) {
-            if (!in_array($player->id, $request->input('confirmed'))) {
-                SquadPlayers::where('player_id', $player->id)
-                    ->where('squad_id', $currentSquadId)
-                    ->delete();
-                unset($player);
+        if ($request->input('confirmed')) {
+            $currentSquad = Squad::find($currentSquadId);
+            foreach ($currentSquad->players as $player) {
+                if (!in_array($player->id, $request->input('confirmed'))) {
+                    SquadPlayers::where('player_id', $player->id)
+                        ->where('squad_id', $currentSquadId)
+                        ->delete();
+                    unset($player);
+                }
             }
-        }
 
-        return view('tournament.run.draw', [
-            'tournament' => Tournament::find($tournamentId),
-            'part' => 'q',
-            'stage' => 'draw',
-            'players' => $currentSquad->players,
-            'currentSquadId' => $currentSquad->id
-        ]);
+            return view('tournament.run.draw', [
+                'tournament' => Tournament::find($tournamentId),
+                'part' => 'q',
+                'stage' => 'draw',
+                'players' => $currentSquad->players,
+                'currentSquadId' => $currentSquad->id
+            ]);
+        } else {
+            return "Не выбрано ни одного игрока!";
+        }
     }
 
     public function runQualificationGame(Request $request, $tournamentId, $currentSquadId)
@@ -170,11 +184,13 @@ class TournamentController extends Controller
         $currentSquad = Squad::find($currentSquadId);
         $playedGames = array();
         foreach ($currentSquad->players as $player) {
-            $playedGames[$player->id] = $player->games
-                ->where('player_id', $player->id)
+            $games = $player->games
                 ->where('tournament_id', $tournamentId)
                 ->where('part', 'q')
                 ->where('squad_id', $currentSquadId);
+            foreach ($games as $game) {
+                $playedGames[$player->id][] = $game;
+            }
         }
 
         return view('tournament.run.game', [
@@ -225,7 +241,7 @@ class TournamentController extends Controller
         return view('tournament.run.results-q-s', [
             'tournament' => Tournament::find($tournamentId),
             'part' => 'q',
-            'stage' => 'game',
+            'stage' => 'rest',
             'players' => $currentSquad->players,
             'currentSquadId' => $currentSquadId,
             'playedGames' => $playedGames,
@@ -269,6 +285,28 @@ class TournamentController extends Controller
             'qResults' => $qResults]);
     }
 
+    private function sortPlayersByResult(&$players, $tournamentId, $part)
+    {
+        usort($players, function ($playerA, $playerB) use ($tournamentId, $part) {
+//            echo gettype((array)$playerA);
+//
+//            if (gettype($playerA) == 'object') {
+//                $playerA = (array)$playerA;
+//                $playerB = (array)$playerB;
+//            }
+
+            $playerAResult = $playerA['results']
+                ->where('tournament_id', $tournamentId)
+                ->where('part', $part)
+                ->first();
+            $playerBResult = $playerB['results']
+                ->where('tournament_id', $tournamentId)
+                ->where('part', $part)
+                ->first();
+            return ($playerAResult->sum < $playerBResult->sum);
+        });
+    }
+
     public function runRoundRobinConfirm(Request $request, $tournamentId)
     {
         $players = json_decode($request->input('players'));
@@ -285,7 +323,7 @@ class TournamentController extends Controller
         return view('tournament.run.confirm', [
             'tournament' => $tournament,
             'part' => 'rr',
-            'stage' => '',
+            'stage' => 'conf',
             'players' => $players
         ]);
     }
@@ -303,7 +341,7 @@ class TournamentController extends Controller
         return view('tournament.run.draw', [
             'tournament' => $tournament,
             'part' => 'rr',
-            'stage' => '',
+            'stage' => 'draw',
             'players' => $players
         ]);
     }
@@ -327,8 +365,8 @@ class TournamentController extends Controller
 
         return view('tournament.run.game-rr', [
             'tournament' => Tournament::find($tournamentId),
-            'part' => 'q',
-            'stage' => '',
+            'part' => 'rr',
+            'stage' => 'game',
             'players' => $players,
             'lastPlayerIndex' => $playersCount - 1,
             'roundCount' => $roundCount,
@@ -374,6 +412,8 @@ class TournamentController extends Controller
             $playersResults[$player->id] = $roundRobinResult;
         }
 
+//        echo gettype($players);
+//        $players = array_values($players);
 //        $this->sortPlayersByResult($players, $tournamentId, 'rr');
 
         $playersCount = count($players);
@@ -382,7 +422,7 @@ class TournamentController extends Controller
         return view('tournament.run.results-rr', [
             'tournament' => Tournament::find($tournamentId),
             'part' => 'rr',
-            'stage' => '',
+            'stage' => 'rest',
             'fPlayers' => $players,
             'roundCount' => $roundCount,
             'fGames' => $playedRoundRobinGames,
@@ -452,6 +492,10 @@ class TournamentController extends Controller
                 $allResults[] = $result;
             }
         }
+
+        usort($allResults, function ($resultA, $resultB) {
+            return ($resultA->sum < $resultB->sum);
+        });
 
         return view('tournament.results', [
             'tournament' => $tournament,
@@ -547,21 +591,6 @@ class TournamentController extends Controller
       $tournament = Tournament::find($tournamentId);
       $tournament->delete();
       return redirect('/');
-    }
-
-    private function sortPlayersByResult(&$players, $tournamentId, $part)
-    {
-        uasort($players, function ($playerA, $playerB) use ($tournamentId, $part) {
-            $playerAResult = $playerA['results']
-                ->where('tournament_id', $tournamentId)
-                ->where('part', $part)
-                ->first();
-            $playerBResult = $playerB['results']
-                ->where('tournament_id', $tournamentId)
-                ->where('part', $part)
-                ->first();
-            return ($playerAResult->sum < $playerBResult->sum);
-        });
     }
 
 }

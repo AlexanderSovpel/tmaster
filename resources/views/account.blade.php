@@ -1,23 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <div id="info">
+    <div class="user panel panel-default">
+        <div id="info" class="panel-heading">
             <a href="/account/edit" id="edit-link">редактировать</a>
             <div id="user-photo">
-                <img src="">
+                <img src="{{asset($user->avatar)}}">
             </div>
             <div id="user-data">
-                <h2>{{$user->name}} {{$user->surname}}</h2>
+                <h1>{{$user->name}} {{$user->surname}}</h1>
                 <p>{{$user->gender}}</p>
                 <p>{{$user->birthday}} ({{$user->age}})</p>
                 <p>{{$user->phone}}</p>
                 <p>{{$user->email}}</p>
             </div>
+            <div class="clearfix"></div>
         </div>
-        <hr>
-        {{--<div>{{$user->games}}</div>--}}
-        <div id="statistics"></div>
-        <div id="error"></div>
+        <div class="clearfix"></div>
+        <div>
+            <h3>Статистика</h3>
+            <div id="statistics">
+            </div>
+        </div>
     </div>
 @endsection

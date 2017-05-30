@@ -1,14 +1,14 @@
 @extends('layouts.run')
 
 @section('process')
-    <h2>Результаты</h2>
+    <h1>Результаты</h1>
     <form action="/{{$tournament->id}}/run/q/conf/{{$currentSquadId}}" method="get">
         {{ csrf_field() }}
         <table>
             <tr>
                 <td>№</td>
                 <td>Участник</td>
-                @for ($j = 0; $j < $tournament->qualification_entries; ++$j)
+                @for ($j = 0; $j < $tournament->qualification->entries; ++$j)
                     <td>{{$j + 1}}</td>
                 @endfor
                 <td>Гандикап</td>
@@ -22,15 +22,9 @@
                     <td>{{$players[$i]->surname ." ". $players[$i]->name}}</td>
                     @foreach ($playedGames[$players[$i]->id] as $game)
                         <td>
-                            <div class="input-group result">
-                                <input type="text"
-                                       class="player-result form-control played"
-                                       readonly
-                                       @if(isset($game))
-                                       value="{{$game->result}}"
-                                        @endif
-                                >
-                            </div>
+                            @if(isset($game))
+                                {{$game->result}}
+                            @endif
                         </td>
                     @endforeach
                     <td id="handicap_{{$players[$i]->id}}" class="player-bonus">

@@ -1,6 +1,10 @@
-var resultTabs = document.querySelector('#result-tabs').children;
-var results = document.querySelector('#results').children;
+var resultTabs = document.querySelector('#result-tabs');
+if (resultTabs) {
+    resultTabs = resultTabs.children;
+}
+var results = document.querySelector('#results');
 if (results) {
+    results = results.children;
     qResultsTab = document.getElementById('show-qualification-results');
     qResultsTab.onclick = function (e) {
         e.preventDefault();

@@ -1,6 +1,3 @@
-/**
- * Created by Alexander on 14.05.17.
- */
 var squad = document.getElementById('squad');
 if (squad) {
     squad.onchange = getPlayersList;
@@ -20,11 +17,11 @@ $('#apply-button').click(function (e) {
       data: squad,
       headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
       success: function (data) {
-          $('#error').html(data);
+          $('.error').html(data);
           getPlayersList();
       }
   }).fail(function (data) {
-      $('#error').html(data.responseText);
+      $('.error').html(data.responseText);
   });
 });
 
@@ -40,7 +37,7 @@ function getPlayersList() {
           response.players[i].name + '</li>');
       }
     }).fail(function(data) {
-      $('#error').html(data);
+        $('.error').html(data);
     });
 }
 

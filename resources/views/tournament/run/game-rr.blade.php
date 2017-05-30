@@ -1,13 +1,13 @@
 @extends('layouts.run')
 
 @section('process')
-    <h2>Игра</h2>
+    <h1>Игра</h1>
     <form action="/{{$tournament->id}}/run/rr/rest" method="post">
         {{ csrf_field() }}
         <input type="hidden" name="players" value="{{json_encode($players)}}">
         @for($i = 0; $i < $roundCount; ++$i)
             <div class="round">
-                <h3>Round {{$i+1}}</h3>
+                <h3>Раунд {{$i+1}}</h3>
                 @for($j = 0, $h = $lastPlayerIndex; $j < ($lastPlayerIndex + 1) / 2; ++$j, --$h)
                     <div class="opponents">
                         <div class="input-group opponent">
@@ -25,12 +25,16 @@
                                 {{$playedGames[$players[$j]->id][$i]->bonus or ''}}
                             </span>
                             <span class="input-group-btn">
-                                <button class="btn btn-secondary post-opponent-result" type="button">set</button>
+                                <button class="btn btn-secondary post-opponent-result" type="button">
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                </button>
                             </span>
                         </div>
                         <div class="input-group opponent">
                             <span class="input-group-btn">
-                                <button class="btn btn-secondary post-opponent-result" type="button">set</button>
+                                <button class="btn btn-secondary post-opponent-result" type="button">
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                </button>
                             </span>
                             <span class="opponent-bonus input-group-addon">
                                 {{$playedGames[$players[$h]->id][$i]->bonus or ''}}
@@ -46,6 +50,7 @@
                             </label>
                             <input type="hidden" class="opponent-id input-group-addon" value="{{$players[$h]->id}}">
                         </div>
+                        <div class="clearfix"></div>
                     </div>
                 @endfor
             </div>
@@ -54,7 +59,7 @@
                 list($players[0], $players[$lastPlayerIndex]) = array($players[$lastPlayerIndex], $players[0]);
             @endphp
         @endfor
-        <button type="submit">завершить игру</button>
+        <button type="submit" class="btn">завершить игру</button>
         <div id="error"></div>
     </form>
 @endsection
