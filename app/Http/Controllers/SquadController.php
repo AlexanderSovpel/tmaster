@@ -19,4 +19,9 @@ class SquadController extends Controller
 
         return json_encode($response);
     }
+
+    public function addSquadForm(Request $request)
+    {
+        return view('partial.squad-form', ['index' => $request->index]);
+    }
 }

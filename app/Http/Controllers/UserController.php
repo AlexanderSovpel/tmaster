@@ -83,4 +83,12 @@ class UserController extends Controller
 
         return redirect('/account');
     }
+
+    public function saveTempImage(Request $request)
+    {
+//        echo 'hello';
+        $tempName = 'tempAvatar.' . $request->file('tempImg')->getClientOriginalExtension();;
+        $request->file('tempImg')->storeAs('public', $tempName);
+        return Storage::url($tempName);
+    }
 }

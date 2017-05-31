@@ -13,16 +13,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function addSquadForm(Request $request)
-    {
-        return view('partial.squad-form', ['index' => $request->index]);
-    }
 
-    public function saveTempImage(Request $request)
-    {
-//        echo 'hello';
-        $tempName = 'tempAvatar.' . $request->file('tempImg')->getClientOriginalExtension();;
-        $request->file('tempImg')->storeAs('public', $tempName);
-        return Storage::url($tempName);
-    }
+
+
 }

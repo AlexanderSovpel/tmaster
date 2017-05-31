@@ -64,7 +64,7 @@
     </div>
     {{--</div>--}}
     {{--<div id="error"></div>--}}
-    <form method="post" action="/saveTournament" id="new-tournament" class="panel panel-default">
+    <form method="post" action="/createTournament" id="new-tournament" class="panel panel-default">
         {{csrf_field()}}
         <input type="hidden" id="step" value="0">
         <div class="creation-step">

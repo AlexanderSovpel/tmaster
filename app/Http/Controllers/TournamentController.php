@@ -515,7 +515,7 @@ class TournamentController extends Controller
         return view('tournament.new-tournament');
     }
 
-    public function saveTournament(Request $request)
+    public function createTournament(Request $request)
     {
         $handicap = new Handicap([
             'type' => $request->handicap_type,
@@ -583,7 +583,6 @@ class TournamentController extends Controller
             ]);
             $squad->save();
         }
-//
         return redirect('/');
     }
 
