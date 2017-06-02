@@ -32,8 +32,6 @@ class UserController extends Controller
             }
         }
 
-//        var_dump($dates);
-
         $statistic = array();
         foreach ($dates as $date) {
             $s = new \stdClass();

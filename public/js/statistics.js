@@ -18,19 +18,18 @@ else {
 }
 
 function drawChart() {
-    var rawData = [
-        ['Месяц', 'худший', 'средний', 'лучший']
-    ];
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Месяц');
+    data.addColumn('number', 'худший');
+    data.addColumn('number', 'средний');
+    data.addColumn('number', 'лучший');
+
     for (var i = 0; i < statistic.length; ++i) {
         var date = new Date(statistic[i].date);
-        console.log(date);
+        // console.log(date);
         date = monthNames[date.getMonth()] + ', ' + date.getFullYear();
-        rawData[i + 1] = [
-            date, statistic[i].min, statistic[i].avg, statistic[i].max
-        ];
+        data.addRow([date, statistic[i].min, statistic[i].avg, statistic[i].max]);
     }
-
-    var data = google.visualization.arrayToDataTable(rawData);
 
     var options = {
         hAxis: {title: 'Месяц', titleTextStyle: {color: '#333'}},

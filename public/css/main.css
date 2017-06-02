@@ -4,11 +4,31 @@
 }
 
 /*Common*/
+html {
+    height: 100%;
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Open Sans', sans-serif;
     padding-top: 120px;
-    padding-bottom: 70px;
+    padding-bottom: 80px;
     font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+footer {
+    height: 50px;
+    width: 100%;
+    background-color: #0f1b5f;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: lighter;
+    text-align: center;
+    line-height: 50px;
+    position: absolute;
+    bottom: 0px;
 }
 
 .container {
@@ -75,7 +95,8 @@ label {
     font-weight: 600;
 }
 
-.form-control:focus {
+.form-control:focus,
+.form-control:hover {
     border-bottom: solid 2px rgba(15, 27, 95, 1);
     box-shadow: none;
 }
@@ -1030,16 +1051,4 @@ tr:nth-child(2n) {
 
 .btn-file {
     display: none;
-}
-
-
-
-footer {
-  height: 50px;
-  background-color: #0f1b5f;
-  color: #ffffff;
-  font-size: 18px;
-  font-weight: lighter;
-  text-align: center;
-  line-height: 50px;
 }

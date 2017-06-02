@@ -94,8 +94,8 @@
     <section class="container">
         @yield('content')
     </section>
-    <footer class="navbar-fixed-bottom">&copy; 2006-2017, Белорусская Федерация Боулинга</footer>
 </div>
+<footer class="footer">&copy; 2006-2017, Белорусская Федерация Боулинга</footer>
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
