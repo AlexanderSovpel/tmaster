@@ -48,7 +48,7 @@ Route::get('/account', 'UserController@showAccount');
 Route::get('/account/edit', 'UserController@editAccount');
 Route::post('/account/save', 'UserController@saveAccount');
 Route::get('/getStatistic', 'UserController@getStatistic');
-Route::post('/saveTempImage', 'UserController@saveTempImage');
+//Route::post('/saveTempImage', 'UserController@saveTempImage');
 
 Route::get('/setGameResult', 'GameController@setResult');
 Route::get('/changeGameResult', 'GameController@changeResult');
