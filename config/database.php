@@ -1,4 +1,10 @@
 <?php
+$url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+
+$host = $url["host"];
+$username = $url["user"];
+$password = $url["pass"];
+$database = substr($url["path"], 1);
 
 return [
 
@@ -30,13 +36,6 @@ return [
     | choice installed on your machine before you begin development.
     |
     */
-	
-	$url = parse_url(getenv("CLEARDB_DATABASE_URL"));
-
-	$host = $url["host"];
-	$username = $url["user"];
-	$password = $url["pass"];
-	$database = substr($url["path"], 1);
 
     'connections' => [
 
@@ -46,7 +45,7 @@ return [
             'prefix' => '',
         ],
 
-        'mysql' => array(
+        'mysql' => [
         'driver'    => 'mysql',
         'host'      => $host,
         'database'  => $database,
@@ -55,7 +54,7 @@ return [
         'charset'   => 'utf8',
         'collation' => 'utf8_unicode_ci',
         'prefix'    => '',
-		),
+		],
 
         'pgsql' => [
             'driver' => 'pgsql',
