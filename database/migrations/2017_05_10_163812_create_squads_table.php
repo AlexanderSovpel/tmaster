@@ -15,13 +15,15 @@ class CreateSquadsTable extends Migration
     {
         Schema::create('squads', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('tournament_id');
             $table->date('date');
             $table->time('start_time');
             $table->time('end_time');
             $table->integer('max_players');
-            $table->integer('t_id');
-//            $table->foreign('t_id')->references('id')->on('tournament');
+            $table->boolean('finished');
             $table->timestamps();
+
+            $table->foreign('tournament_id')->references('id')->on('tournaments');
         });
     }
 

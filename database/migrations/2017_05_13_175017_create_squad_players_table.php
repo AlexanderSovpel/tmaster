@@ -15,12 +15,13 @@ class CreateSquadPlayersTable extends Migration
     {
         if (!Schema::hasTable('squad_players')) {
             Schema::create('squad_players', function (Blueprint $table) {
-//            common
                 $table->increments('id');
                 $table->integer('squad_id');
                 $table->integer('player_id');
-
                 $table->timestamps();
+
+                $table->foreign('squad_id')->references('id')->on('squads');
+                $table->foreign('player_id')->references('id')->on('users');
             });
         }
     }

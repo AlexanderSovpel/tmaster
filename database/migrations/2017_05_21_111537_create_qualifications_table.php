@@ -16,12 +16,9 @@ class CreateQualificationsTable extends Migration
         Schema::create('qualifications', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('tournament_id')->unsigned();
-            $table->foreign('tournament_id')->references('id')->on('tournaments');
             $table->integer('entries')->default(6);
             $table->integer('games')->default(1);
             $table->integer('finalists')->default(6);
-
-//            payment
             $table->double('fee');
             $table->boolean('allow_reentry')->default(true);
             $table->integer('reentries')->default(1);

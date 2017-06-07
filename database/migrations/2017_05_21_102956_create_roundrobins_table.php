@@ -16,7 +16,6 @@ class CreateRoundrobinsTable extends Migration
         Schema::create('round_robins', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('tournament_id')->unsigned();
-            $table->foreign('tournament_id')->references('id')->on('tournaments');
             $table->integer('players')->default(6);
             $table->integer('win_bonus')->default(20);
             $table->integer('draw_bonus')->default(10);
