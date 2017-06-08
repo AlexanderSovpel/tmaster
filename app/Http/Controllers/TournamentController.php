@@ -25,7 +25,7 @@ class TournamentController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth');
     }
 
     /**
@@ -36,7 +36,7 @@ class TournamentController extends Controller
     public function index()
     {
       return 'Hello!';
-      Debugbar::info(User::all());
+      // Debugbar::info(User::all());
       // return User::all();
 
         // $tournaments = Tournament::all()->sortByDesc('id');
