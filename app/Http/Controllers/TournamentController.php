@@ -37,14 +37,14 @@ class TournamentController extends Controller
     {
       // return 'Hello!';
       // Debugbar::info(User::all());
-      return User::all();
+      // return User::all();
 
-        // $tournaments = Tournament::all()->sortByDesc('id');
+        $tournaments = Tournament::all()->sortByDesc('id');
         // session()->put('tournaments', $tournaments);
 
-        // $user = Auth::user();
+        $user = Auth::user();
 
-        // return view('index', ['tournaments' => $tournaments, 'user' => $user]);
+        return view('index', ['tournaments' => $tournaments, 'user' => $user]);
     }
 
     public function details($tournamentId)
