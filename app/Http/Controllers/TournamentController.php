@@ -381,6 +381,8 @@ class TournamentController extends Controller
         $players = json_decode($request->input('players'));
         echo json_last_error()."<br>";
         echo gettype($players)."<br>";
+        echo count($players)."<br>";
+        var_dump($players)."<br>";
 //        foreach ($players as $key => $player) {
 //            echo "$key: $player<br>";
 //        }
