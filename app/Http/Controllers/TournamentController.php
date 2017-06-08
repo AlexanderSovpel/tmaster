@@ -36,6 +36,7 @@ class TournamentController extends Controller
     public function index()
     {
       return 'Hello!';
+      Debugbar::info(User::all());
       // return User::all();
 
         // $tournaments = Tournament::all()->sortByDesc('id');
