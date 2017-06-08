@@ -13,6 +13,7 @@ class CreateSquadsTable extends Migration
      */
     public function up()
     {
+      if (!Schema::hasTable('squads')) {
         Schema::create('squads', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('tournament_id');
@@ -25,6 +26,7 @@ class CreateSquadsTable extends Migration
 
             // $table->foreign('tournament_id')->references('id')->on('tournaments');
         });
+      }
     }
 
     /**

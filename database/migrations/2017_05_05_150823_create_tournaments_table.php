@@ -13,7 +13,8 @@ class CreateTournamentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tournament', function (Blueprint $table) {
+      if (!Schema::hasTable('tournaments')) {
+        Schema::create('tournaments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('location');
@@ -33,6 +34,7 @@ class CreateTournamentsTable extends Migration
             // $table->foreign('contact_id')->references('id')->on('users');
 
         });
+      }
     }
 
     /**

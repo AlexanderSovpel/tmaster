@@ -13,6 +13,7 @@ class CreateQualificationsTable extends Migration
      */
     public function up()
     {
+      if (!Schema::hasTable('qualifications')) {
         Schema::create('qualifications', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('tournament_id')->unsigned();
@@ -25,6 +26,7 @@ class CreateQualificationsTable extends Migration
             $table->double('reentry_fee');
             $table->timestamps();
         });
+      }
     }
 
     /**

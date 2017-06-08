@@ -13,6 +13,7 @@ class GamesTable extends Migration
      */
     public function up()
     {
+      if (!Schema::hasTable('games')) {
         Schema::create('games', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('player_id');
@@ -27,6 +28,7 @@ class GamesTable extends Migration
             // $table->foreign('player_id')->references('id')->on('users');
             // $table->foreign('tournament_id')->references('id')->on('tournaments');
         });
+      }
     }
 
     /**

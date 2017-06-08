@@ -13,6 +13,7 @@ class CreateResultsTable extends Migration
      */
     public function up()
     {
+      if (!Schema::hasTable('results')) {
         Schema::create('results', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('tournament_id');
@@ -25,6 +26,7 @@ class CreateResultsTable extends Migration
             // $table->foreign('tournament_id')->references('id')->on('tournaments');
             // $table->foreign('player_id')->references('id')->on('users');
         });
+      }
     }
 
     /**

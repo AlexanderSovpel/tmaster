@@ -13,6 +13,7 @@ class CreateRoundrobinsTable extends Migration
      */
     public function up()
     {
+      if (!Schema::hasTable('round_robins')) {
         Schema::create('round_robins', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('tournament_id')->unsigned();
@@ -24,6 +25,7 @@ class CreateRoundrobinsTable extends Migration
             $table->time('end_time');
             $table->timestamps();
         });
+      }
     }
 
     /**
