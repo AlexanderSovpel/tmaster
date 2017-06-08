@@ -25,7 +25,7 @@ class TournamentController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     /**
@@ -35,12 +35,14 @@ class TournamentController extends Controller
      */
     public function index()
     {
-        $tournaments = Tournament::all()->sortByDesc('id');
-        session()->put('tournaments', $tournaments);
+      return User::all();
 
-        $user = Auth::user();
+        // $tournaments = Tournament::all()->sortByDesc('id');
+        // session()->put('tournaments', $tournaments);
 
-        return view('index', ['tournaments' => $tournaments, 'user' => $user]);
+        // $user = Auth::user();
+
+        // return view('index', ['tournaments' => $tournaments, 'user' => $user]);
     }
 
     public function details($tournamentId)
