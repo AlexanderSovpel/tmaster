@@ -380,9 +380,10 @@ class TournamentController extends Controller
         echo $request->input('players')."<br>";
         $players = json_decode($request->input('players'));
         echo json_last_error()."<br>";
-        foreach ($players as $key => $player) {
-            echo "$key: $player<br>";
-        }
+        echo gettype($players)."<br>";
+//        foreach ($players as $key => $player) {
+//            echo "$key: $player<br>";
+//        }
 //        $playedRoundRobinGames = array();
 //        $playersResults = array();
 //        $qualificationResults = array();
