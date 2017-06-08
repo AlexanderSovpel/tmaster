@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes();
 
 Route::get('/test', function() {
-  return App\User::all();
+  return App\Tournament::all();
 });
 
 Route::get('/', 'TournamentController@index');
