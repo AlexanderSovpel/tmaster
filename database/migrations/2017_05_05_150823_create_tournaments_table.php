@@ -27,12 +27,6 @@ class CreateTournamentsTable extends Migration
             $table->integer('contact_id')->unsigned();
             $table->boolean('finished');
             $table->timestamps();
-
-            // $table->foreign('handicap_id')->references('id')->on('handicaps');
-            // $table->foreign('qualification_id')->references('id')->on('qualifications');
-            // $table->foreign('roundrobin_id')->references('id')->on('roundrobins');
-            // $table->foreign('contact_id')->references('id')->on('users');
-
         });
       }
     }

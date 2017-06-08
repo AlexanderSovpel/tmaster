@@ -24,9 +24,6 @@ class GamesTable extends Migration
             $table->integer('bonus');
             $table->date('date');
             $table->timestamps();
-
-            // $table->foreign('player_id')->references('id')->on('users');
-            // $table->foreign('tournament_id')->references('id')->on('tournaments');
         });
       }
     }

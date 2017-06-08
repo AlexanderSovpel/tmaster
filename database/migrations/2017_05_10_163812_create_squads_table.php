@@ -23,8 +23,6 @@ class CreateSquadsTable extends Migration
             $table->integer('max_players');
             $table->boolean('finished');
             $table->timestamps();
-
-            // $table->foreign('tournament_id')->references('id')->on('tournaments');
         });
       }
     }
