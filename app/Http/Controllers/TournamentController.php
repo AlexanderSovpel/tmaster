@@ -375,13 +375,13 @@ class TournamentController extends Controller
 
     public function roundRobinResults(Request $request, $tournamentId)
     {
-
-        $players = json_decode($request->input('players'));
-        $playedRoundRobinGames = array();
-        $playersResults = array();
-        $qualificationResults = array();
-        foreach ($players as $player) {
-            echo $player."<br>";
+            return "hello";
+//        $players = json_decode($request->input('players'));
+//        $playedRoundRobinGames = array();
+//        $playersResults = array();
+//        $qualificationResults = array();
+//        foreach ($players as $player) {
+//            echo $player."<br>";
 
 //            $roundRobinGames = Game::where('player_id', $player->id)
 //                ->where('tournament_id', $tournamentId)
@@ -413,7 +413,7 @@ class TournamentController extends Controller
 //            $roundRobinResult->save();
 //            $qualificationResults[$player->id] = $qualificationResult;
 //            $playersResults[$player->id] = $roundRobinResult;
-        }
+//        }
 //
 ////        echo gettype($players);
 ////        $players = array_values($players);
