@@ -72,7 +72,7 @@
         </ul>
         @if(!$tournament->finished)
             @if($user->is_admin)
-            <a href="/{{$tournament->id}}/run/q/conf/{{$tournament->squads[0]->id}}" class="tournament-btn btn">начать соревнование</a>
+            <a href="/{{$tournament->id}}/run/q/conf/{{$tournament->squads[0]->id}}" class="tournament-btn-lg btn">начать соревнование</a>
             @else
             <a href="/{{$tournament->id}}/apply" class="btn tournament-btn-lg">подать заявку</a>
             @endif
