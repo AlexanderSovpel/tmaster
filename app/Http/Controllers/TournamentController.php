@@ -11,6 +11,7 @@ use App\Squad;
 use App\SquadPlayers;
 use App\Tournament;
 use App\User;
+use DebugBar\DebugBar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,14 +36,10 @@ class TournamentController extends Controller
      */
     public function index()
     {
-      // return 'Hello!';
-      // Debugbar::info(User::all());
-      // return User::all();
-
         $tournaments = Tournament::all()->sortByDesc('id');
-        // session()->put('tournaments', $tournaments);
-
         $user = Auth::user();
+
+        DebugBar::info($user);
 
         return view('index', ['tournaments' => $tournaments, 'user' => $user]);
     }
