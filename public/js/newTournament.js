@@ -62,6 +62,7 @@ if (newTournamentForm) {
         }
     }).fail(function (data) {
         console.log(data.responseText);
+        $('#error').html(data.responseText);
     });
   });
 

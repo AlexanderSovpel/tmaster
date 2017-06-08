@@ -369,4 +369,5 @@
             <input type="submit" id="save" class="btn" value="сохранить">
         </div>
     </form>
+    <div id="error"></div>
 @endsection
