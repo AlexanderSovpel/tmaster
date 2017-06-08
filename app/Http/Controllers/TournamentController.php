@@ -377,7 +377,7 @@ class TournamentController extends Controller
     {
         echo "hello<br>";
         $players = json_decode($request->input('players'));
-        echo "$players<br>";
+        echo "gettype($players)<br>";
 //        $playedRoundRobinGames = array();
 //        $playersResults = array();
 //        $qualificationResults = array();
