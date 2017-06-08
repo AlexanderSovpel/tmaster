@@ -22,8 +22,8 @@ class CreateResultsTable extends Migration
             $table->double('avg');
             $table->timestamps();
 
-            $table->foreign('tournament_id')->references('id')->on('tournaments');
-            $table->foreign('player_id')->references('id')->on('users');
+            // $table->foreign('tournament_id')->references('id')->on('tournaments');
+            // $table->foreign('player_id')->references('id')->on('users');
         });
     }
 

@@ -23,7 +23,6 @@ class CreateQualificationsTable extends Migration
             $table->boolean('allow_reentry')->default(true);
             $table->integer('reentries')->default(1);
             $table->double('reentry_fee');
-
             $table->timestamps();
         });
     }

@@ -20,8 +20,8 @@ class CreateSquadPlayersTable extends Migration
                 $table->integer('player_id');
                 $table->timestamps();
 
-                $table->foreign('squad_id')->references('id')->on('squads');
-                $table->foreign('player_id')->references('id')->on('users');
+                // $table->foreign('squad_id')->references('id')->on('squads');
+                // $table->foreign('player_id')->references('id')->on('users');
             });
         }
     }

@@ -23,7 +23,7 @@ class CreateSquadsTable extends Migration
             $table->boolean('finished');
             $table->timestamps();
 
-            $table->foreign('tournament_id')->references('id')->on('tournaments');
+            // $table->foreign('tournament_id')->references('id')->on('tournaments');
         });
     }
 
