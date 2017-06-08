@@ -38,7 +38,7 @@ class TournamentsTableSeeder extends Seeder
             'end_time' => '14:00'
         ]);
 
-        $contact = DB::table('users')->where('is_admin', true)->first();
+        $contact = DB::table('users')->where('is_admin', 1)->first();
 
         DB::table('tournament')->insert([
             'name' => 'V этап чемпионата РБ',
