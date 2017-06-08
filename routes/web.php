@@ -12,9 +12,6 @@
 */
 use Illuminate\Support\Facades\Auth;
 
-if (session()->has('tournament')) {
-    $tournament = session('tournament');
-}
 Auth::routes();
 
 Route::get('/', 'TournamentController@index');
