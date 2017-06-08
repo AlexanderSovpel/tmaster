@@ -527,6 +527,7 @@ class TournamentController extends Controller
             'max_game' => $request->handicap_max_game
         ]);
         $handicap->save();
+        echo $handicap;
 
         $qualification = new Qualification([
             'entries' => $request->qualification_entries,
@@ -538,6 +539,7 @@ class TournamentController extends Controller
             'reentry_fee' => $request->reentry_fee
         ]);
         $qualification->save();
+        echo $qualification;
 
         $roundRobin = new RoundRobin([
             'players' => $request->rr_players,
@@ -548,10 +550,12 @@ class TournamentController extends Controller
             'end_time' => $request->rr_end_time,
         ]);
         $roundRobin->save();
+        echo $roundRobin;
 
         $contact = User::where('email', $request->contact_email)
             ->where('phone', $request->contact_phone)
             ->first();
+        echo $contact;
 
         $newTournament = new Tournament([
             'name' => $request->name,
@@ -587,7 +591,9 @@ class TournamentController extends Controller
             ]);
             $squad->save();
         }
-        return redirect('/');
+
+        echo $newTournament;
+        // return redirect('/');
     }
 
     public function deleteTournament($tournamentId) {
