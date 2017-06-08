@@ -17,6 +17,13 @@ class GameController extends Controller
 //        echo $request->input('bonus')."<br>";
 //        echo date("Y-m-d")."<br>";
         $game = new Game();
+        $game->player_id = $request->player_id;
+        $game->tournament_id = $request->tournament_id;
+        $game->part = $request->part;
+        $game->squad_id = $request->squad_id;
+        $game->result = $request->result;
+        $game->bonus = $request->bonus;
+        $game->date = date("Y-m-d");
 //        $game = new Game(['player_id' => $request->input('player_id'),
 //            'tournament_id' => $request->input('tournament_id'),
 //            'part' => $request->input('part'),
@@ -26,7 +33,7 @@ class GameController extends Controller
 //            'date' => date("Y-m-d")]);
 //
 //        $game->save();
-        return "game created";
+        return "game created: ".$game;
     }
 
     public function changeResult(Request $request)
