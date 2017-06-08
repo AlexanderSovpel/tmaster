@@ -45,7 +45,6 @@ class TournamentsTableSeeder extends Seeder
             'location' => 'Bowling House',
             'type' => 'sport',
             'oil_type' => 'middle',
-            'oil_file' => null,
             'description' => '',
             'handicap_id' => $handicap_id,
             'qualification_id' => $qualification_id,
