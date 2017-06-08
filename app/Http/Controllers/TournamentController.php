@@ -383,65 +383,65 @@ class TournamentController extends Controller
 //        echo gettype($players)."<br>";
 //        echo count($players)."<br>";
 //        var_dump($players)."<br>";
-        foreach ($players as $key => $player) {
-            echo gettype($player)."<br>";
-            echo $key."<br>";
-            echo $player->id."<br>";
-        }
-//        $playedRoundRobinGames = array();
-//        $playersResults = array();
-//        $qualificationResults = array();
-//        foreach ($players as $player) {
-//            echo $player."<br>";
-//            $roundRobinGames = Game::where('player_id', $player->id)
-//                ->where('tournament_id', $tournamentId)
-//                ->where('part', 'rr')
-//                ->get();
-//
-//            $sum = 0;
-//            foreach ($roundRobinGames as $roundRobinGame) {
-//                $playedRoundRobinGames[$player->id][] = $roundRobinGame;
-//                $sum += $roundRobinGame->result + $roundRobinGame->bonus;
-//            }
-//            $avg = round($sum / $roundRobinGames->count(), 2);
-////
-//
-//            $qualificationResult = Result::where('tournament_id', $tournamentId)
-//                ->where('player_id', $player->id)
-//                ->where('part', 'q')
-//                ->first();
-//
-//            $sum += $qualificationResult->sum;
-//
-//            $roundRobinResult = Result::firstOrNew([
-//                'tournament_id' => $tournamentId,
-//                'player_id' => $player->id,
-//                'part' => 'rr',
-//                'sum' => $sum,
-//                'avg' => $avg
-//            ]);
-//            $roundRobinResult->save();
-//            $qualificationResults[$player->id] = $qualificationResult;
-//            $playersResults[$player->id] = $roundRobinResult;
+//        foreach ($players as $key => $player) {
+//            echo gettype($player)."<br>";
+//            echo $key."<br>";
+//            echo $player->id."<br>";
 //        }
+        $playedRoundRobinGames = array();
+        $playersResults = array();
+        $qualificationResults = array();
+        foreach ($players as $player) {
+//            echo $player."<br>";
+            $roundRobinGames = Game::where('player_id', $player->id)
+                ->where('tournament_id', $tournamentId)
+                ->where('part', 'rr')
+                ->get();
+//
+            $sum = 0;
+            foreach ($roundRobinGames as $roundRobinGame) {
+                $playedRoundRobinGames[$player->id][] = $roundRobinGame;
+                $sum += $roundRobinGame->result + $roundRobinGame->bonus;
+            }
+            $avg = round($sum / $roundRobinGames->count(), 2);
+//
+
+            $qualificationResult = Result::where('tournament_id', $tournamentId)
+                ->where('player_id', $player->id)
+                ->where('part', 'q')
+                ->first();
+
+            $sum += $qualificationResult->sum;
+
+            $roundRobinResult = Result::firstOrNew([
+                'tournament_id' => $tournamentId,
+                'player_id' => $player->id,
+                'part' => 'rr',
+                'sum' => $sum,
+                'avg' => $avg
+            ]);
+            $roundRobinResult->save();
+            $qualificationResults[$player->id] = $qualificationResult;
+            $playersResults[$player->id] = $roundRobinResult;
+        }
 
 ////        echo gettype($players);
 ////        $players = array_values($players);
 ////        $this->sortPlayersByResult($players, $tournamentId, 'rr');
 //
-//        $playersCount = count($players);
-//        $roundCount = ($playersCount % 2) ? $playersCount : $playersCount - 1;
-//
-//        return view('tournament.run.results-rr', [
-//            'tournament' => Tournament::find($tournamentId),
-//            'part' => 'rr',
-//            'stage' => 'rest',
-//            'fPlayers' => $players,
-//            'roundCount' => $roundCount,
-//            'fGames' => $playedRoundRobinGames,
-//            'fResults' => $playersResults,
-//            'qResults' => $qualificationResults
-//        ]);
+        $playersCount = count($players);
+        $roundCount = ($playersCount % 2) ? $playersCount : $playersCount - 1;
+
+        return view('tournament.run.results-rr', [
+            'tournament' => Tournament::find($tournamentId),
+            'part' => 'rr',
+            'stage' => 'rest',
+            'fPlayers' => $players,
+            'roundCount' => $roundCount,
+            'fGames' => $playedRoundRobinGames,
+            'fResults' => $playersResults,
+            'qResults' => $qualificationResults
+        ]);
     }
 
     public function getResults($tournamentId)
