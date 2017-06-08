@@ -17,7 +17,7 @@ if (newTournamentForm) {
     sessionStorage.setItem('currentStep', 0);
     $.ajax({
         type: 'POST',
-        url: '/saveTournament',
+        url: '/createTournament',
         data: {
           name: $('#name').val(),
           location: $('#location').val(),
@@ -61,7 +61,7 @@ if (newTournamentForm) {
             location.replace('/');
         }
     }).fail(function (data) {
-        $('#error').html(data.responseText);
+        console.log(data.responseText);
     });
   });
 
