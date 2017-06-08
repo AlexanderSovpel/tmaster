@@ -376,8 +376,8 @@ class TournamentController extends Controller
     public function roundRobinResults(Request $request, $tournamentId)
     {
         echo "hello<br>";
-        $players = json_decode($request->input('players'));
-        echo "gettype($players)<br>";
+//        $players = json_decode($request->input('players'));
+        echo "var_dump($request)<br>";
 //        $playedRoundRobinGames = array();
 //        $playersResults = array();
 //        $qualificationResults = array();
