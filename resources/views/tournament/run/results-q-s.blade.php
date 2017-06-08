@@ -43,7 +43,7 @@
             @endfor
             </tbody>
         </table>
-        <button type="submit btn">завершить игру</button>
+        <button type="submit" class="btn">завершить игру</button>
         <div id="error"></div>
     </form>
 @endsection

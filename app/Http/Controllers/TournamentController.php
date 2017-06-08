@@ -11,6 +11,7 @@ use App\Squad;
 use App\SquadPlayers;
 use App\Tournament;
 use App\User;
+use DebugBar\DebugBar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -374,6 +375,8 @@ class TournamentController extends Controller
 
     public function roundRobinResults(Request $request, $tournamentId)
     {
+        DebugBar::enable();
+
         $players = json_decode($request->input('players'));
         $playedRoundRobinGames = array();
         $playersResults = array();
@@ -383,7 +386,7 @@ class TournamentController extends Controller
                 ->where('tournament_id', $tournamentId)
                 ->where('part', 'rr')
                 ->get();
-
+//
             $sum = 0;
             foreach ($roundRobinGames as $roundRobinGame) {
                 $playedRoundRobinGames[$player->id][] = $roundRobinGame;
@@ -391,42 +394,46 @@ class TournamentController extends Controller
             }
             $avg = round($sum / $roundRobinGames->count(), 2);
 
-            $qualificationResult = Result::where('tournament_id', $tournamentId)
-                ->where('player_id', $player->id)
-                ->where('part', 'q')
-                ->first();
-
-            $sum += $qualificationResult->sum;
-
-            $roundRobinResult = Result::firstOrNew([
-                'tournament_id' => $tournamentId,
-                'player_id' => $player->id,
-                'part' => 'rr',
-                'sum' => $sum,
-                'avg' => $avg
-            ]);
-            $roundRobinResult->save();
-            $qualificationResults[$player->id] = $qualificationResult;
-            $playersResults[$player->id] = $roundRobinResult;
+            DebugBar::info($player);
+            DebugBar::info($sum);
+            DebugBar::info($avg);
+//
+//            $qualificationResult = Result::where('tournament_id', $tournamentId)
+//                ->where('player_id', $player->id)
+//                ->where('part', 'q')
+//                ->first();
+//
+//            $sum += $qualificationResult->sum;
+//
+//            $roundRobinResult = Result::firstOrNew([
+//                'tournament_id' => $tournamentId,
+//                'player_id' => $player->id,
+//                'part' => 'rr',
+//                'sum' => $sum,
+//                'avg' => $avg
+//            ]);
+//            $roundRobinResult->save();
+//            $qualificationResults[$player->id] = $qualificationResult;
+//            $playersResults[$player->id] = $roundRobinResult;
         }
-
-//        echo gettype($players);
-//        $players = array_values($players);
-//        $this->sortPlayersByResult($players, $tournamentId, 'rr');
-
-        $playersCount = count($players);
-        $roundCount = ($playersCount % 2) ? $playersCount : $playersCount - 1;
-
-        return view('tournament.run.results-rr', [
-            'tournament' => Tournament::find($tournamentId),
-            'part' => 'rr',
-            'stage' => 'rest',
-            'fPlayers' => $players,
-            'roundCount' => $roundCount,
-            'fGames' => $playedRoundRobinGames,
-            'fResults' => $playersResults,
-            'qResults' => $qualificationResults
-        ]);
+//
+////        echo gettype($players);
+////        $players = array_values($players);
+////        $this->sortPlayersByResult($players, $tournamentId, 'rr');
+//
+//        $playersCount = count($players);
+//        $roundCount = ($playersCount % 2) ? $playersCount : $playersCount - 1;
+//
+//        return view('tournament.run.results-rr', [
+//            'tournament' => Tournament::find($tournamentId),
+//            'part' => 'rr',
+//            'stage' => 'rest',
+//            'fPlayers' => $players,
+//            'roundCount' => $roundCount,
+//            'fGames' => $playedRoundRobinGames,
+//            'fResults' => $playersResults,
+//            'qResults' => $qualificationResults
+//        ]);
     }
 
     public function getResults($tournamentId)
