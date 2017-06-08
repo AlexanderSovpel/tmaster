@@ -553,7 +553,7 @@ class TournamentController extends Controller
         echo $roundRobin;
 
         $contact = User::where('email', $request->contact_email)
-            ->where('phone', $request->contact_phone)
+            // ->where('phone', $request->contact_phone)
             ->first();
         echo $contact;
 
