@@ -32,7 +32,7 @@ class GameController extends Controller
 //            'bonus' => $request->input('bonus'),
 //            'date' => date("Y-m-d")]);
 //
-//        $game->save();
+        $game->save();
         return "game created: ".$game;
     }
 
