@@ -35,7 +35,7 @@ class GameController extends Controller
         $game->result = $request->input('newResult');
         $game->bonus = $request->input('bonus');
         $game->save();
-        return "game changed";
+        return "game changed: ".$game;
     }
 
     public function sumBlock(Request $request)

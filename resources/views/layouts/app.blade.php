@@ -14,7 +14,6 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Oswald" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/jquery.Jcrop.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -104,7 +103,6 @@
 <script src="{{ asset('js/newTournament.js') }}"></script>
 <script src="{{ asset('js/statistics.js') }}"></script>
 <script src="{{ asset('js/run.js') }}"></script>
-<script src="{{ asset('js/jquery.Jcrop.js') }}"></script>
 <script src="{{ asset('js/account.js') }}"></script>
 </body>
 </html>
