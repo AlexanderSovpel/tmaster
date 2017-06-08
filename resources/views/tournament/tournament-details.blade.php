@@ -71,8 +71,23 @@
             </li>
         </ul>
         @if(!$tournament->finished)
+            @if($user->is_admin)
+            <a href="/{{$tournament->id}}/run/q/conf/{{$tournament->squads[0]->id}}" class="tournament-btn btn">начать соревнование</a>
+            @else
             <a href="/{{$tournament->id}}/apply" class="btn tournament-btn-lg">подать заявку</a>
+            @endif
         @endif
         <div class="clearfix"></div>
+        <ol class="breadcrumb">
+            <li><a href="/{{$tournament->id}}/players">Участники</a></li>
+            <li>
+                @if($tournament->finished)
+                    <a href="/{{$tournament->id}}/results">Результаты</a>
+                @else
+                    Результаты
+                @endif
+            </li>
+            <li class="#">Фотоотчет</li>
+        </ol>
     </article>
 @endsection

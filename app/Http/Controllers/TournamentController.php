@@ -11,7 +11,6 @@ use App\Squad;
 use App\SquadPlayers;
 use App\Tournament;
 use App\User;
-use DebugBar\DebugBar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,10 +44,9 @@ class TournamentController extends Controller
     public function details($tournamentId)
     {
         $tournament = Tournament::find($tournamentId);
-//        echo $tournament;
         return view('tournament.tournament-details', [
             'tournament' => $tournament,
-//            'user' => Auth::user()
+            'user' => Auth::user()
         ]);
     }
 
