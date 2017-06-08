@@ -9,15 +9,15 @@ class GameController extends Controller
 {
     public function setResult(Request $request)
     {
-        $game = new Game(['player_id' => $request->input('player_id'),
-            'tournament_id' => $request->input('tournament_id'),
-            'part' => $request->input('part'),
-            'squad_id' => $request->input('squad_id'),
-            'result' => $request->input('result'),
-            'bonus' => $request->input('bonus'),
-            'date' => date("Y-m-d")]);
-
-        $game->save();
+//        $game = new Game(['player_id' => $request->input('player_id'),
+//            'tournament_id' => $request->input('tournament_id'),
+//            'part' => $request->input('part'),
+//            'squad_id' => $request->input('squad_id'),
+//            'result' => $request->input('result'),
+//            'bonus' => $request->input('bonus'),
+//            'date' => date("Y-m-d")]);
+//
+//        $game->save();
         return "game created";
     }
 
