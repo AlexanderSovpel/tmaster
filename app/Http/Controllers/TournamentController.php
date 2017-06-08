@@ -375,46 +375,26 @@ class TournamentController extends Controller
 
     public function roundRobinResults(Request $request, $tournamentId)
     {
-//        echo "hello<br>";
-//        echo gettype($request->input('players'))."<br>";
-//        echo $request->input('players')."<br>";
         $players = json_decode($request->input('players'));
-//        echo json_last_error()."<br>";
-//        echo gettype($players)."<br>";
-//        echo count($players)."<br>";
-//        var_dump($players)."<br>";
-//        foreach ($players as $key => $player) {
-//            echo gettype($player)."<br>";
-//            echo $key."<br>";
-//            echo $player->id."<br>";
-//        }
         $playedRoundRobinGames = array();
         $playersResults = array();
         $qualificationResults = array();
         foreach ($players as $player) {
-//            echo $player."<br>";
             $roundRobinGames = Game::where('player_id', $player->id)
                 ->where('tournament_id', $tournamentId)
                 ->where('part', 'rr')
                 ->get();
-//            var_dump($roundRobinGames);
-////
-///
             $sum = 0;
             foreach ($roundRobinGames as $roundRobinGame) {
                 $playedRoundRobinGames[$player->id][] = $roundRobinGame;
                 $sum += $roundRobinGame->result + $roundRobinGame->bonus;
             }
             $avg = round($sum / $roundRobinGames->count(), 2);
-//
-
             $qualificationResult = Result::where('tournament_id', $tournamentId)
                 ->where('player_id', $player->id)
                 ->where('part', 'q')
                 ->first();
-//
             $sum += $qualificationResult->sum;
-
             $roundRobinResult = Result::firstOrNew([
                 'tournament_id' => $tournamentId,
                 'player_id' => $player->id,
