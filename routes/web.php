@@ -40,7 +40,7 @@ Route::get('/{tournamentId}/run/q/rest', 'TournamentController@qualificationResu
 Route::get('/{tournamentId}/run/rr/conf/', 'TournamentController@runRoundRobinConfirm');
 Route::get('/{tournamentId}/run/rr/draw', 'TournamentController@runRoundRobinDraw');
 Route::get('/{tournamentId}/run/rr/game', 'TournamentController@runRoundRobinGame');
-Route::post('/{tournamentId}/run/rr/rest', 'TournamentController@roundRobinResults');
+Route::get('/{tournamentId}/run/rr/rest', 'TournamentController@roundRobinResults');
 
 Route::get('/getSquadFilling/{id}', 'SquadController@getSquadFilling');
 Route::get('/addSquadForm', 'SquadController@addSquadForm');
