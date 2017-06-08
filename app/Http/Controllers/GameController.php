@@ -9,13 +9,6 @@ class GameController extends Controller
 {
     public function setResult(Request $request)
     {
-        echo $request->input('player_id')."\n";
-//        echo $request->input('tournament_id')."<br>";
-//        echo $request->input('part')."<br>";
-//        echo $request->input('squad_id')."<br>";
-//        echo $request->input('result')."<br>";
-//        echo $request->input('bonus')."<br>";
-//        echo date("Y-m-d")."<br>";
         $game = new Game();
         $game->player_id = $request->player_id;
         $game->tournament_id = $request->tournament_id;
