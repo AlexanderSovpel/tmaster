@@ -383,9 +383,10 @@ class TournamentController extends Controller
         echo gettype($players)."<br>";
         echo count($players)."<br>";
         var_dump($players)."<br>";
-//        foreach ($players as $key => $player) {
+        foreach ($players as $key => $player) {
+            echo "player<br>";
 //            echo "$key: $player<br>";
-//        }
+        }
 //        $playedRoundRobinGames = array();
 //        $playersResults = array();
 //        $qualificationResults = array();
