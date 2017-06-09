@@ -506,7 +506,9 @@ class TournamentController extends Controller
     public function newTournament()
     {
         $admins = User::where('is_admin', 1)->get();
-        var_dump($admins);
+        foreach ($admins as $key => $value) {
+          echo $value."<br>";
+        }
         return view('tournament.new-tournament', ['admins' => $admins]);
     }
 
