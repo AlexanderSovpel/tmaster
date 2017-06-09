@@ -25,6 +25,28 @@ $('#apply-button').click(function (e) {
   });
 });
 
+$('.players-tournament-btn').click(function (e) {
+    e.preventDefault();
+    var tournamentId = $('#tournament-id').val();
+    var squad = {
+        squad: $(this).siblings("[name='squad']").val()
+    };
+
+    $.ajax({
+        type: 'POST',
+        url: '/' + tournamentId + '/sendApplication',
+        data: squad,
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        success: function (data) {
+            $('.error').html(data);
+            location.reload();
+        }
+    }).fail(function (data) {
+        $('.error').html(data.responseText);
+    });
+});
+
+
 function getPlayersList() {
     var selectedSquad = squad.options[squad.selectedIndex].value;
 

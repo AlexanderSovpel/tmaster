@@ -442,6 +442,16 @@ label {
 .squad .remove-btn {
   font-size: 14px;
 }
+
+.players-tournament-btn {
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+.squad .apply-form {
+    width: 100%;
+    float: none;
+}
 /*END Players*/
 
 /*Apply*/
@@ -585,7 +595,6 @@ tr:nth-child(2n) {
     margin: auto;
     background-color: #ffffff;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    /*font-size: 18px;*/
 }
 
 .creation-step > h1 {
@@ -620,18 +629,11 @@ tr:nth-child(2n) {
 #new-tournament > .creation-step > .form-group > .form-group > .checkbox,
 #new-tournament > .creation-step > .form-group > .choose-type {
   width: 40%;
-    /*margin-left: 20px;*/
   display: inline-block;
 }
 
 .creation-step > .form-group > .input-group {
-    /*width: 40%;*/
   margin-left: 20px;
-    /*display: inline-table;*/
-}
-
-.creation-step > .well > .form-group > label {
-    /*width: 100%;*/
 }
 
 .creation-step > .well > .form-group > .form-control {
@@ -639,7 +641,6 @@ tr:nth-child(2n) {
 }
 
 .well {
-    /*width: 90%;*/
     margin: auto;
     margin-bottom: 20px;
     border-radius: 0px;
@@ -736,22 +737,6 @@ tr:nth-child(2n) {
   display: block;
 }
 
-.input {
-    /*font-size: 18px;*/
-    /*background-color: transparent;*/
-    /*border: none;*/
-    /*border-bottom: solid 2px rgba(15, 27, 95, 0.5);*/
-    /*border-radius: 0px;*/
-    /*box-shadow: none;*/
-}
-
-.input:focus {
-    /*border: none;*/
-    /*border-bottom: solid 2px rgba(15, 27, 95, 1);*/
-    /*border-radius: 0px;*/
-    /*box-shadow: none;*/
-}
-
 .played {
     border: none;
 }
@@ -781,7 +766,6 @@ tr:nth-child(2n) {
 
 .confirm-checkbox:not(checked) + label {
     position: relative; /* будем позиционировать псевдочекбокс относительно label */
-    /*padding: 0 0 0 60px; !* оставляем слева от label место под псевдочекбокс *!*/
 }
 
 .confirm-checkbox:not(checked) + label:before {
@@ -791,7 +775,6 @@ tr:nth-child(2n) {
     background: url('../img/unchecked.png');
     position: absolute;
     top: 4px;
-    /*left: 0px;*/
 }
 
 /* Меняем фон чекбокса, когда он включен. */

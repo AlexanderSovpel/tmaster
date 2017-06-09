@@ -117,7 +117,7 @@ class TournamentController extends Controller
             ->where('player_id', $playerId)->first();
         $sp->delete();
 
-        return redirect('/');
+        return back();
     }
 
     public function runQualificationConfirm($tournamentId, $currentSquadId)
@@ -506,11 +506,7 @@ class TournamentController extends Controller
     public function newTournament()
     {
          $admins = User::where('is_admin', 1)->get();
-        // foreach ($admins as $key => $value) {
-          // echo $value."<br>";
-        // }
          return view('tournament.new-tournament', ['admins' => $admins]);
-//        return view('tournament.new-tournament');
     }
 
     public function createTournament(Request $request)
