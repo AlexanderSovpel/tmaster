@@ -407,10 +407,10 @@ label {
   float: left;
 }
 
-.squad:nth-child(2n+1) {
-  margin-right: 0px;
-  margin-left: 2%;
-}
+/*.squad:nth-child(2n+1) {*/
+  /*margin-right: 0px;*/
+  /*margin-left: 2%;*/
+/*}*/
 
 .squad h1 {
   margin-top: 0px;
