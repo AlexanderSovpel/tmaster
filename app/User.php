@@ -24,7 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'is_admin', 'password', 'remember_token',
+        'is_admin', 'remember_token',
     ];
 
     public function squads()

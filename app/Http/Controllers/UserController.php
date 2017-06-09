@@ -6,6 +6,7 @@ use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -70,12 +71,13 @@ class UserController extends Controller
             $user->avatar = $url;
         }
 
-//        if ($request->new_password) {
-//            if (Hash::check($request->old_password, $user->getAuthPassword())) {
-//                if ($request->new_password == $request->password_confirm) {
-//                }
-//            }
-//        }
+        if ($request->new_password) {
+            if (Hash::check($request->old_password, $user->getAuthPassword())) {
+                if ($request->new_password == $request->password_confirm) {
+                    $user->password = bcrypt($request->new_password);
+                }
+            }
+        }
 
         $user->save();
 
