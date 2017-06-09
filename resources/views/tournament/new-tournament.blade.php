@@ -358,11 +358,11 @@
             </div>
             <div class="form-group row">
                 <label for="contact-phone" class="control-label col-md-6">Телефон</label>
-                <input type="text" id="contact-phone" name="contact_phone" class="form-control col-md-6" readonly>
+                <input type="text" id="contact-phone" name="contact_phone" class="form-control col-md-6" value="{{$admins[0]->phone}}" readonly>
             </div>
             <div class="form-group row">
                 <label for="contact-email" class="control-label col-md-6">Электронная почта</label>
-                <input type="email" id="contact-email" name="contact_email" class="form-control col-md-6" readonly>
+                <input type="email" id="contact-email" name="contact_email" class="form-control col-md-6" value="{{$admins[0]->email}}" readonly>
             </div>
         </div>
 
