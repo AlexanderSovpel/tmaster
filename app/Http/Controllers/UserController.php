@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
+use App\User;
 
 class UserController extends Controller
 {
@@ -90,8 +91,8 @@ class UserController extends Controller
     }
 
     public function getPlayers() {
-      // $players = User::all();
-      return view('players');
+      $players = User::all();
+      return view('players', ['players' => $players]);
     }
 
     public function saveTempImage(Request $request)
