@@ -17,7 +17,7 @@
           </tr>
         </thead>
         <tbody>
-        @foreach($players as $index => $player)
+        {{-- @foreach($players as $index => $player)
           <tr class="">
             <td>{{$index}}</td>
             <td>{{$player->id}}</td>
@@ -25,7 +25,7 @@
             <td>{{$player->results()->where('part', 'rr')->sum('sum')}}</td>
             <td>{{$player->results()->where('part', 'rr')->avg('avg')}}</td>
           </tr>
-        @endforeach
+        @endforeach --}}
         </tbody>
       </table>
     </div>
