@@ -25,9 +25,13 @@
             <td>{{$player->name}} {{$player->surname}}</td>
             <td>
               @if($player->is_admin)
-              <span class="glyphicon glyphicon-ok label label-success"></span>
+              <span class="label label-success">
+                <span class="glyphicon glyphicon-ok"></span>
+              </span>
               @else
-              <span class="glyphicon glyphicon-remove label label-danger"></span>
+              <span class="label label-danger">
+                <span class="glyphicon glyphicon-remove"></span>
+              </span>
               @endif
             </td>
             <td>{{$player->results()->where('part', 'rr')->sum('sum')}}</td>
