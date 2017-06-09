@@ -12,6 +12,7 @@
             <th>№</th>
             <th>ID</th>
             <th>Игрок</th>
+            <th>Судья</th>
             <th>Сумма</th>
             <th>Средний</th>
           </tr>
@@ -22,6 +23,14 @@
             <td>{{$index}}</td>
             <td>{{$player->id}}</td>
             <td>{{$player->name}} {{$player->surname}}</td>
+            <td>
+              {{$player->name}}
+              @if($player->is_admin)
+              <span class="glyphicon glyphicon-ok"></span>
+              @else
+              <span class="glyphicon glyphicon-remove"></span>
+              @endif
+            </td>
             <td>{{$player->results()->where('part', 'rr')->sum('sum')}}</td>
             <td>{{$player->results()->where('part', 'rr')->avg('avg')}}</td>
           </tr>
