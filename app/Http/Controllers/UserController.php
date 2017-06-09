@@ -90,8 +90,8 @@ class UserController extends Controller
     }
 
     public function getPlayers() {
-      $players = User::all();
-      return view('players', ['players' => $players]);
+      // $players = User::all();
+      return view('players');
     }
 
     public function saveTempImage(Request $request)
