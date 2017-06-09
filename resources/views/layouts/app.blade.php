@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'T-Master') }}</title>
+    <title>T-Master</title>
 
     <!-- Styles -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Oswald" rel="stylesheet">
@@ -49,7 +49,8 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    &nbsp;
+                  <li><a href="/">Соревнования</a></li>
+                  <li><a href="/players">Игроки</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

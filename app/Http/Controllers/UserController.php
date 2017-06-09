@@ -89,6 +89,11 @@ class UserController extends Controller
       return json_encode($admin);
     }
 
+    public function getPlayers() {
+      $players = User::all();
+      return view('players', ['players' => $players]);
+    }
+
     public function saveTempImage(Request $request)
     {
 //        echo 'hello';

@@ -140,6 +140,11 @@ label {
     border: none;
 }
 
+thead {
+  height: 40px;
+  font-weight: 600;
+  background-color: #dddddd;
+}
 /*END Common*/
 
 /*Header*/
@@ -192,6 +197,11 @@ label {
     padding-bottom: 15px;
 }
 
+.dropdown .dropdown-toggle {
+  height: 50px !important;
+  line-height: 22px !important;
+}
+
 .dropdown-menu {
   font-size: 18px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
@@ -217,6 +227,15 @@ label {
 .navbar-default .navbar-nav > .open > a:hover {
   color: #9d0d15;
   background-color: transparent;
+}
+
+.navbar .navbar-header {
+  margin-right: 40px;
+}
+
+.navbar .collapse.navbar-collapse .navbar-nav > li > a {
+  height: 80px;
+  line-height: 52px;
 }
 /*END Header*/
 

@@ -49,6 +49,7 @@ Route::get('/account', 'UserController@showAccount');
 Route::get('/account/edit', 'UserController@editAccount');
 Route::post('/account/save', 'UserController@saveAccount');
 Route::get('/getStatistic', 'UserController@getStatistic');
+Route::get('/players', 'UserController@getPlayers');
 // Route::get('/getContact/{id}', 'UserController@getContact');
 //Route::post('/saveTempImage', 'UserController@saveTempImage');
 
