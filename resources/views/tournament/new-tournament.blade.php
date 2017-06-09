@@ -350,7 +350,7 @@
                 <label for="contact-person" class="control-label col-md-6">Контактное лицо</label>
                 <select class="form-control col-md-6" id="contact-person" name="contact_person">
                   @foreach ($admins as $admin)
-                    {{--<option value="{{$admin->id}}">{{$admin->name $admin->surname}}</option>--}}
+                    <option value="{{$admin->id}}">{{$admin->name}} {{$admin->surname}}</option>
                     {{--<option value="1">{{count($admins)}}</option>--}}
                   @endforeach
                 </select>
