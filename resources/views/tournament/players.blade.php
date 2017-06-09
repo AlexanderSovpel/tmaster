@@ -21,7 +21,7 @@
                     @endforeach
                 </ol>
                 <div class="clearfix"></div>
-                @if($squad->players()->count() < $squad->max_players)
+                @if($squad->players()->count() < $squad->max_players && !\Illuminate\Support\Facades\Auth::user()->is_admin)
                     <form method="post" action="/{{$tournament->id}}/sendApplication" class="apply-form">
                         {{ csrf_field() }}
                         <input type="hidden" name="squad" value="{{$squad->id}}">
