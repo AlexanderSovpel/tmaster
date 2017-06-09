@@ -11,6 +11,6 @@ class RemoveDumpUsers extends Seeder
      */
     public function run()
     {
-      DB::table('users')->where('id', '<', 10)->delete();
+      DB::table('users')->where('id', '<', 60)->delete();
     }
 }
