@@ -4,7 +4,6 @@
         <li><a href="/">Соревнования</a></li>
         <li>Создание турнира</li>
     </ol>
-    {{--<div class="container">--}}
     <div class="row bs-wizard" style="border-bottom:0;">
         <div class="col-xs-1 bs-wizard-step active">
             <div class="text-center bs-wizard-stepnum">Общee</div>
@@ -62,8 +61,6 @@
             <a href="#" class="bs-wizard-dot"></a>
         </div>
     </div>
-    {{--</div>--}}
-    {{--<div id="error"></div>--}}
     <form method="post" action="/createTournament" id="new-tournament" class="panel panel-default">
         {{csrf_field()}}
         <input type="hidden" id="step" value="0">
@@ -352,10 +349,10 @@
             <div class="form-group row">
                 <label for="contact-person" class="control-label col-md-6">Контактное лицо</label>
                 <select class="form-control col-md-6" id="contact-person" name="contact_person">
-                  <!-- @foreach ($admins as $admin) -->
-                    <!-- <option value="{{$admin->id}}">{{$admin->name $admin->surname}}</option> -->
-                    <!-- <option value="1">{{count($admins)}}</option> -->
-                  <!-- @endforeach -->
+                  {{--@foreach ($admins as $admin)--}}
+                    {{--<option value="{{$admin->id}}">{{$admin->name $admin->surname}}</option>--}}
+                    {{--<option value="1">{{count($admins)}}</option>--}}
+                  {{--@endforeach--}}
                 </select>
                 <!-- <input type="text" id="contact-person" name="contact_person" class="form-control col-md-6" required> -->
             </div>
