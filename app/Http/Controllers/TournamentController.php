@@ -505,7 +505,8 @@ class TournamentController extends Controller
 
     public function newTournament()
     {
-        return view('tournament.new-tournament');
+        $admins = User::where('is_admin', true)->get();
+        return view('tournament.new-tournament', ['admins' => $admins]);
     }
 
     public function createTournament(Request $request)
@@ -541,9 +542,7 @@ class TournamentController extends Controller
         $roundRobin->save();
         echo $roundRobin;
 
-        $contact = User::where('email', $request->contact_email)
-            // ->where('phone', $request->contact_phone)
-            ->first();
+        $contact = User::find($request->contact_person);
         echo $contact;
 
         $newTournament = new Tournament([

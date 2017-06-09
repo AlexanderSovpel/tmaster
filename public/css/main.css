@@ -1064,3 +1064,16 @@ tr:nth-child(2n) {
     }
 
 }
+
+@media screen and (max-width: 360px) {
+    .tournament {
+        width: 100%;
+        padding: 10px 10px 5px 10px;
+    }
+
+    .col-md-6 {
+        width: auto;
+        float: left;
+    }
+
+}

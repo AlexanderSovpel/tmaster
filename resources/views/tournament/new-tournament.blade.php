@@ -351,15 +351,20 @@
             <h1>Контактная информация</h1>
             <div class="form-group row">
                 <label for="contact-person" class="control-label col-md-6">Контактное лицо</label>
-                <input type="text" id="contact-person" name="contact_person" class="form-control col-md-6" required>
+                <select class="form-control col-md-6" id="contact-person" name="contact_person">
+                  @foreach ($admins as $admin)
+                    <option value="{{$admin->id}}">{{$admin->name $admin->surname}}</option>
+                  @endforeach
+                </select>
+                <!-- <input type="text" id="contact-person" name="contact_person" class="form-control col-md-6" required> -->
             </div>
             <div class="form-group row">
                 <label for="contact-phone" class="control-label col-md-6">Телефон</label>
-                <input type="text" id="contact-phone" name="contact_phone" class="form-control col-md-6" required>
+                <input type="text" id="contact-phone" name="contact_phone" class="form-control col-md-6" readonly>
             </div>
             <div class="form-group row">
                 <label for="contact-email" class="control-label col-md-6">Электронная почта</label>
-                <input type="email" id="contact-email" name="contact_email" class="form-control col-md-6" required>
+                <input type="email" id="contact-email" name="contact_email" class="form-control col-md-6" readonly>
             </div>
         </div>
 

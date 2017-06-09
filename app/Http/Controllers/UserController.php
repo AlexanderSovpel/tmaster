@@ -82,6 +82,11 @@ class UserController extends Controller
         return redirect('/account');
     }
 
+    public function getContact($id) {
+      $admin = User::find($id);
+      return json_encode($admin);
+    }
+
     public function saveTempImage(Request $request)
     {
 //        echo 'hello';

@@ -11,6 +11,18 @@ if (newTournamentForm) {
     }
   }
 
+  var contactPerson = document.querySelector('#contact-person');
+  $(contactPerson).change(function() {
+    var adminId = this.options[this.selectedIndex].value;
+    $.get('/getContact/' + adminId, function(data) {
+      var adminUser = JSON.parse(data);
+      $('#contact-phone').val(adminUser.phone);
+      $('#contact-email').val(adminUser.email);
+    }).fail(function(data) {
+        console.log(data);
+      });
+  });
+
   $('#save').click(function(e) {
     e.preventDefault();
     $('#step').val(0);
