@@ -505,7 +505,8 @@ class TournamentController extends Controller
 
     public function newTournament()
     {
-        $admins = User::where('is_admin', true)->get();
+        $admins = User::where('is_admin', 1)->get();
+        var_dump($admins);
         return view('tournament.new-tournament', ['admins' => $admins]);
     }
 
