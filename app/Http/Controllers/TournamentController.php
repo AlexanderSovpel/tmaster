@@ -509,7 +509,8 @@ class TournamentController extends Controller
         foreach ($admins as $key => $value) {
           echo $value."<br>";
         }
-        return view('tournament.new-tournament', ['admins' => $admins]);
+        // return view('tournament.new-tournament', ['admins' => $admins]);
+        return view('tournament.new-tournament');
     }
 
     public function createTournament(Request $request)
