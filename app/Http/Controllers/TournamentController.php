@@ -120,7 +120,7 @@ class TournamentController extends Controller
             ->where('player_id', $playerId)->first();
         $sp->delete();
 
-        return redirect('/');
+        return back();
     }
 
     public function runQualificationConfirm($tournamentId, $currentSquadId)

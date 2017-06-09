@@ -407,10 +407,10 @@ label {
   float: left;
 }
 
-.squad:nth-child(2n+1) {
-  margin-right: 0px;
-  margin-left: 2%;
-}
+/*.squad:nth-child(2n+1) {*/
+/*margin-right: 0px;*/
+/*margin-left: 2%;*/
+/*}*/
 
 .squad h1 {
   margin-top: 0px;
@@ -441,6 +441,16 @@ label {
 
 .squad .remove-btn {
   font-size: 14px;
+}
+
+.players-tournament-btn {
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+.squad .apply-form {
+    width: 100%;
+    float: none;
 }
 /*END Players*/
 

@@ -66,6 +66,14 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="email" class="col-md-6 control-label">Телефон</label>
+                            <div class="col-md-6">
+                                <input id="phone" type="text" class="form-control" name="phone"
+                                       value="{{ $user->phone }}" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label for="email" class="col-md-6 control-label">Электронная почта</label>
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control" name="email"
@@ -73,28 +81,29 @@
                             </div>
                         </div>
 
-                        {{--<h3>Изменение пароля</h3>--}}
+                        <h3>Изменение пароля</h3>
 
-                        {{--<div class="form-group">--}}
-                        {{--<label for="old-password" class="col-md-6 control-label">Старый пароль</label>--}}
-                        {{--<div class="col-md-6">--}}
-                        {{--<input id="old-password" type="password" class="form-control" name="old_password">--}}
-                        {{--</div>--}}
-                        {{--</div>--}}
+                        <div class="form-group">
+                            <label for="old-password" class="col-md-6 control-label">Старый пароль</label>
+                            <div class="col-md-6">
+                                <input id="old-password" type="password" class="form-control" name="old_password">
+                            </div>
+                        </div>
 
-                        {{--<div class="form-group">--}}
-                        {{--<label for="new-password" class="col-md-6 control-label">Новый пароль</label>--}}
-                        {{--<div class="col-md-6">--}}
-                        {{--<input id="new-password" type="password" class="form-control" name="new_password">--}}
-                        {{--</div>--}}
-                        {{--</div>--}}
+                        <div class="form-group">
+                            <label for="new-password" class="col-md-6 control-label">Новый пароль</label>
+                            <div class="col-md-6">
+                                <input id="new-password" type="password" class="form-control" name="new_password">
+                            </div>
+                        </div>
 
-                        {{--<div class="form-group">--}}
-                        {{--<label for="password-confirm" class="col-md-6 control-label">Подтверждение пароля</label>--}}
-                        {{--<div class="col-md-6">--}}
-                        {{--<input id="password-confirm" type="password" class="form-control" name="password_confirm">--}}
-                        {{--</div>--}}
-                        {{--</div>--}}
+                        <div class="form-group">
+                            <label for="password-confirm" class="col-md-6 control-label">Подтверждение пароля</label>
+                            <div class="col-md-6">
+                                <input id="password-confirm" type="password" class="form-control"
+                                       name="password_confirm">
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <div class="col-md-6">

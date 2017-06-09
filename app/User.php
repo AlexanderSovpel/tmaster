@@ -24,7 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'is_admin', 'password', 'remember_token',
+        'is_admin', 'remember_token',
     ];
 
     public function squads()
@@ -41,7 +41,6 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Result', 'player_id');
     }
-
 //    public function tournament() {
 //        return $this->belongsTo('App\Tournament', 'contact_id');
 //    }
