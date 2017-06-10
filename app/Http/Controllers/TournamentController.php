@@ -35,7 +35,7 @@ class TournamentController extends Controller
      */
     public function index()
     {
-        $tournaments = Tournament::all()->sortByDesc('id');
+        $tournaments = Tournament::all();
         $user = Auth::user();
 
         return view('index', ['tournaments' => $tournaments, 'user' => $user]);
