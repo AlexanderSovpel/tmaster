@@ -254,20 +254,35 @@ class TournamentController extends Controller
         $qResults = array();
         foreach ($tournament->squads as $squad) {
             foreach ($squad->players as $player) {
-                $qPlayers[] = $player;
-                $games = $player->games()
-                    ->where('tournament_id', $tournament->id)
-                    ->where('part', 'q')->get();
+              $games = $player->games()
+                  ->where('tournament_id', $tournament->id)
+                  ->where('squad_id', $squad->id)
+                  ->where('part', 'q')->get();
 
-                foreach ($games as $game) {
-                    $qGames[$player->id][] = $game;
+              $result = Result::where('tournament_id', $tournamentId)
+                  ->where('player_id', $player->id)
+                  ->where('part', 'q')
+                  ->where('squad_id', $squad->id)
+                  ->first();
+
+              foreach ($qPlayers as $index => $q) {
+                if ($q->id == $player->id) {
+                  $extIndex = $index;
+                  break;
                 }
+              }
 
-                $result = Result::where('tournament_id', $tournamentId)
-                    ->where('player_id', $player->id)
-                    ->where('part', 'q')
-                    ->first();
+              if (isset($extIndex)) {
+                if ($qResults[$player->id] < $result) {
+                  $qGames[$player->id] = $games;
+                  $qResults[$player->id] = $result;
+                }
+              }
+              else {
+                array_push($qPlayers, $player);
+                $qGames[$player->id] = $games;
                 $qResults[$player->id] = $result;
+              }
             }
         }
 
@@ -435,20 +450,37 @@ class TournamentController extends Controller
         $qResults = array();
         foreach ($tournament->squads as $squad) {
             foreach ($squad->players as $player) {
-                $qPlayers[] = $player;
-                $qualificationGames = Game::where('tournament_id', $tournament->id)
-                    ->where('player_id', $player->id)
-                    ->where('part', 'q')->get();
+              $qualificationGames = Game::where('tournament_id', $tournament->id)
+                  ->where('player_id', $player->id)
+                  ->where('part', 'q')
+                  ->where('squad_id', $squad->id)
+                  ->get();
 
-                foreach ($qualificationGames as $game) {
-                    $qGames[$player->id][] = $game;
+
+              $qResult = Result::where('tournament_id', $tournamentId)
+                  ->where('player_id', $player->id)
+                  ->where('part', 'q')
+                  ->where('squad_id', $squad->id)
+                  ->first();
+
+              foreach ($qPlayers as $index => $q) {
+                if ($q->id == $player->id) {
+                  $extIndex = $index;
+                  break;
                 }
+              }
 
-                $qResult = Result::where('tournament_id', $tournamentId)
-                    ->where('player_id', $player->id)
-                    ->where('part', 'q')
-                    ->first();
+              if (isset($extIndex)) {
+                if ($qResults[$player->id] < $qResult) {
+                  $qGames[$player->id] = $qualificationGames;
+                  $qResults[$player->id] = $qResult;
+                }
+              }
+              else {
+                array_push($qPlayers, $player);
+                $qGames[$player->id] = $qualificationGames;
                 $qResults[$player->id] = $qResult;
+              }
             }
         }
 
