@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Result;
 
 class FixFinalResult extends Seeder
 {
@@ -11,7 +12,6 @@ class FixFinalResult extends Seeder
      */
     public function run()
     {
-        DB::('results')->where('tournament_id', 42)->where('player_id', 122)
-                       ->where('part', 'rr')->update(['sum' => 2058]);
+        Result::where('tournament_id', 42)->where('player_id', 122)->where('part', 'rr')->update(['sum' => 2058]);
     }
 }
