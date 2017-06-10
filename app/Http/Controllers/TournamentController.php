@@ -271,11 +271,12 @@ class TournamentController extends Controller
                   $qResults[$player->id] = $result;
 
               foreach ($qPlayers as $index => $q) {
-                if ($q->id == $player->id) {
-                  echo "$extIndex<br>";
-                  $extIndex = $index;
-                  break;
-                }
+                echo "$index<br>";
+                // if ($q->id == $player->id) {
+                //   echo "$extIndex<br>";
+                //   $extIndex = $index;
+                //   break;
+                // }
               }
               //
               // if (isset($extIndex)) {
