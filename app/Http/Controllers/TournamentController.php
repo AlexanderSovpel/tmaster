@@ -438,7 +438,7 @@ class TournamentController extends Controller
 
 ////        echo gettype($players);
 ////        $players = array_values($players);
-////        $this->sortPlayersByResult($players, $tournamentId, 'rr');
+       $this->sortPlayersByResult($players, $tournamentId, 'rr');
 //
         $playersCount = count($players);
         $roundCount = ($playersCount % 2) ? $playersCount : $playersCount - 1;
