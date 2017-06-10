@@ -479,6 +479,9 @@ class TournamentController extends Controller
                   ->where('squad_id', $squad->id)
                   ->first();
 
+              echo "$player<br>";
+              echo "$qResult<br>";
+
               foreach ($qPlayers as $index => $q) {
                 if ($q->id == $player->id) {
                   $extIndex = $index;
