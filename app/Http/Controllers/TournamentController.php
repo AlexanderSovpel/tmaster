@@ -493,13 +493,13 @@ class TournamentController extends Controller
 
               if (isset($extIndex)) {
                 if ($qResults[$player->id] < $qResult) {
-                  echo "result of player #"$player->id." updated<br>";
+                  echo "result of player #".$player->id." updated<br>";
                   $qGames[$player->id] = $qualificationGames;
                   $qResults[$player->id] = $qResult;
                 }
               }
               else {
-                echo "result of player #"$player->id." set<br>";
+                echo "result of player #".$player->id." set<br>";
                 array_push($qPlayers, $player);
                 $qGames[$player->id] = $qualificationGames;
                 $qResults[$player->id] = $qResult;
