@@ -487,15 +487,15 @@ class TournamentController extends Controller
               }
 
               if (isset($extIndex)) {
-                if ($qResults[$player->id] < $qResult) {
-                  $qGames[$player->id] = $qualificationGames;
-                  $qResults[$player->id] = $qResult;
+                if ($qResults[$extIndex] < $qResult) {
+                  $qGames[$extIndex] = $qualificationGames;
+                  $qResults[$extIndex] = $qResult;
                 }
               }
               else {
                 array_push($qPlayers, $player);
-                $qGames[$player->id] = $qualificationGames;
-                $qResults[$player->id] = $qResult;
+                $qGames[] = $qualificationGames;
+                $qResults[] = $qResult;
               }
             }
         }
