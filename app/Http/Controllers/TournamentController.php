@@ -288,7 +288,7 @@ class TournamentController extends Controller
         }
 
         $this->sortPlayersByResult($qPlayers, $tournamentId, 'q');
-        // session(['players' => $qPlayers]);
+        session(['players' => $qPlayers]);
 
         return view('tournament.run.results-q', [
             'tournament' => $tournament,
@@ -326,8 +326,8 @@ class TournamentController extends Controller
 
     public function runRoundRobinConfirm(Request $request, $tournamentId)
     {
-        // $players = session('players');
-        $players = json_decode($request->input('players'));
+        $players = session('players');
+        // $players = json_decode($request->input('players'));
         $tournament = Tournament::find($tournamentId);
         $finalistsCount = 1;
 
@@ -338,7 +338,7 @@ class TournamentController extends Controller
             }
         }
 
-        session('players' => $players);
+        session(['players' => $players]);
 
         return view('tournament.run.confirm', [
             'tournament' => $tournament,
@@ -351,14 +351,14 @@ class TournamentController extends Controller
     public function runRoundRobinDraw(Request $request, $tournamentId)
     {
         $tournament = Tournament::find($tournamentId);
-        // $players = session('players');
+        $players = session('players');
         $players = json_decode($request->input('players'));
         foreach ($players as $player) {
             if (!in_array($player->id, $request->input('confirmed'))) {
                 unset($player);
             }
         }
-        // session('players' => $players);
+        session(['players' => $players]);
 
         return view('tournament.run.draw', [
             'tournament' => $tournament,
@@ -370,8 +370,8 @@ class TournamentController extends Controller
 
     public function runRoundRobinGame(Request $request, $tournamentId)
     {
-        // $players = session('players');
-        $players = json_decode($request->input('players'));
+        $players = session('players');
+        // $players = json_decode($request->input('players'));
         $playedGames = array();
         foreach ($players as $player) {
             $games = Game::where('player_id', $player->id)
@@ -399,7 +399,7 @@ class TournamentController extends Controller
 
     public function roundRobinResults(Request $request, $tournamentId)
     {
-        // $players = session('players');
+        $players = session('players');
         $players = json_decode($request->input('players'));
         $playedRoundRobinGames = array();
         $playersResults = array();
