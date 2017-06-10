@@ -501,7 +501,9 @@ class TournamentController extends Controller
         }
 
         $this->sortPlayersByResult($qPlayers, $tournamentId, 'q');
-
+        foreach ($qPlayers as $key => $value) {
+          echo "$key: $value<br>";
+        }
 
         $fGames = array();
         $fResults = array();
@@ -532,8 +534,6 @@ class TournamentController extends Controller
             if (!isset($fResults[$result->player_id])) {
                 $allResults[] = $result;
             }
-
-            echo $qResult."<br>";
         }
 
         usort($allResults, function ($resultA, $resultB) {
