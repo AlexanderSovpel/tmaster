@@ -266,30 +266,31 @@ class TournamentController extends Controller
                   ->where('squad_id', $squad->id)
                   ->first();
 
-                  array_push($qPlayers, $player);
-                  $qGames[$player->id] = $games;
-                  $qResults[$player->id] = $result;
+                  // array_push($qPlayers, $player);
+                  // $qGames[$player->id] = $games;
+                  // $qResults[$player->id] = $result;
 
+              $extIndex = null;
               foreach ($qPlayers as $index => $q) {
                 // echo "$index<br>";
                 if ($q->id == $player->id) {
-                  echo $q->id."<br>";
-                //   $extIndex = $index;
-                //   break;
+                  // echo $q->id."<br>";
+                  $extIndex = $index;
+                  break;
                 }
               }
               //
-              // if (isset($extIndex)) {
-              //   if ($qResults[$player->id] < $result) {
-              //     $qGames[$player->id] = $games;
-              //     $qResults[$player->id] = $result;
-              //   }
-              // }
-              // else {
-              //   array_push($qPlayers, $player);
-              //   $qGames[$player->id] = $games;
-              //   $qResults[$player->id] = $result;
-              // }
+              if (isset($extIndex)) {
+                if ($qResults[$player->id] < $result) {
+                  $qGames[$player->id] = $games;
+                  $qResults[$player->id] = $result;
+                }
+              }
+              else {
+                array_push($qPlayers, $player);
+                $qGames[$player->id] = $games;
+                $qResults[$player->id] = $result;
+              }
             }
         }
 
