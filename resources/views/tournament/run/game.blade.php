@@ -4,7 +4,7 @@
     <div class="panel-heading"><h1>Игра</h1></div>
     <form action="/{{$tournament->id}}/run/q/rest/{{$currentSquadId}}" method="post" class="panel-body">
         {{ csrf_field() }}
-        <!-- <input type="hidden" name="players" value="{{$players}}"> -->
+        <input type="hidden" name="players" value="{{$players}}">
         <table>
           <thead>
             <tr>
