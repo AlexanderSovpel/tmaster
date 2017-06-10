@@ -281,7 +281,7 @@ class TournamentController extends Controller
               }
               //
               if (isset($extIndex)) {
-                if ($qResults[$player->id] < $result) {
+                if ($qResults[$player->id]->sum < $result->sum) {
                   $qGames[$player->id] = $games;
                   $qResults[$player->id] = $result;
                 }
