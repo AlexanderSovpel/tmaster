@@ -318,11 +318,11 @@ class TournamentController extends Controller
             $playerAResult = $playerA['results']
                 ->where('tournament_id', $tournamentId)
                 ->where('part', $part)
-                ->max('sum');
+                ->first();
             $playerBResult = $playerB['results']
                 ->where('tournament_id', $tournamentId)
                 ->where('part', $part)
-                ->max('sum');
+                ->first();
             return ($playerAResult->sum < $playerBResult->sum);
         });
     }
