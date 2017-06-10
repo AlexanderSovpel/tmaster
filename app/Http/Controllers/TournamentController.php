@@ -502,9 +502,9 @@ class TournamentController extends Controller
 
         $this->sortPlayersByResult($qPlayers, $tournamentId, 'q');
 
-        // foreach ($qPlayers as $key => $value) {
-        //   echo "$key: $value<br>";
-        // }
+        foreach ($qResults as $key => $value) {
+          echo "$key: $value<br>";
+        }
 
         $fGames = array();
         $fResults = array();
