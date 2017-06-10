@@ -1,7 +1,7 @@
 @extends('layouts.run')
 
 @section('process')
-    <h2>Результаты</h2>
+    <h1>Результаты</h1>
     <form action="/{{$tournament->id}}/results" method="get">
         {{ csrf_field() }}
         @include('partial.final-results')
