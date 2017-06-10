@@ -37,7 +37,7 @@ Route::get('/{tournamentId}/run/q/game/{currentSquadId}', 'TournamentController@
 Route::post('/{tournamentId}/run/q/rest/{currentSquadId}', 'TournamentController@qualificationSquadResults');
 Route::get('/{tournamentId}/run/q/rest', 'TournamentController@qualificationResults');
 
-Route::get('/{tournamentId}/run/rr/conf/', 'TournamentController@runRoundRobinConfirm');
+Route::post('/{tournamentId}/run/rr/conf/', 'TournamentController@runRoundRobinConfirm');
 Route::get('/{tournamentId}/run/rr/draw', 'TournamentController@runRoundRobinDraw');
 Route::get('/{tournamentId}/run/rr/game', 'TournamentController@runRoundRobinGame');
 Route::get('/{tournamentId}/run/rr/rest', 'TournamentController@roundRobinResults');

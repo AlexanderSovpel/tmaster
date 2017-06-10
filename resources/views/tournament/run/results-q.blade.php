@@ -2,7 +2,7 @@
 
 @section('process')
 <h2>Квалификация - Результаты</h2>
-<form action="/{{$tournament->id}}/run/rr/conf/" method="get">
+<form action="/{{$tournament->id}}/run/rr/conf/" method="post">
     {{ csrf_field() }}
     <input type="hidden" name="players" value="{{json_encode($qPlayers)}}">
     @include('partial.qualification-results')
