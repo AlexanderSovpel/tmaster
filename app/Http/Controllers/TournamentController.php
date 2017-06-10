@@ -532,6 +532,8 @@ class TournamentController extends Controller
             if (!isset($fResults[$result->player_id])) {
                 $allResults[] = $result;
             }
+
+            echo $qResult."<br>";
         }
 
         usort($allResults, function ($resultA, $resultB) {
