@@ -4,7 +4,7 @@
     <h1>Игра</h1>
     <form action="/{{$tournament->id}}/run/rr/rest" method="get">
         {{ csrf_field() }}
-        <input type="hidden" name="players" value="{{json_encode($players)}}">
+        <!-- <input type="hidden" name="players" value="{{json_encode($players)}}"> -->
         @for($i = 0; $i < $roundCount; ++$i)
             <div class="round">
                 <h3>Раунд {{$i+1}}</h3>
