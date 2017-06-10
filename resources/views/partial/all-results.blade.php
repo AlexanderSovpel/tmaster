@@ -1,4 +1,4 @@
-<table>
+<table class="table">
   <thead>
     <tr class="results-header">
         <th class="position">№</th>
