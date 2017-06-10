@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Result extends Model
 {
-    protected $fillable = ['tournament_id', 'player_id', 'part', 'sum', 'avg'];
+    protected $fillable = ['tournament_id', 'player_id', 'part', 'sum', 'avg', 'squad_id'];
 
     public function tournament()
     {

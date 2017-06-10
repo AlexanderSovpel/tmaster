@@ -227,7 +227,8 @@ class TournamentController extends Controller
                 'player_id' => $player->id,
                 'part' => 'q',
                 'sum' => $sum,
-                'avg' => $avg
+                'avg' => $avg,
+                'squad_id' => $currentSquadId
             ]);
             $result->save();
             $playersResults[$player->id] = $result;
