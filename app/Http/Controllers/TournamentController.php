@@ -326,7 +326,6 @@ class TournamentController extends Controller
 
     public function runRoundRobinConfirm(Request $request, $tournamentId)
     {
-        error_log(session('players'));
         $players = session('players');
         // $players = json_decode($request->input('players'));
         $tournament = Tournament::find($tournamentId);
@@ -340,7 +339,7 @@ class TournamentController extends Controller
         }
 
         session(['players' => $players]);
-        error_log(session('players'));
+        error_log(var_dump(session('players')));
 
         return view('tournament.run.confirm', [
             'tournament' => $tournament,
@@ -354,7 +353,7 @@ class TournamentController extends Controller
     {
         $tournament = Tournament::find($tournamentId);
         $players = session('players');
-        error_log($players);
+        error_log(var_dump(session('players')));
 
         // $players = json_decode($request->input('players'));
         foreach ($players as $player) {
@@ -363,6 +362,7 @@ class TournamentController extends Controller
             }
         }
         session(['players' => $players]);
+        error_log(var_dump(session('players')));
 
         return view('tournament.run.draw', [
             'tournament' => $tournament,
