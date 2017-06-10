@@ -352,6 +352,7 @@ class TournamentController extends Controller
     {
         $tournament = Tournament::find($tournamentId);
         $players = session('players');
+        echo gettype($players);
         // $players = json_decode($request->input('players'));
         foreach ($players as $player) {
             if (!in_array($player->id, $request->input('confirmed'))) {
