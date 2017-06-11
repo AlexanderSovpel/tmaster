@@ -15,9 +15,9 @@
         <td id="sum_result_{{$result->player->id}}" class="player-sum">{{$result->sum}}</td>
         <td id="part_{{$result->player->id}}" class="player-avg">
           @if ($result->part == 'q')
-          квалификация
+          <span class="label label-info">квалификация</span>
           @elseif($result->part == 'rr')
-          финал
+          <span class="label label-success">финал</span
           @endif
         </td>
       </tr>
