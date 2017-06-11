@@ -20,7 +20,7 @@
   </ul>
 </div>
 @endif
-<p class="date">{{$tournament->squads[0]->date}} &mdash; {{$tournament->roundRobin->date}}</p>
+<p class="date">{{date('j.m.Y', strtotime($tournament->squads[0]->date))}} &mdash; {{date('j.m.Y', strtotime($tournament->roundRobin->date))}}</p>
 @if(!$tournament->finished)
         <p class='tournament-open'>регистрация открыта</p>
 @else
@@ -33,17 +33,14 @@
         <p class="info-data col-md-6">{{ $tournament->handicap->type }}, {{$tournament->handicap->value}}</p>
         <p class="info-label col-md-6">Квалификация</p>
         <div class="col-md-6">
-      @php
-        setlocale(LC_ALL, 'ru_RU.UTF-8');
-      @endphp
       @foreach($tournament->squads as $squad)
-          <p class="info-data">{{strftime('%e %b %Y (%a)', strtotime($squad->date))}}, {{strftime('%R', strtotime($squad->start_time))}} &ndash; {{strftime('%R', strtotime($squad->end_time))}}</p>
+          <p class="info-data">{{date('j.m.Y', strtotime($squad->date))}}, {{date('H:i', strtotime($squad->start_time))}} &ndash; {{date('H:i', strtotime($squad->end_time))}}</p>
           <!-- <p class="info-data">{{gettype($squad->date)}}</p> -->
       @endforeach
         </div>
         <p class="info-label col-md-6">Финал</p>
-        <p class="info-data col-md-6">{{$tournament->roundRobin->date}},
-            {{$tournament->roundRobin->start_time}} &ndash; {{$tournament->roundRobin->end_time}}</p>
+        <p class="info-data col-md-6">{{date('j.m.Y', strtotime($tournament->roundRobin->date))}},
+            {{date('H:i', strtotime($tournament->roundRobin->start_time))}} &ndash; {{date('H:i', strtotime($tournament->roundRobin->end_time))}}</p>
         <p class="info-label col-md-6">Место проведения</p>
         <p class="info-data col-md-6">{{ $tournament->location }}</p>
         <p class="info-label fee-label col-md-6">
