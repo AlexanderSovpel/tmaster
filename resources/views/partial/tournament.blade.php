@@ -34,7 +34,8 @@
         <p class="info-label col-md-6">Квалификация</p>
         <div class="col-md-6">
       @foreach($tournament->squads as $squad)
-          <p class="info-data">{{date('j M Y (D)', $squad->date)}}, {{date('H:i', $squad->start_time)}} &ndash; {{date('H:i', $squad->end_time)}}</p>
+          <!-- <p class="info-data">{{date('j M Y (D)', $squad->date)}}, {{date('H:i', $squad->start_time)}} &ndash; {{date('H:i', $squad->end_time)}}</p> -->
+          <p class="info-data">{{gettype($squad->date)}}</p>
       @endforeach
         </div>
         <p class="info-label col-md-6">Финал</p>
