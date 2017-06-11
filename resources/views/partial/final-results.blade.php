@@ -3,7 +3,7 @@
     <tr class="results-header">
         <th class="position">№</th>
       <th class="player-name">Участник</th>
-      <th>Квалификация</th>
+      <th>Кв-ия</th>
       @for ($j = 0; $j < $roundCount; ++$j)
           <th class="player-result">{{$j + 1}}</th>
           <th class="player-bonus"></th>

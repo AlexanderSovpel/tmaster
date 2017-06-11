@@ -6,7 +6,7 @@
         @for ($j = 0; $j < $tournament->qualification->entries; ++$j)
             <th class="player-result">{{$j + 1}}</th>
         @endfor
-        <th class="player-bonus">Гандикап</th>
+        <th class="player-bonus">Г-п</th>
         <th class="player-sum">Сумма</th>
         <th class="player-avg">Средний</th>
     </tr>
