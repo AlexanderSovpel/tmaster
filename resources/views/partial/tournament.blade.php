@@ -33,8 +33,11 @@
         <p class="info-data col-md-6">{{ $tournament->handicap->type }}, {{$tournament->handicap->value}}</p>
         <p class="info-label col-md-6">Квалификация</p>
         <div class="col-md-6">
+      @php
+        setlocale(LC_ALL, 'ru_RU.UTF-8');
+      @endphp
       @foreach($tournament->squads as $squad)
-          <p class="info-data">{{date('j M Y (D)', strtotime($squad->date))}}, {{date('H:i', strtotime($squad->start_time))}} &ndash; {{date('H:i', strtotime($squad->end_time))}}</p>
+          <p class="info-data">{{strftime('%e %b %Y (%a)', strtotime($squad->date))}}, {{strftime('%R', strtotime($squad->start_time))}} &ndash; {{strftime('%R', strtotime($squad->end_time))}}</p>
           <!-- <p class="info-data">{{gettype($squad->date)}}</p> -->
       @endforeach
         </div>
