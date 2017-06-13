@@ -284,8 +284,8 @@
             <h1>Квалификация</h1>
             <input type="hidden" id="squads-count" name="squads_count" value="2">
             <a href="#" id="add-squad" class="btn">добавить поток</a>
-            @include('partial.squad-form', ['index' => 2])
             @include('partial.squad-form', ['index' => 1])
+            @include('partial.squad-form', ['index' => 2])
         </div>
 
         <div class="creation-step">

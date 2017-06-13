@@ -168,10 +168,10 @@ if (newTournamentForm) {
         xhr.send();
 
         if (xhr.status != 200) {
-            document.getElementById('error').innerHTML = xhr.responseText;
+            console.log(xhr.responseText);
         }
         else {
-            $(this).after(xhr.responseText);
+            $(this).parent().append(xhr.responseText);
             console.log(squadsCount.value);
         }
     };

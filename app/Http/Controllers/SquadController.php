@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Squad;
+use Illuminate\Http\Request;
 
 class SquadController extends Controller
 {
