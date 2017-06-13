@@ -20,7 +20,7 @@
   </ul>
 </div>
 @endif
-<p class="date">{{date('j.m.Y', strtotime($tournament->squads[0]->date))}} &mdash; {{date('j.m.Y', strtotime($tournament->roundRobin->date))}}</p>
+<p class="date">{{date('j.m.Y', strtotime($tournament->squads()->orderBy('date', 'ASC')->orderBy('start_time', 'ASC')->first()->date))}} &mdash; {{date('j.m.Y', strtotime($tournament->roundRobin->date))}}</p>
 @if(!$tournament->finished)
         <p class='tournament-open'>регистрация открыта</p>
 @else

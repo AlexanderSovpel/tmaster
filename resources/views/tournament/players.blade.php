@@ -6,7 +6,7 @@
         <article class="squad panel panel-default">
             <div class="panel-heading"><h1>Поток {{$index + 1}}</h1></div>
             <div class="panel-body">
-                <p class="date">{{$squad->date}}, {{$squad->start_time}} &ndash; {{$squad->end_time}}</p>
+                <p class="date">{{date('j.m.Y', strtotime($squad->date))}}, {{date('H:i', strtotime($squad->start_time))}} &ndash; {{date('H:i', strtotime($squad->end_time))}}</p>
                 <p class="players-label">Участники:</p>
                 <ol class="players-list">
                     @foreach($squad->players as $player)
