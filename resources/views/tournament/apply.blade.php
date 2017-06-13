@@ -13,8 +13,8 @@
             <div class="form-group row">
                 <label for="squad" class="col-md-6">Поток</label>
                 <select id="squad" name="squad" class="form-control data col-md-6">
-                    @foreach($tournament->squads as $squad)
-                        <option value="{{$squad->id}}" selected>{{"$squad->date $squad->start_time"}}</option>
+                    @foreach($tournament->squads()->orderBy('date', 'ASC')->orderBy('start_time', 'ASC')->get() as $squad)
+                        <option value="{{$squad->id}}" selected>{{date('j.m.Y', strtotime($squad->date))}} {{date('H:i', strtotime($squad->start_time))}}</option>
                     @endforeach
                 </select>
             </div>
