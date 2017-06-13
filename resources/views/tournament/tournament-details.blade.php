@@ -15,7 +15,7 @@
         </p>
         <div class="details row">
             <p class="control-label col-md-6">Даты проведения</p>
-            <p class="detail col-md-6">{{$tournament->squads[0]->date}} &mdash; {{$tournament->roundRobin->date}}</p>
+            <p class="detail col-md-6">{{date('j.m.Y', strtotime($tournament->squads()->orderBy('date', 'ASC')->orderBy('start_time', 'ASC')->first()->date))}} &mdash; {{date('j.m.Y', strtotime($tournament->roundRobin->date))}}</p>
             <p class="control-label col-md-6">Место проведения</p>
             <p class="detail col-md-6">{{$tournament->location}}</p>
             <p class="control-label col-md-6">Вступительный взнос</p>
@@ -44,12 +44,12 @@
         @endphp
         <ul class="schedule">
             @foreach($days as $key => $day)
-                <li class="schedule-day">{{$day}}:
+                <li class="schedule-day">{{date('j.m.Y', strtotime($day))}}:
                     <ul>
-                        @foreach($tournament->squads as $index => $squad)
+                        @foreach($tournament->squads()->orderBy('date', 'ASC')->orderBy('start_time', 'ASC')->get() as $index => $squad)
                             @if($squad->date == $day)
                                 <li class="schedule-time">
-                                    <span class="time">{{$squad->start_time}}-{{$squad->end_time}}</span>
+                                    <span class="time">{{date('H:i', strtotime($squad->start_time))}}-{{date('H:i', strtotime($squad->end_time))}}</span>
                                     {{$index + 1}}-ая группа, {{$squad->max_players}}
                                     участников, {{$tournament->qualification->games * $tournament->qualification->entries}}
                                     игр квалификации
@@ -60,11 +60,11 @@
                 </li>
             @endforeach
             <li class="schedule-day">
-                {{$tournament->roundrobin->date}}:
+                {{date('j.m.Y', strtotime($tournament->roundrobin->date))}}:
                 <ul>
                     <li class="schedule-time">
-                        <span class="time">{{$tournament->roundrobin->start_time}}
-                            -{{$tournament->roundrobin->end_time}}</span>
+                        <span class="time">{{date('H:i', strtotime($tournament->roundrobin->start_time))}}
+                            -{{date('H:i', strtotime($tournament->roundrobin->end_time))}}</span>
                         финал Round-Robin, {{$tournament->roundrobin->players}} лучших игроков
                     </li>
                 </ul>
