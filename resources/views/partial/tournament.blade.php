@@ -33,9 +33,8 @@
         <p class="info-data col-md-6">{{ $tournament->handicap->type }}, {{$tournament->handicap->value}}</p>
         <p class="info-label col-md-6">Квалификация</p>
         <div class="col-md-6">
-      @foreach($tournament->squads as $squad)
+      @foreach($tournament->squads()->orderBy('date', 'ASC')->orderBy('start_time', 'ASC')->get() as $squad)
           <p class="info-data">{{date('j.m.Y', strtotime($squad->date))}}, {{date('H:i', strtotime($squad->start_time))}} &ndash; {{date('H:i', strtotime($squad->end_time))}}</p>
-          <!-- <p class="info-data">{{gettype($squad->date)}}</p> -->
       @endforeach
         </div>
         <p class="info-label col-md-6">Финал</p>
@@ -47,9 +46,6 @@
       <img src="{{asset('img/iconmonstr-coin-3.svg')}}">
     </p>
         <p class="info-data fee col-md-6">{{$tournament->qualification->fee}} BYN</p>
-    <!-- <li>Contact: {{$tournament->contact->surname}} {{$tournament->contact->name}},
-        {{$tournament->contact->phone}},
-        {{$tournament->contact->email}}</li> -->
 </div>
 
 @if(\Illuminate\Support\Facades\Auth::check() && !$tournament->finished)
