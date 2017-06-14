@@ -5,7 +5,7 @@
         <div id="info" class="panel-heading">
             <a href="/account/edit" id="edit-link">редактировать</a>
             <div id="user-photo">
-                <img src="{{asset('img/logo.png')}}">
+                <img src="{{asset('img/placeholder-user.png')}}">
             </div>
             <div id="user-data">
                 <h1>{{$user->name}} {{$user->surname}}</h1>
