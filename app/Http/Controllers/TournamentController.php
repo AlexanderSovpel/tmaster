@@ -547,7 +547,7 @@ class TournamentController extends Controller
             'max_game' => $request->handicap_max_game
         ]);
         $handicap->save();
-        echo $handicap;
+        // echo $handicap;
 
         $qualification = new Qualification([
             'entries' => $request->qualification_entries,
@@ -559,7 +559,7 @@ class TournamentController extends Controller
             'reentry_fee' => $request->reentry_fee
         ]);
         $qualification->save();
-        echo $qualification;
+        // echo $qualification;
 
         $roundRobin = new RoundRobin([
             'players' => $request->rr_players,
@@ -570,10 +570,10 @@ class TournamentController extends Controller
             'end_time' => $request->rr_end_time,
         ]);
         $roundRobin->save();
-        echo $roundRobin;
+        // echo $roundRobin;
 
         $contact = User::find($request->contact_person);
-        echo $contact;
+        // echo $contact;
 
         $newTournament = new Tournament([
             'name' => $request->name,
@@ -658,10 +658,8 @@ class TournamentController extends Controller
     $tournament->roundRobin->end_time = $request->rr_end_time;
     $tournament->roundRobin->save();
 
-  //???
-    $contact = User::where('email', $request->contact_email)
-        ->where('phone', $request->contact_phone)
-        ->first();
+    $contact = User::find($request->contact_person);
+    $tournament->contact_id = $contact->id;
 
     for ($i = 0; $i < $request->squads_count; ++$i) {
       $squad = $tournament->squads()->find($request->squad_id[$i]);
