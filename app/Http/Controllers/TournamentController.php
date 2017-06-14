@@ -622,7 +622,8 @@ class TournamentController extends Controller
 
     public function editTournament($tournamentId) {
     $tournament = Tournament::find($tournamentId);
-    return view('tournament.tournament-edit', ['tournament' => $tournament]);
+    $admins = User::where('is_admin', 1)->get();
+    return view('tournament.tournament-edit', ['tournament' => $tournament, 'admins' => $admins]);
   }
 
   public function saveTournament(Request $request, $tournamentId) {
