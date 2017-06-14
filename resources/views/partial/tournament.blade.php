@@ -13,7 +13,7 @@
   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
       @if(!$tournament->finished)
           <li><a href="/{{$tournament->id}}/run/q/conf/{{$tournament->squads[0]->id}}">Провести</a></li>
-    <li><a href="#">Редактировать</a></li>
+    <li><a href="/{{$tournament->id}}/edit">Редактировать</a></li>
     <li role="separator" class="divider"></li>
       @endif
       <li><a href="/{{$tournament->id}}/deleteTournament">Удалить</a></li>

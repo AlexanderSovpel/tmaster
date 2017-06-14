@@ -1,5 +1,6 @@
 <div class="well">
     <h3>Поток {{$index}}</h3>
+    <input type="hidden" name="squad_id[]" value="">
     <a href="#" class="remove-squad" onclick="removeSquad(this)"><span class="glyphicon glyphicon-remove remove"></span></a>
     <div class="form-group row">
         <label class="control-label col-md-6" for="squad-date-{{$index}}">Дата проведения</label>

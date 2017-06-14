@@ -97,7 +97,7 @@ if (newTournamentForm) {
         if (!$(this).hasClass('disabled')) {
           currentStep.value = step;
           showStep(steps, step);
-          toggleStepBtnVisibility();
+          toggleStepBtnVisibility(newTournamentForm);
         }
       });
 
@@ -117,7 +117,7 @@ if (newTournamentForm) {
 
         sessionStorage.setItem('currentStep', currentStep.value);
         showStep(steps, currentStep.value);
-        toggleStepBtnVisibility();
+        toggleStepBtnVisibility(newTournamentForm);
     };
 
     nextStepBtn.onclick = function () {
@@ -143,7 +143,7 @@ if (newTournamentForm) {
 
         sessionStorage.setItem('currentStep', currentStep.value);
         showStep(steps, currentStep.value);
-        toggleStepBtnVisibility();
+        toggleStepBtnVisibility(newTournamentForm);
     };
 
     var partChoiseChbx = document.querySelectorAll('.part-choice');
@@ -157,30 +157,99 @@ if (newTournamentForm) {
             }
         }
     }
+}
 
-    var addSquadBtn = document.getElementById('add-squad');
-    var squadsCount = document.getElementById('squads-count');
-    addSquadBtn.onclick = function () {
-        var xhr = new XMLHttpRequest();
-        var params = '?' + 'index=' + (++squadsCount.value);
+var editTournament = document.getElementById('edit-tournament');
+if (editTournament) {
+  var currentStep = editTournament.querySelector('#step');
+  var steps = editTournament.querySelectorAll('.creation-step');
+  var nextStepBtn = editTournament.querySelector('#next-step');
+  var prevStepBtn = editTournament.querySelector('#prev-step');
+  var saveBtn = editTournament.querySelector('#save');
 
-        xhr.open('GET', '/addSquadForm' + params, false);
-        xhr.send();
+  showStep(steps, currentStep.value);
+  toggleStepBtnVisibility(editTournament);
+  var wizardSteps = document.querySelectorAll('.bs-wizard-step');
+  for(var i = 0; i < wizardSteps.length; ++i) {
+    $(wizardSteps[i]).click(function () {
+      var w = Array.prototype.slice.call($('.bs-wizard-step'));
+      var step = w.indexOf(this);
+      if (!$(this).hasClass('disabled')) {
+        currentStep.value = step;
+        showStep(steps, step);
+        toggleStepBtnVisibility(editTournament);
+      }
+    });
 
-        if (xhr.status != 200) {
-            console.log(xhr.responseText);
-        }
-        else {
-            $(this).parent().append(xhr.responseText);
-            console.log(squadsCount.value);
-        }
-    };
+    toggleWizardSteps(currentStep.value);
+  }
 
-    var removeSquadBtns = document.querySelectorAll('.remove-squad');
-    for (var i = 0; i < removeSquadBtns.length; ++i) {
-        removeSquadBtns[i].onclick = function () {
-            removeSquad(this);
-        }
+  prevStepBtn.onclick = function () {
+    var prevWizardStep = $('.bs-wizard-step')[currentStep.value];
+    $(prevWizardStep).removeClass('active');
+    $(prevWizardStep).addClass('disabled');
+
+      --currentStep.value;
+
+      var currWizardStep = $('.bs-wizard-step')[currentStep.value];
+      $(currWizardStep).removeClass('complete');
+      $(currWizardStep).addClass('active');
+
+      sessionStorage.setItem('currentStep', currentStep.value);
+      showStep(steps, currentStep.value);
+      toggleStepBtnVisibility(editTournament);
+  };
+
+  nextStepBtn.onclick = function () {
+    var currentStepDiv = $('.creation-step')[currentStep.value];
+    var currentStepFields = $(currentStepDiv).find('.form-control');
+    for(var i = 0; i < currentStepFields.length; ++i) {
+      if (!currentStepFields[i].value) {
+        console.log('not all fields are filled!');
+        $('#error').html('<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><span>Заполните все поля!</span></div>');
+        return;
+      }
+    }
+
+    var prevWizardStep = $('.bs-wizard-step')[currentStep.value];
+    $(prevWizardStep).removeClass('active');
+    $(prevWizardStep).addClass('complete');
+
+      ++currentStep.value;
+
+      var currWizardStep = $('.bs-wizard-step')[currentStep.value];
+      $(currWizardStep).removeClass('disabled');
+      $(currWizardStep).addClass('active');
+
+      sessionStorage.setItem('currentStep', currentStep.value);
+      showStep(steps, currentStep.value);
+      toggleStepBtnVisibility(editTournament);
+  };
+}
+
+
+var addSquadBtn = document.getElementById('add-squad');
+var squadsCount = document.getElementById('squads-count');
+addSquadBtn.onclick = function () {
+    var xhr = new XMLHttpRequest();
+    var params = '?' + 'index=' + (++squadsCount.value);
+
+    xhr.open('GET', '/addSquadForm' + params, false);
+    xhr.send();
+
+    if (xhr.status != 200) {
+        console.log(xhr.responseText);
+    }
+    else {
+        $(this).parent().append(xhr.responseText);
+        console.log(squadsCount.value);
+    }
+};
+
+var removeSquadBtns = document.querySelectorAll('.remove-squad');
+for (var i = 0; i < removeSquadBtns.length; ++i) {
+    removeSquadBtns[i].onclick = function () {
+        removeSquad(this);
     }
 }
 
@@ -216,12 +285,12 @@ function toggleWizardSteps(currentStep) {
   }
 }
 
-function toggleStepBtnVisibility() {
-    var currentStep = newTournamentForm.querySelector('#step').value;
-    var steps = newTournamentForm.querySelectorAll('.creation-step');
-    var nextStepBtn = newTournamentForm.querySelector('#next-step');
-    var prevStepBtn = newTournamentForm.querySelector('#prev-step');
-    var saveBtn = newTournamentForm.querySelector('#save');
+function toggleStepBtnVisibility(form) {
+    var currentStep = form.querySelector('#step').value;
+    var steps = form.querySelectorAll('.creation-step');
+    var nextStepBtn = form.querySelector('#next-step');
+    var prevStepBtn = form.querySelector('#prev-step');
+    var saveBtn = form.querySelector('#save');
 
     (currentStep == 0) ? $(prevStepBtn).css('visibility', 'hidden') : $(prevStepBtn).css('visibility', 'visible');
     (currentStep == steps.length - 1) ? $(nextStepBtn).hide() : $(nextStepBtn).show();

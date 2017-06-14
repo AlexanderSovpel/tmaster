@@ -620,4 +620,70 @@ class TournamentController extends Controller
       return redirect('/');
     }
 
+    public function editTournament($tournamentId) {
+    $tournament = Tournament::find($tournamentId);
+    return view('tournament.tournament-edit', ['tournament' => $tournament]);
+  }
+
+  public function saveTournament(Request $request, $tournamentId) {
+    $tournament = Tournament::find($tournamentId);
+
+    $tournament->name = $request->name;
+    $tournament->location = $request->location;
+    $tournament->type = $request->type;
+    $tournament->oil_type = $request->oil_type;
+    $tournament->description = $request->description;
+
+    $tournament->handicap->type = $request->handicap_type;
+    $tournament->handicap->value = $request->handicap_value;
+    $tournament->handicap->max_game = $request->handicap_max_game;
+    $tournament->handicap->save();
+
+    $tournament->qualification->entries = $request->qualification_entries;
+    $tournament->qualification->games = $request->qualification_games;
+    $tournament->qualification->finalists = $request->qualification_finalists;
+    $tournament->qualification->fee = $request->qualification_fee;
+    $tournament->qualification->allow_reentry = $request->allow_reentry;
+    $tournament->qualification->reentries = $request->reentries_amount;
+    $tournament->qualification->reentry_fee = $request->reentry_fee;
+    $tournament->qualification->save();
+
+
+    $tournament->roundRobin->players = $request->rr_players;
+    $tournament->roundRobin->win_bonus = $request->rr_win_bonus;
+    $tournament->roundRobin->draw_bonus = $request->rr_draw_bonus;
+    $tournament->roundRobin->date = $request->rr_date;
+    $tournament->roundRobin->start_time = $request->rr_start_time;
+    $tournament->roundRobin->end_time = $request->rr_end_time;
+    $tournament->roundRobin->save();
+
+  //???
+    $contact = User::where('email', $request->contact_email)
+        ->where('phone', $request->contact_phone)
+        ->first();
+
+    for ($i = 0; $i < $request->squads_count; ++$i) {
+      $squad = $tournament->squads()->find($request->squad_id[$i]);
+      if ($squad == null) {
+        $squad = new Squad();
+        $squad->tournament_id = $tournament->id;
+        $squad->finished = false;
+      }
+      $squad->date = $request->squad_date[$i];
+      $squad->start_time = $request->squad_start_time[$i];
+      $squad->end_time = $request->squad_end_time[$i];
+      $squad->max_players = $request->squad_max_players[$i];
+      $squad->save();
+    }
+
+    foreach ($tournament->squads as $key => $squad) {
+      if (!in_array($squad->id, $request->squad_id)) {
+        $squad->delete();
+      }
+    }
+
+    $tournament->save();
+    return redirect('/');
+  }
+
 }

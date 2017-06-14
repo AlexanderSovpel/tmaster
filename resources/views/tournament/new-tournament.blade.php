@@ -61,7 +61,7 @@
             <a href="#" class="bs-wizard-dot"></a>
         </div>
     </div>
-    <form method="post" action="/createTournament" id="new-tournament" class="panel panel-default">
+    <form method="post" action="/createTournament" id="new-tournament" class="panel panel-default tournament-edit">
         {{csrf_field()}}
         <input type="hidden" id="step" value="0">
         <div class="creation-step">

@@ -608,7 +608,7 @@ tr:nth-child(2n) {
 /*END Form Wizard*/
 
 /* New Tournament */
-#new-tournament {
+.tournament-edit {
     width: 60%;
     padding: 30px;
     margin: auto;
@@ -635,18 +635,18 @@ tr:nth-child(2n) {
     color: #ffffff;
 }
 
-#new-tournament > .creation-step > .form-group > .form-group > label {
+.tournament-edit > .creation-step > .form-group > .form-group > label {
   vertical-align: middle;
 }
 
-#new-tournament > .creation-step > .form-group > label {
+.tournament-edit > .creation-step > .form-group > label {
     vertical-align: top;
 }
 
-#new-tournament > .creation-step > .form-group > .form-control,
-#new-tournament > .creation-step > .form-group > .form-group > .form-control,
-#new-tournament > .creation-step > .form-group > .form-group > .checkbox,
-#new-tournament > .creation-step > .form-group > .choose-type {
+.tournament-edit > .creation-step > .form-group > .form-control,
+.tournament-edit > .creation-step > .form-group > .form-group > .form-control,
+.tournament-edit > .creation-step > .form-group > .form-group > .checkbox,
+.tournament-edit > .creation-step > .form-group > .choose-type {
   width: 40%;
   display: inline-block;
 }

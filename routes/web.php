@@ -26,6 +26,8 @@ Route::post('/{id}/removeApplication', 'TournamentController@removeApplication')
 Route::get('/newTournament', 'TournamentController@newTournament');
 Route::post('/createTournament', 'TournamentController@createTournament');
 Route::get('/{tournamentId}/deleteTournament', 'TournamentController@deleteTournament');
+Route::get('/{tournamentId}/edit', 'TournamentController@editTournament');
+Route::post('/{tournamentId}/saveTournament', 'TournamentController@saveTournament');
 
 Route::get('/{tournamentId}/run/q/conf/{currentSquadId}', 'TournamentController@runQualificationConfirm');
 Route::get('/{tournamentId}/run/q/draw/{currentSquadId}', 'TournamentController@runQualificationDraw');
