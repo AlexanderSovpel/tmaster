@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class SquadController extends Controller
 {
+  public function __construct()
+  {
+      $this->middleware('auth');
+  }
+  
     public function getSquadFilling($squadId)
     {
         $squad = Squad::find($squadId);
