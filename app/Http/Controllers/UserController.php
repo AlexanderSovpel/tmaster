@@ -67,9 +67,11 @@ class UserController extends Controller
 
         if ($request->hasFile('avatar')) {
             $avatarLink = 'avatar_' . $user->id . '.' . $request->file('avatar')->getClientOriginalExtension();
-            $path = $request->file('avatar')->storeAs('public', $avatarLink);
-            $url = Storage::url($avatarLink);
-            $user->avatar = $url;
+            // $path = $request->file('avatar')->storeAs('public', $avatarLink);
+            // $url = Storage::url($avatarLink);
+            // $user->avatar = $url;
+            $path = $request->file('avatar')->move(public_path('img/avatars'), $avatarLink);
+            $user->avatar = $avatarLink;
         }
 
         if ($request->new_password) {
