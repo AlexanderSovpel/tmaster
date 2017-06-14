@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    {{--<div class="container">--}}
     <ol class="breadcrumb">
         <li><a href="/account">{{$user->name}} {{$user->surname}}</a></li>
         <li>Редактирование профиля</li>
@@ -14,8 +13,6 @@
                     <form class="form-horizontal" role="form" method="POST" action="/account/save"
                           enctype="multipart/form-data">
                         {{ csrf_field() }}
-                        {{--                        <input type="hidden" name="id" value="{{}}">--}}
-
                         <div class="form-group row">
                             <label for="name" class="col-md-6 control-label">Имя</label>
                             <div class="col-md-6">
@@ -119,6 +116,4 @@
             </div>
         </div>
     </div>
-    {{--<div class="error"></div>--}}
-    {{--</div>--}}
 @endsection
