@@ -35,7 +35,12 @@ class TournamentController extends Controller
      */
     public function index()
     {
-        $tournaments = Tournament::all()->sortByDesc('id');
+        // $tournaments = Tournament::all()->sortByDesc('id');
+        $tournaments = Tournament::join('squads', 'squads.tournament_id', '=', 'tournaments.id')
+          ->orderBy('squads.date', 'DESC')
+          ->select('tournaments.*')
+          ->distinct()
+          ->get();
         $user = Auth::user();
 
         return view('index', ['tournaments' => $tournaments, 'user' => $user]);
