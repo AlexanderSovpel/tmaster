@@ -1,5 +1,6 @@
 var newTournamentForm = document.getElementById('new-tournament');
 if (newTournamentForm) {
+  sessionStorage.setItem('currentStep', 0);
   $('.form-control').change(function() {
     sessionStorage.setItem(this.name, this.value);
     console.log(sessionStorage.getItem(this.name));
