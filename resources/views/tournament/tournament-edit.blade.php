@@ -285,13 +285,13 @@
             </div>
             <div class="form-group row">
                 <label for="rr-start-time" class="control-label col-md-6">Время начала</label>
-                <input type="date" id="rr-start-time" name="rr_start_time" class="form-control col-md-6"
+                <input type="time" id="rr-start-time" name="rr_start_time" class="form-control col-md-6"
                        pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" title="Время в формате чч:мм"
                        value="{{date('H:i', strtotime($tournament->roundRobin->start_time))}}">
             </div>
             <div class="form-group row">
                 <label for="rr-end-time" class="control-label col-md-6">Время окончания</label>
-                <input type="date" id="rr-end-time" name="rr_end_time" class="form-control col-md-6"
+                <input type="time" id="rr-end-time" name="rr_end_time" class="form-control col-md-6"
                        pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" title="Время в формате чч:мм"
                        value="{{date('H:i', strtotime($tournament->roundRobin->end_time))}}">
             </div>
