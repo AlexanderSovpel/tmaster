@@ -89,7 +89,7 @@ if (newTournamentForm) {
     var saveBtn = newTournamentForm.querySelector('#save');
 
     showStep(steps, currentStep.value);
-    toggleStepBtnVisibility();
+    toggleStepBtnVisibility(newTournamentForm);
     var wizardSteps = document.querySelectorAll('.bs-wizard-step');
     for(var i = 0; i < wizardSteps.length; ++i) {
       $(wizardSteps[i]).click(function () {
@@ -299,7 +299,7 @@ function toggleStepBtnVisibility(form) {
     }
     else {
       $(prevStepBtn).show();
-      $(saveBtn).show();
+      // $(saveBtn).show();
     }
     (currentStep == steps.length - 1) ? $(nextStepBtn).hide() : $(nextStepBtn).show();
     (currentStep != steps.length - 1) ? $(saveBtn).hide() : $(saveBtn).show();
