@@ -47,12 +47,11 @@ $('.players-tournament-btn').click(function (e) {
 });
 
 $('.add-player-btn').click(function() {
-  var addPlayersBtn = this;
   var tournamentId = document.querySelector('#tournament-id').value;
   var squadId = $(this).siblings("[name='squad_id']").val();
   var url = '/' + tournamentId + '/' + squadId + '/getPlayers';
   $.get(url, function(data) {
-    $(addPlayerBtn).after(data);
+    $('.error').after(data);
   }).fail(function(data) {
     console.log(data.responseText);
   });
