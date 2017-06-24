@@ -11,8 +11,9 @@
                 <p class="players-label">Участники:</p>
                 <ol class="players-list">
                     @foreach($squad->players as $player)
-                        <li>{{$player->surname}} {{$player->name}}</li>
-                        @if (\Illuminate\Support\Facades\Auth::check() && $player->id == \Illuminate\Support\Facades\Auth::id() && !$tournament->finished)
+                      <li>{{$player->surname}} {{$player->name}}</li>
+                      @if (\Illuminate\Support\Facades\Auth::check())
+                        @if ($player->id == \Illuminate\Support\Facades\Auth::id() && !$tournament->finished)
                             <form action='{{url("$tournament->id/removeApplication")}}' method="post">
                                 {{ csrf_field() }}
                                 <input type="hidden" name="currentSquad" value="{{$squad->id}}">
@@ -26,6 +27,7 @@
                             <button type="submit" class="remove-btn btn-link">Удалить</button>
                         </form>
                         @endif
+                      @endif
                     @endforeach
                 </ol>
                 <div class="clearfix"></div>
