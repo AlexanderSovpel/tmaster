@@ -286,7 +286,7 @@ function toggleWizardSteps(currentStep) {
   }
 }
 
-function toggleStepBtnVisibility(form) {
+function toggleStepBtnVisibility(form, isNew) {
     var currentStep = form.querySelector('#step').value;
     var steps = form.querySelectorAll('.creation-step');
     var nextStepBtn = form.querySelector('#next-step');
@@ -295,14 +295,18 @@ function toggleStepBtnVisibility(form) {
 
     if (currentStep == 0) {
       $(prevStepBtn).hide();
-      $(saveBtn).hide();
     }
     else {
       $(prevStepBtn).show();
       // $(saveBtn).show();
     }
     (currentStep == steps.length - 1) ? $(nextStepBtn).hide() : $(nextStepBtn).show();
-    (currentStep != steps.length - 1) ? $(saveBtn).hide() : $(saveBtn).show();
+    if (isNew) {
+      (currentStep != steps.length - 1) ? $(saveBtn).hide() : $(saveBtn).show();
+    }
+    else {
+      $(saveBtn).show();
+    }
 }
 
 function togglePartSettingsVisibility(partName) {
