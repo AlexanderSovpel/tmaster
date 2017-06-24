@@ -23,7 +23,7 @@
                         <form action="/{{$tournament->id}}/removeApplication/{{$player->id}}" method="post">
                             {{ csrf_field() }}
                             <input type="hidden" name="currentSquad" value="{{$squad->id}}">
-                            <button type="submit" class="remove-btn btn-link">Удалить игрока</button>
+                            <button type="submit" class="remove-btn btn-link">Удалить</button>
                         </form>
                         @endif
                     @endforeach

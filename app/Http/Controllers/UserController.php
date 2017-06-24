@@ -72,9 +72,6 @@ class UserController extends Controller
 
         if ($request->hasFile('avatar')) {
             $avatarLink = 'avatar_' . $user->id . '.' . $request->file('avatar')->getClientOriginalExtension();
-            // $path = $request->file('avatar')->storeAs('public', $avatarLink);
-            // $url = Storage::url($avatarLink);
-            // $user->avatar = $url;
             $path = $request->file('avatar')->move(public_path('img/avatars'), $avatarLink);
             $user->avatar = $avatarLink;
         }
@@ -99,7 +96,31 @@ class UserController extends Controller
 
     public function getPlayers() {
       $players = User::all();
-      return view('players', ['players' => $players]);
+      $aPlayers = array();
+
+      foreach ($players as $player) {
+        $resultsSum = 0;
+        foreach ($player->results()->where('part', 'q')->get() as $result) {
+          $tResult = $result;
+          $tId = $result->tournament_id;
+
+          $fResult = $player->results()->where('tournament_id', $tId)->where('part', 'rr')->first();
+          if ($fResult != null) {
+              $result = $fResult;
+          }
+
+          $resultsSum += $result->sum;
+        }
+
+        $player->resultsSum = $resultsSum;
+        $aPlayers[] = $player;
+      }
+
+      usort($aPlayers, function ($pA, $pB) {
+          return ($pA->resultsSum < $pB->resultsSum);
+      });
+
+      return view('players', ['players' => $aPlayers]);
     }
 
     public function getApplicationPlayers($tournamentId, $squadId) {
