@@ -286,7 +286,7 @@ function toggleWizardSteps(currentStep) {
   }
 }
 
-function toggleStepBtnVisibility(form, isNew = false) {
+function toggleStepBtnVisibility(form, isNew) {
     var currentStep = form.querySelector('#step').value;
     var steps = form.querySelectorAll('.creation-step');
     var nextStepBtn = form.querySelector('#next-step');
