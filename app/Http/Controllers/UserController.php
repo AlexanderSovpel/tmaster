@@ -102,9 +102,15 @@ class UserController extends Controller
       return view('players', ['players' => $players]);
     }
 
+    public function getApplicationPlayers($tournamentId, $squadId) {
+          $players = User::orderBy('surname', 'ASC')->get();
+          return view('partial.players-apply', ['players' => $players,
+                                                'tournamentId' => $tournamentId,
+                                                'squadId' => $squadId]);
+    }
+
     public function saveTempImage(Request $request)
     {
-//        echo 'hello';
         $tempName = 'tempAvatar.' . $request->file('tempImg')->getClientOriginalExtension();;
         $request->file('tempImg')->storeAs('public', $tempName);
         return Storage::url($tempName);

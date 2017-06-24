@@ -18,17 +18,27 @@
                                 <button type="submit" class="remove-btn btn-link">Отозвать заявку</button>
                             </form>
                         @endif
+                        @if(\Illuminate\Support\Facades\Auth::user()->is_admin)
+                        <form action="/{{$tournament->id}}/removeApplication/{{$player->id}}" method="post">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="currentSquad" value="{{$squad->id}}">
+                            <button type="submit" class="remove-btn btn-link">Удалить игрока</button>
+                        </form>
+                        @endif
                     @endforeach
                 </ol>
                 <div class="clearfix"></div>
-                @if(!\Illuminate\Support\Facades\Auth::user()->is_admin)
-                    @if($squad->players()->count() < $squad->max_players && !$tournament->finished)
-                        <form method="post" action="/{{$tournament->id}}/sendApplication" class="apply-form">
-                            {{ csrf_field() }}
-                            <input type="hidden" name="squad" value="{{$squad->id}}">
-                            <button type="submit" class="btn tournament-btn players-tournament-btn">подать заявку</button>
-                        </form>
-                    @endif
+                @if($squad->players()->count() < $squad->max_players && !$tournament->finished)
+                  @if(!\Illuminate\Support\Facades\Auth::user()->is_admin)
+                    <form method="post" action="/{{$tournament->id}}/sendApplication" class="apply-form">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="squad" value="{{$squad->id}}">
+                        <button type="submit" class="btn tournament-btn players-tournament-btn">подать заявку
+                        </button>
+                    </form>
+                  @else
+                    <a href="#" class="btn add-player-btn">добавить участника</a>
+                  @endif
                 @endif
             </div>
       </article>

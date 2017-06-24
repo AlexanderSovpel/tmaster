@@ -46,6 +46,20 @@ $('.players-tournament-btn').click(function (e) {
     });
 });
 
+$('.add-player-btn').click(function() {
+  var tournamentId = document.querySelector('#tournament-id').value;
+  var squadId = $(this).siblings("[name='squad_id']").val();
+  var url = '/' + tournamentId + '/' + squadId + '/getPlayers';
+  $.get(url, function(data) {
+    $(addPlayerBtn).after(data);
+  }).fail(function(data) {
+    console.log(data.responseText);
+  });
+});
+
+function closeApply() {
+  $('#popup').remove();
+}
 
 function getPlayersList() {
     var selectedSquad = squad.options[squad.selectedIndex].value;
@@ -62,15 +76,3 @@ function getPlayersList() {
         $('.error').html(data);
     });
 }
-
-// var players = document.querySelectorAll('.player');
-// for (var i = 0; i < players.length; ++i) {
-//     var playerId = players[i].querySelector('.player-id').value;
-//     var tournamentId = document.getElementsByName('tournament')[0].value;
-//     var part = document.getElementsByName('part')[0].value;
-//     var squadId = document.getElementsByName('currentSquad')[0].value;
-//
-//     var blockSum = fillBlockSum(playerId, tournamentId, part, squadId);
-//     var gamesCount = players[i].querySelectorAll(".played").length;
-//     fillBlockAvg(blockSum, gamesCount, playerId);
-// }

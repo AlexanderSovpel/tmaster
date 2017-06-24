@@ -118,9 +118,11 @@ class TournamentController extends Controller
         ]);
     }
 
-    public function removeApplication(Request $request, $id)
+    public function removeApplication(Request $request, $id, $playerId)
     {
-        $playerId = Auth::id();
+        if ($playerId == null) {
+          $playerId = Auth::id();
+        }
         $sp = SquadPlayers::where('squad_id', $request->input('currentSquad'))
             ->where('player_id', $playerId)->first();
         $sp->delete();
