@@ -324,7 +324,7 @@
         </div>
 
         <div id="controls">
-            <a href="/" id="cancel" class="btn cancel-btn">отмена</button>
+            <a href="/" id="cancel" class="btn cancel-btn">отмена</a>
             <button type="button" id="prev-step" class="btn" value="назад">назад</button>
             <button type="button" id="next-step" class="btn" value="далее">далее</button>
             <input type="submit" id="save" class="btn" value="сохранить">
