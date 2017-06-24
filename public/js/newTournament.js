@@ -293,7 +293,14 @@ function toggleStepBtnVisibility(form) {
     var prevStepBtn = form.querySelector('#prev-step');
     var saveBtn = form.querySelector('#save');
 
-    (currentStep == 0) ? $(prevStepBtn).css('visibility', 'hidden') : $(prevStepBtn).css('visibility', 'visible');
+    if (currentStep == 0) {
+      $(prevStepBtn).hide();
+      $(saveBtn).hide();
+    }
+    else {
+      $(prevStepBtn).show();
+      $(saveBtn).show();
+    }
     (currentStep == steps.length - 1) ? $(nextStepBtn).hide() : $(nextStepBtn).show();
     (currentStep != steps.length - 1) ? $(saveBtn).hide() : $(saveBtn).show();
 }
