@@ -105,5 +105,6 @@
 <script src="{{ asset('js/statistics.js') }}"></script>
 <script src="{{ asset('js/run.js') }}"></script>
 <script src="{{ asset('js/account.js') }}"></script>
+<script src="{{ asset('js/players.js') }}"></script>
 </body>
 </html>
