@@ -6,6 +6,7 @@
         <article class="squad panel panel-default">
             <div class="panel-heading"><h1>Поток {{$index + 1}}</h1></div>
             <div class="panel-body">
+                <input type="hidden" value="{{$squad->id}}" name="squad_id">
                 <p class="date">{{date('j.m.Y', strtotime($squad->date))}}, {{date('H:i', strtotime($squad->start_time))}} &ndash; {{date('H:i', strtotime($squad->end_time))}}</p>
                 <p class="players-label">Участники:</p>
                 <ol class="players-list">
