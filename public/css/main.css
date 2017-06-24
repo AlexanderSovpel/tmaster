@@ -101,6 +101,10 @@ label {
     box-shadow: none;
 }
 
+button {
+  border-width: 0px;
+}
+
 .btn {
     padding: 10px 20px;
     background-color: #9d0d15;
