@@ -103,10 +103,10 @@ class UserController extends Controller
     }
 
     public function getApplicationPlayers($tournamentId, $squadId) {
-          $players = User::orderBy('surname', 'ASC')->get();
-          return view('partial.players-apply', ['players' => $players,
-                                                'tournamentId' => $tournamentId,
-                                                'squadId' => $squadId]);
+      $players = User::orderBy('surname', 'ASC')->get();
+      return view('partial.players-apply', ['players' => $players,
+                                            'tournamentId' => $tournamentId,
+                                            'squadId' => $squadId]);
     }
 
     public function saveTempImage(Request $request)

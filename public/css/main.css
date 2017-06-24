@@ -991,13 +991,14 @@ tr:nth-child(2n) {
     clear: both;
 }
 
-#popup-avatar {
+#popup {
     min-height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     overflow: hidden;
     top: 0px;
+    left: 0px;
     z-index: 100;
 }
 
@@ -1010,6 +1011,7 @@ tr:nth-child(2n) {
     max-height: 500px;
     max-width: 500px;
 }
+
 
 #uploaded-image {
     height: auto;
@@ -1031,7 +1033,26 @@ tr:nth-child(2n) {
 
 /*END User*/
 
+/*Players Popup*/
+.choose-player {
+  margin-top: 40px;
+}
 
+.choose-player #player-select {
+  width: 60%;
+}
+
+form.add-player {
+  width: 100%;
+  float: none;
+}
+
+.add-player-btn {
+  margin-top: 40px;
+  margin-bottom: 0px;
+  float: right;
+}
+/*END Players Popup*/
 
 #description {
     resize: none;
