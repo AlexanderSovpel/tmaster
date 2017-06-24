@@ -75,7 +75,7 @@ class UserController extends Controller
             // Storage::disk('s3')->put('avatars/'.$avatarName, $request->file('avatar'));
             $path = $request->file('avatar')->storeAs('avatars', $avatarName, 's3');
             $avatarUrl = Storage::disk('s3')->url($avatarName);
-            $user->avatar = $avatarUrl;
+            $user->avatar = $avatarName;
             // $user->avatar = $path;
             // $path = $request->file('avatar')->move(public_path('img/avatars'), $avatarLink);
             // $user->avatar = $avatarLink;
