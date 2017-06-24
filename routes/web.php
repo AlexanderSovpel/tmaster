@@ -19,17 +19,17 @@ Route::get('/{tournamentId}/details', 'TournamentController@details');
 Route::get('/{id}/players', 'TournamentController@getTournamentPlayers');
 Route::get('/{tournamentId}/results', 'TournamentController@getResults');
 
-Route::get('/{id}/apply', 'TournamentController@getApplication');
-Route::post('/{id}/sendApplication', 'TournamentController@postApplication');
-Route::post('/{id}/removeApplication/{playerId}', 'TournamentController@removeApplication');
+Route::get('/{id}/apply', 'TournamentController@getApplication')->middleware('auth');
+Route::post('/{id}/sendApplication', 'TournamentController@postApplication')->middleware('auth');
+Route::post('/{id}/removeApplication/{playerId}', 'TournamentController@removeApplication')->middleware('auth');
 
-Route::get('/newTournament', 'TournamentController@newTournament');
+Route::get('/newTournament', 'TournamentController@newTournament')->middleware('auth');
 Route::post('/createTournament', 'TournamentController@createTournament');
-Route::get('/{tournamentId}/deleteTournament', 'TournamentController@deleteTournament');
-Route::get('/{tournamentId}/editTournament', 'TournamentController@editTournament');
+Route::get('/{tournamentId}/deleteTournament', 'TournamentController@deleteTournament')->middleware('auth');
+Route::get('/{tournamentId}/editTournament', 'TournamentController@editTournament')->middleware('auth');
 Route::post('/{tournamentId}/saveTournament', 'TournamentController@saveTournament');
 
-Route::get('/{tournamentId}/run/q/conf/{currentSquadId}', 'TournamentController@runQualificationConfirm');
+Route::get('/{tournamentId}/run/q/conf/{currentSquadId}', 'TournamentController@runQualificationConfirm')->middleware('auth');
 Route::get('/{tournamentId}/run/q/draw/{currentSquadId}', 'TournamentController@runQualificationDraw');
 Route::get('/{tournamentId}/run/q/game/{currentSquadId}', 'TournamentController@runQualificationGame');
 Route::post('/{tournamentId}/run/q/rest/{currentSquadId}', 'TournamentController@qualificationSquadResults');
@@ -43,13 +43,13 @@ Route::get('/{tournamentId}/run/rr/rest', 'TournamentController@roundRobinResult
 Route::get('/getSquadFilling/{id}', 'SquadController@getSquadFilling');
 Route::get('/addSquadForm', 'SquadController@addSquadForm');
 
-Route::get('/account', 'UserController@showAccount');
-Route::get('/account/edit', 'UserController@editAccount');
-Route::post('/account/save', 'UserController@saveAccount');
-Route::get('/getStatistic', 'UserController@getStatistic');
-Route::get('/players', 'UserController@getPlayers');
-Route::get('/{tournamentId}/{squadId}/getPlayers', 'UserController@getApplicationPlayers');
-Route::get('/account/{playerId}/toggleAdmin', 'UserController@toggleAdmin');
+Route::get('/account', 'UserController@showAccount')->middleware('auth');
+Route::get('/account/edit', 'UserController@editAccount')->middleware('auth');
+Route::post('/account/save', 'UserController@saveAccount')->middleware('auth');
+Route::get('/getStatistic', 'UserController@getStatistic')->middleware('auth');
+Route::get('/players', 'UserController@getPlayers')->middleware('auth');
+Route::get('/{tournamentId}/{squadId}/getPlayers', 'UserController@getApplicationPlayers')->middleware('auth');
+Route::get('/account/{playerId}/toggleAdmin', 'UserController@toggleAdmin')->middleware('auth');
 
 Route::get('/setGameResult', 'GameController@setResult');
 Route::get('/changeGameResult', 'GameController@changeResult');
