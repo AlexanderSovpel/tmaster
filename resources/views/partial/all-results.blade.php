@@ -17,7 +17,7 @@
           @if ($result->part == 'q')
           <span class="label label-info">квалификация</span>
           @elseif($result->part == 'rr')
-          <span class="label label-success">финал</span
+          <span class="label label-success">финал</span>
           @endif
         </td>
       </tr>

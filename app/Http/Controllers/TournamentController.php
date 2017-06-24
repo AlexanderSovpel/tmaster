@@ -73,6 +73,9 @@ class TournamentController extends Controller
     {
         $tournament = Tournament::find($id);
         $playerId = Auth::id();
+        if ($request->has('player_id')) {
+          $playerId = $request->player_id;
+        }
         $squadId = $request->input('squad');
 
         $playerEntries = 0;
@@ -649,7 +652,7 @@ class TournamentController extends Controller
     $tournament->qualification->games = $request->qualification_games;
     $tournament->qualification->finalists = $request->qualification_finalists;
     $tournament->qualification->fee = $request->qualification_fee;
-    $tournament->qualification->allow_reentry = $request->allow_reentry;
+    $tournament->qualification->allow_reentry = (boolean)$request->allow_reentry;
     $tournament->qualification->reentries = $request->reentries_amount;
     $tournament->qualification->reentry_fee = $request->reentry_fee;
     $tournament->qualification->save();

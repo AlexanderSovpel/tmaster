@@ -202,7 +202,7 @@
 
         <div class="creation-step">
             <h1>Квалификация</h1>
-            <input type="hidden" id="squads-count" name="squads_count" value="2">
+            <input type="hidden" id="squads-count" name="squads_count" value="{{$tournament->squads()->count()}}">
             <a href="#" id="add-squad" class="btn">добавить поток</a>
             @foreach($tournament->squads()->orderBy('date', 'ASC')->orderBy('start_time', 'ASC')->get() as $index => $squad)
             <div class="well">
@@ -218,14 +218,14 @@
                 </div>
                 <div class="form-group row">
                     <label class="control-label col-md-6" for="squad-start-time-{{$index}}">Время начала</label>
-                    <input type="date" id="squad-start-time-{{$index}}" name="squad_start_time[]"
+                    <input type="time" id="squad-start-time-{{$index}}" name="squad_start_time[]"
                            class="form-control squad-start-time col-md-4"
                            pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" title="Время в формате чч:мм"
                            value="{{date('H:i', strtotime($squad->start_time))}}">
                 </div>
                 <div class="form-group row">
                     <label class="control-label col-md-6" for="squad-end-time-{{$index}}">Время окончания</label>
-                    <input type="date" id="squad-end-time-{{$index}}" name="squad_end_time[]"
+                    <input type="time" id="squad-end-time-{{$index}}" name="squad_end_time[]"
                            class="form-control squad-end-time col-md-4"
                            pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" title="Время в формате чч:мм"
                            value="{{date('H:i', strtotime($squad->end_time))}}">
@@ -233,8 +233,8 @@
                 <div class="form-group row">
                     <label class="control-label col-md-6" for="squad-max-players-{{$index}}">Количество участников</label>
                     <input type="number" id="squad-max-players-{{$index}}" name="squad_max_players[]"
-                           class="form-control squad-max-players col-md-4" value="{{$squad->max_players}}" min="6"
-                           max="12" required>
+                           class="form-control squad-max-players col-md-4" value="{{$squad->max_players}}" min="4"
+                           max="50" required>
                 </div>
             </div>
             @endforeach
@@ -324,7 +324,7 @@
         </div>
 
         <div id="controls">
-            <button type="button" id="cancel" class="btn cancel-btn" value="отмена">отмена</button>
+            <a href="/" id="cancel" class="btn cancel-btn">отмена</button>
             <button type="button" id="prev-step" class="btn" value="назад">назад</button>
             <button type="button" id="next-step" class="btn" value="далее">далее</button>
             <input type="submit" id="save" class="btn" value="сохранить">
