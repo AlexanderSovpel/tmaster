@@ -26,7 +26,7 @@
             <td>
               @if($player->is_admin)
                 @if(\Illuminate\Support\Facades\Auth::user()->is_admin)
-                  <button type="button" class="label label-success" data-toggle="modal" data-target="#toggleAdmin" data-id="{{$player->id}}" data-player="{{$player->name}} {{$player->surname}}">
+                  <button type="button" data-toggle="modal" data-target="#toggleAdmin" data-id="{{$player->id}}" data-player="{{$player->name}} {{$player->surname}}">
                     <span class="label label-success">
                       <span class="glyphicon glyphicon-ok"></span>
                     </span>
@@ -38,7 +38,7 @@
                 @endif
               @else
                 @if(Auth::user()->is_admin)
-                  <button type="button" class="label label-danger" data-toggle="modal" data-target="#toggleAdmin" data-id="{{$player->id}}" data-player="{{$player->name}} {{$player->surname}}">
+                  <button type="button" data-toggle="modal" data-target="#toggleAdmin" data-id="{{$player->id}}" data-player="{{$player->name}} {{$player->surname}}">
                     <span class="label label-danger">
                       <span class="glyphicon glyphicon-remove"></span>
                     </span>
