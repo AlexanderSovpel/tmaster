@@ -38,7 +38,7 @@
                         @endif
                     </td>
                     <td id="sum_result_{{$players[$i]->id}}">{{$playersResults[$players[$i]->id]->sum}}</td>
-                    <td id="avg_result_{{$players[$i]->id}}">{{$playersResults[$players[$i]->id]->avg}}</td>
+                    <td id="avg_result_{{$players[$i]->id}}">{{number_format($playersResults[$players[$i]->id]->avg, 2, ',')}}</td>
                 </tr>
             @endfor
             </tbody>

@@ -51,7 +51,7 @@
               @endif
             </td>
             <td>{{$player->results()->where('part', 'rr')->sum('sum')}}</td>
-            <td>{{$player->results()->where('part', 'rr')->avg('avg')}}</td>
+            <td>{{number_format($player->results()->where('part', 'rr')->avg('avg'), 2, ',')}}</td>
           </tr>
         @endforeach
         </tbody>

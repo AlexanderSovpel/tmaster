@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('content')
 @include('partial.breadcrumb', ['page' => 'Результаты'])
-    <!-- <section class="container"> -->
         <ul class="nav nav-tabs" id="result-tabs">
             <li role="presentation">
                 <a href="#" id="show-qualification-results">Квалификация</a>
@@ -24,5 +23,4 @@
                 @include('partial.all-results')
             </div>
         </div>
-    <!-- </section> -->
 @endsection

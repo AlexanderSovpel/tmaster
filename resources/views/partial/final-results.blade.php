@@ -27,7 +27,7 @@
             <td class="player-bonus">+{{$game->bonus}}</td>
             @endforeach
             <td id="sum_result_{{$player->id}}" class="player-sum">{{$fResults[$player->id]->sum}}</td>
-            <td id="avg_result_{{$player->id}}" class="player-avg">{{$fResults[$player->id]->avg}}</td>
+            <td id="avg_result_{{$player->id}}" class="player-avg">{{number_format($fResults[$player->id]->avg, 2, ',')}}</td>
         </tr>
     @endforeach
 </table>
