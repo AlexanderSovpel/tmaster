@@ -70,7 +70,7 @@
                 </ul>
             </li>
         </ul>
-        @if(!$tournament->finished)
+        @if(!$tournament->finished && \Illuminate\Support\Facades\Auth::check())
             @if($user->is_admin)
             <a href="/{{$tournament->id}}/run/q/conf/{{$tournament->squads[0]->id}}" class="tournament-btn-lg btn">начать соревнование</a>
             @else
