@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-        @if($user->is_admin)
+        @if(\Illuminate\Support\Facades\Auth::check() && $user->is_admin)
             <a href="/newTournament" class="add-tournament-btn">добавить соревнование</a>
         @endif
         @foreach($tournaments as $tournament)
