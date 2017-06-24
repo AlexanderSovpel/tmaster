@@ -47,7 +47,7 @@ Route::get('/addSquadForm', 'SquadController@addSquadForm');
 Route::get('/account', 'UserController@showAccount')->middleware('auth');
 Route::get('/account/edit', 'UserController@editAccount')->middleware('auth');
 Route::post('/account/save', 'UserController@saveAccount')->middleware('auth');
-// Route::get('/getStatistic', 'UserController@getStatistic')->middleware('auth');
+Route::get('/getStatistic', 'UserController@getStatistic')->middleware('auth');
 Route::get('/players', 'UserController@getPlayers')->middleware('auth');
 Route::get('/{tournamentId}/{squadId}/getPlayers', 'UserController@getApplicationPlayers')->middleware('auth');
 Route::get('/account/{playerId}/toggleAdmin', 'UserController@toggleAdmin')->middleware('auth');
