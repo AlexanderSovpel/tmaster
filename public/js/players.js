@@ -8,6 +8,7 @@ $(document).ready(function() {
   $('#toggle-admin').click(function() {
     $.get('/account/' + playerId + '/toggleAdmin', function(data) {
       console.log(data);
+      location.reload();
     }).fail(function(data) {
       console.log(data);
     });
