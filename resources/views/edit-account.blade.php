@@ -34,7 +34,7 @@
                             <div class="col-md-6">
                                 <input id="avatar" type="file" name="avatar" class="form-control avatar-file"
                                        accept="image/jpeg, image/png, image/gif">
-                                <label for="avatar"><span class="glyphicon glyphicon-file"></span> Выберите изображение</label>
+                                <label for="avatar"><span class="glyphicon glyphicon-file"></span> {{($user->avatar) ? $user->avatar : 'Выберите изображение'}}</label>
                             </div>
                         </div>
 
