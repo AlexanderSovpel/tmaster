@@ -32,7 +32,7 @@
                 @endif
             </td>
             <td id="sum_result_{{$qPlayers[$i]->id}}" class="player-sum">{{$qResults[$qPlayers[$i]->id]->sum}}</td>
-            <td id="avg_result_{{$qPlayers[$i]->id}}" class="player-avg">{{number_format($qResults[$qPlayers[$i]->id]->avg, 2, ',')}}</td>
+            <td id="avg_result_{{$qPlayers[$i]->id}}" class="player-avg">{{number_format($qResults[$qPlayers[$i]->id]->avg, 2, ',', ' ')}}</td>
         </tr>
     @endfor
   </tbody>
