@@ -103,6 +103,7 @@ label {
 
 button {
   border-width: 0px;
+  background-color: transparent;
 }
 
 .btn {

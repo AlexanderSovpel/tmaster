@@ -98,7 +98,7 @@ if (newTournamentForm) {
         if (!$(this).hasClass('disabled')) {
           currentStep.value = step;
           showStep(steps, step);
-          toggleStepBtnVisibility(newTournamentForm);
+          toggleStepBtnVisibility(newTournamentForm, true);
         }
       });
 
@@ -118,7 +118,7 @@ if (newTournamentForm) {
 
         sessionStorage.setItem('currentStep', currentStep.value);
         showStep(steps, currentStep.value);
-        toggleStepBtnVisibility(newTournamentForm);
+        toggleStepBtnVisibility(newTournamentForm, true);
     };
 
     nextStepBtn.onclick = function () {
@@ -144,7 +144,7 @@ if (newTournamentForm) {
 
         sessionStorage.setItem('currentStep', currentStep.value);
         showStep(steps, currentStep.value);
-        toggleStepBtnVisibility(newTournamentForm);
+        toggleStepBtnVisibility(newTournamentForm, true);
     };
 
     var partChoiseChbx = document.querySelectorAll('.part-choice');
@@ -286,7 +286,7 @@ function toggleWizardSteps(currentStep) {
   }
 }
 
-function toggleStepBtnVisibility(form, isNew) {
+function toggleStepBtnVisibility(form, isNew = false) {
     var currentStep = form.querySelector('#step').value;
     var steps = form.querySelectorAll('.creation-step');
     var nextStepBtn = form.querySelector('#next-step');
