@@ -72,11 +72,14 @@ class UserController extends Controller
 
         if ($request->hasFile('avatar')) {
             $avatarName = 'avatar_' . $user->id . '.' . $request->file('avatar')->getClientOriginalExtension();
-            Storage::disk('s3')->put('avatars/'.$avatarName, $request->file('avatar'));
-            $avatarUrl = Storage::url($avatarName);
-            $user->avatar = $avatarUrl;
+            // Storage::disk('s3')->put('avatars/'.$avatarName, $request->file('avatar'));
+            $path = $request->file('avatar')->storeAs('avatars', $avatarName, 's3');
+            // $avatarUrl = Storage::url($avatarName);
+            // $user->avatar = $avatarUrl;
+            $user->avatar = $path;
             // $path = $request->file('avatar')->move(public_path('img/avatars'), $avatarLink);
             // $user->avatar = $avatarLink;
+
         }
 
         if ($request->new_password) {
