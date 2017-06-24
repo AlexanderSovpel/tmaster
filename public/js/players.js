@@ -6,7 +6,7 @@ $(document).ready(function() {
   });
 
   $('#toggle-admin').click(function() {
-    $.get('account/' + playerId + '/toggleAdmin', function(data) {
+    $.get('/account/' + playerId + '/toggleAdmin', function(data) {
       console.log(data);
     }).fail(function(data) {
       console.log(data);

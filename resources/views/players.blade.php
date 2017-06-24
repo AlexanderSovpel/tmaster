@@ -24,16 +24,34 @@
             <td>{{$player->id}}</td>
             <td>{{$player->name}} {{$player->surname}}</td>
             <td>
-              @if($player->is_admin)
+              @if(Auth::user()->is_admin)
               <button type="button" class="label label-success" data-toggle="modal" data-target="#toggleAdmin" data-id="{{$player->id}}" data-player="{{$player->name}} {{$player->surname}}">
-                <span class="label label-success">
-                  <span class="glyphicon glyphicon-ok"></span>
-                </span>
               </button>
+              @endif
+              @if($player->is_admin)
+                @if(Auth::user()->is_admin)
+                  <button type="button" class="label label-success" data-toggle="modal" data-target="#toggleAdmin" data-id="{{$player->id}}" data-player="{{$player->name}} {{$player->surname}}">
+                    <span class="label label-success">
+                      <span class="glyphicon glyphicon-ok"></span>
+                    </span>
+                  </button>
+                @else
+                  <span class="label label-success">
+                    <span class="glyphicon glyphicon-ok"></span>
+                  </span>
+                @endif
               @else
-              <span class="label label-danger">
-                <span class="glyphicon glyphicon-remove"></span>
-              </span>
+                @if(Auth::user()->is_admin)
+                  <button type="button" class="label label-danger" data-toggle="modal" data-target="#toggleAdmin" data-id="{{$player->id}}" data-player="{{$player->name}} {{$player->surname}}">
+                    <span class="label label-danger">
+                      <span class="glyphicon glyphicon-remove"></span>
+                    </span>
+                  </button>
+                @else
+                  <span class="label label-danger">
+                    <span class="glyphicon glyphicon-remove"></span>
+                  </span>
+                @endif
               @endif
             </td>
             <td>{{$player->results()->where('part', 'rr')->sum('sum')}}</td>

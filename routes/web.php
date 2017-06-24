@@ -49,6 +49,7 @@ Route::post('/account/save', 'UserController@saveAccount');
 Route::get('/getStatistic', 'UserController@getStatistic');
 Route::get('/players', 'UserController@getPlayers');
 Route::get('/{tournamentId}/{squadId}/getPlayers', 'UserController@getApplicationPlayers');
+Route::get('/account/{playerId}/toggleAdmin', 'UserController@toggleAdmin');
 
 Route::get('/setGameResult', 'GameController@setResult');
 Route::get('/changeGameResult', 'GameController@changeResult');

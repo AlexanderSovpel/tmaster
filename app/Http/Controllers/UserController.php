@@ -139,4 +139,11 @@ class UserController extends Controller
         $request->file('tempImg')->storeAs('public', $tempName);
         return Storage::url($tempName);
     }
+
+    public function toggleAdmin($playerId) {
+      $player = User::find($playerId);
+      ($player->is_admin) ? $player->is_admin = false : $player->is_admin = true;
+      $player->save();
+      return $player;
+    }
 }
