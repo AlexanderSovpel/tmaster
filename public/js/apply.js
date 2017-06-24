@@ -76,3 +76,25 @@ function getPlayersList() {
         $('.error').html(data);
     });
 }
+
+function sendApplication() {
+  var tournamentId = $('#tournament-id').val();
+  var params = {
+      squad: $('#apply-squad').val(),
+      player_id: $('#player-select').val()
+  };
+
+  $.ajax({
+      type: 'POST',
+      url: '/' + tournamentId + '/sendApplication',
+      data: params,
+      headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+      success: function (data) {
+        closeApply();
+          $('.error').html(data);
+          location.reload();
+      }
+  }).fail(function (data) {
+      $('.error').html(data.responseText);
+  });
+}
