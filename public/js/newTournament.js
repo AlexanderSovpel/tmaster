@@ -89,7 +89,7 @@ if (newTournamentForm) {
     var saveBtn = newTournamentForm.querySelector('#save');
 
     showStep(steps, currentStep.value);
-    toggleStepBtnVisibility(newTournamentForm);
+    toggleStepBtnVisibility(newTournamentForm, true);
     var wizardSteps = document.querySelectorAll('.bs-wizard-step');
     for(var i = 0; i < wizardSteps.length; ++i) {
       $(wizardSteps[i]).click(function () {
