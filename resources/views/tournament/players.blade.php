@@ -32,7 +32,7 @@
                 </ol>
                 <div class="clearfix"></div>
                 @if($squad->players()->count() < $squad->max_players && !$tournament->finished)
-                  @if(!\Illuminate\Support\Facades\Auth::user()->is_admin)
+                  @if(\Illuminate\Support\Facades\Auth::check() && !\Illuminate\Support\Facades\Auth::user()->is_admin)
                     <form method="post" action="/{{$tournament->id}}/sendApplication" class="apply-form">
                         {{ csrf_field() }}
                         <input type="hidden" name="squad" value="{{$squad->id}}">
