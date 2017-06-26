@@ -183,8 +183,6 @@ if (editTournament) {
         toggleStepBtnVisibility(editTournament);
       }
     });
-
-    toggleWizardSteps(currentStep.value);
   }
 
   prevStepBtn.onclick = function () {
