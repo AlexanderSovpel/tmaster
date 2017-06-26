@@ -96,6 +96,8 @@ if (newTournamentForm) {
         var w = Array.prototype.slice.call($('.bs-wizard-step'));
         var step = w.indexOf(this);
         if (!$(this).hasClass('disabled')) {
+          $(this).addClass('active');
+          $(this).removeClass('complete');
           currentStep.value = step;
           showStep(steps, step);
           toggleStepBtnVisibility(newTournamentForm, true);
@@ -163,6 +165,7 @@ if (newTournamentForm) {
 var editTournament = document.getElementById('edit-tournament');
 if (editTournament) {
   $('.bs-wizard-step').addClass('complete');
+  $('.bs-wizard-step')[0].removeClass('complete');
   $('.bs-wizard-step').removeClass('disabled');
 
   var currentStep = editTournament.querySelector('#step');
@@ -179,6 +182,8 @@ if (editTournament) {
       var w = Array.prototype.slice.call($('.bs-wizard-step'));
       var step = w.indexOf(this);
       if (!$(this).hasClass('disabled')) {
+        $(this).addClass('active');
+        $(this).removeClass('complete');
         currentStep.value = step;
         showStep(steps, step);
         toggleStepBtnVisibility(editTournament);
@@ -259,22 +264,6 @@ function removeSquad(squad) {
     $(squad).parent().remove();
     $('#squads-count').val($('#squads-count').val() - 1);
     // --squadsCount.value;
-}
-
-var wizardDots = document.querySelectorAll('.bs-wizard-dot');
-if (editTournament) {
-  for(var i = 0; i < wizardDots.length; ++i) {
-    $(wizardDots[i]).click(function() {
-      var currentStep = document.querySelector('#step');
-      var steps = document.querySelectorAll('.creation-step');
-
-      currentStep.value = i;
-
-      showStep(steps, currentStep.value);
-      toggleStepBtnVisibility(editTournament);
-      toggleWizardSteps(currentStep.value);
-    });
-  }
 }
 
 function showStep(steps, step) {
