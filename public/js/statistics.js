@@ -6,7 +6,7 @@ if (user) {
   var xhr = new XMLHttpRequest();
   var statistic;
   var userId = $('#user-id').val();
-  xhr.open('GET', userId + '/getStatistic', false);
+  xhr.open('GET', '/' + userId + '/getStatistic', false);
   xhr.send();
 
   if (xhr.status != 200) {
