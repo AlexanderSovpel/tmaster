@@ -18,7 +18,7 @@
         </thead>
         <tbody>
         @foreach($players as $index => $player)
-          <tr class="">
+          <tr class="player-info">
             <td>{{$index + 1}}</td>
             <td>{{$player->id}}</td>
             <td><a href="/{{$player->id}}/account">{{$player->name}} {{$player->surname}}</a></td>

@@ -48,10 +48,12 @@
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
+                @if (Auth::user()->is_admin)
                 <ul class="nav navbar-nav">
                   <li><a href="/">Соревнования</a></li>
                   <li><a href="/players">Игроки</a></li>
                 </ul>
+                @endif
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
