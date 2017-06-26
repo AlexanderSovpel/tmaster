@@ -319,3 +319,8 @@ function togglePartSettingsVisibility(partName) {
     var partBlock = document.getElementsByClassName(partName)[0];
     partBlock.hidden = !(partBlock.hidden);
 }
+
+$('#contact-person').change(function() {
+  $('#contact-phone').val($(this).data('phone'));
+  $('#contact-email').val($(this).data('email'));
+});
