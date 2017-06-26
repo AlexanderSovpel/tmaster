@@ -148,8 +148,8 @@
                 <div class="form-group row">
                     <label for="rr-players" class="control-label col-md-6">Количество участников</label>
                     <input type="number" name="rr_players" id="rr-players" class="form-control col-md-6" value="6"
-                           min="4"
-                           max="12" required>
+                           min="0"
+                           max="100" required>
                 </div>
                 <div class="form-group row">
                     <label for="rr-win-bonus" class="control-label col-md-6">Бонус за победу</label>

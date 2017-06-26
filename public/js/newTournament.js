@@ -260,6 +260,22 @@ function removeSquad(squad) {
     // --squadsCount.value;
 }
 
+var wizardDots = document.querySelectorAll('.bs-wizard-dot');
+if (editTournament) {
+  for(var i = 0; i < wizardDots.length; ++i) {
+    $(wizardDots[i]).click(function() {
+      var currentStep = document.querySelector('#step');
+      var steps = document.querySelectorAll('.creation-step');
+
+      currentStep.value = i;
+
+      showStep(steps, currentStep.value);
+      toggleStepBtnVisibility(editTournament);
+      toggleWizardSteps(currentStep.value);
+    });
+  }
+}
+
 function showStep(steps, step) {
     for (var i = 0; i < steps.length; ++i) {
         steps[i].hidden = (i != step);
