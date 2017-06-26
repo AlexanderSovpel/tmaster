@@ -162,6 +162,8 @@ if (newTournamentForm) {
 
 var editTournament = document.getElementById('edit-tournament');
 if (editTournament) {
+  $('.bs-wizard-step').addClass('complete');
+
   var currentStep = editTournament.querySelector('#step');
   var steps = editTournament.querySelectorAll('.creation-step');
   var nextStepBtn = editTournament.querySelector('#next-step');
@@ -188,7 +190,7 @@ if (editTournament) {
   prevStepBtn.onclick = function () {
     var prevWizardStep = $('.bs-wizard-step')[currentStep.value];
     $(prevWizardStep).removeClass('active');
-    $(prevWizardStep).addClass('disabled');
+    $(prevWizardStep).addClass('complete');
 
       --currentStep.value;
 
@@ -219,7 +221,7 @@ if (editTournament) {
       ++currentStep.value;
 
       var currWizardStep = $('.bs-wizard-step')[currentStep.value];
-      $(currWizardStep).removeClass('disabled');
+      $(currWizardStep).removeClass('complete');
       $(currWizardStep).addClass('active');
 
       sessionStorage.setItem('currentStep', currentStep.value);
