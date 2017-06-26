@@ -21,7 +21,7 @@
           <tr class="">
             <td>{{$index + 1}}</td>
             <td>{{$player->id}}</td>
-            <td>{{$player->name}} {{$player->surname}}</td>
+            <td><a href="/{{$player->id}}/account">{{$player->name}} {{$player->surname}}</a></td>
             <td>{{$player->resultsSum}}</td>
             <td>
               @if($player->is_admin)

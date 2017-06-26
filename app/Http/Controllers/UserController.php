@@ -16,9 +16,14 @@ class UserController extends Controller
       // $this->middleware('auth');
   }
 
-    public function showAccount()
+    public function showAccount($playerId)
     {
-        $user = Auth::user();
+        if ($playerId) {
+          $user = User::find($playerId);
+        }
+        else {
+          $user = Auth::user();
+        }
         $today = new DateTime();
         $birthday = new DateTime($user->birthday);
         $age = $birthday->diff($today)->format('%y лет');

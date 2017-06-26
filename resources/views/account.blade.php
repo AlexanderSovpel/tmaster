@@ -3,7 +3,9 @@
 @section('content')
     <div class="user panel panel-default">
         <div id="info" class="panel-heading">
-            <a href="/account/edit" id="edit-link">редактировать</a>
+            @if($user->id == \Illuminate\Support\Facades\Auth::id())
+              <a href="/account/edit" id="edit-link">редактировать</a>
+            @endif
             <div id="user-photo">
               @if($user->avatar)
               <img src="https://s3.eu-west-2.amazonaws.com/tmaster/avatars/{{$user->avatar}}">
