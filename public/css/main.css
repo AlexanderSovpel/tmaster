@@ -601,7 +601,7 @@ tr:nth-child(2n) {
 .bs-wizard > .bs-wizard-step > .bs-wizard-dot:after {content: ' '; width: 14px; height: 14px; background: #0f1b5f; border-radius: 50px; position: absolute; top: 8px; left: 8px; }
 .bs-wizard > .bs-wizard-step > .progress {position: relative; border-radius: 0px; height: 4px; background-color: #dddddd; box-shadow: none; margin: 18px 0;}
 .bs-wizard > .bs-wizard-step > .progress > .progress-bar {width:0px; box-shadow: none; background: #0f1b5f; transition: none;}
-.bs-wizard > .bs-wizard-step.complete > .progress > .progress-bar {width:100%;}
+.bs-wizard > .bs-wizard-step.complete > .progress > .progress-bar {width:100% !important;}
 .bs-wizard > .bs-wizard-step.active > .bs-wizard-dot {background-color: rgba(15, 27, 95, 0.5)}
 .bs-wizard > .bs-wizard-step.active > .progress > .progress-bar {width:50%;}
 .bs-wizard > .bs-wizard-step:first-child.active > .progress > .progress-bar {width:0%;}
