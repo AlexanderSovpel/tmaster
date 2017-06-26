@@ -157,6 +157,6 @@ class UserController extends Controller
       $player = User::find($playerId);
       ($player->is_admin) ? $player->is_admin = false : $player->is_admin = true;
       $player->save();
-      return $player->is_admin;
+      return $player;
     }
 }
