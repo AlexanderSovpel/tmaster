@@ -12,17 +12,17 @@
             <th>№</th>
             <th>ID</th>
             <th>Игрок</th>
-            <th>Судья</th>
             <th>Сумма</th>
-            <th>Средний</th>
+            <th>Судья</th>
           </tr>
         </thead>
         <tbody>
         @foreach($players as $index => $player)
           <tr class="">
-            <td>{{$index}}</td>
+            <td>{{$index + 1}}</td>
             <td>{{$player->id}}</td>
             <td>{{$player->name}} {{$player->surname}}</td>
+            <td>{{$player->resultsSum}}</td>
             <td>
               @if($player->is_admin)
                 @if(\Illuminate\Support\Facades\Auth::user()->is_admin)
@@ -50,8 +50,6 @@
                 @endif
               @endif
             </td>
-            <td>{{$player->results()->where('part', 'rr')->sum('sum')}}</td>
-            <td>{{number_format($player->results()->where('part', 'rr')->avg('avg'), 2, ',', ' ')}}</td>
           </tr>
         @endforeach
         </tbody>
