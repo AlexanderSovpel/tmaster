@@ -321,6 +321,6 @@ function togglePartSettingsVisibility(partName) {
 }
 
 $('#contact-person').change(function() {
-  $('#contact-phone').val($(this).data('phone'));
-  $('#contact-email').val($(this).data('email'));
+  $('#contact-phone').val($(this.options[this.selectedIndex]).data('phone'));
+  $('#contact-email').val($(this.options[this.selectedIndex]).data('email'));
 });
