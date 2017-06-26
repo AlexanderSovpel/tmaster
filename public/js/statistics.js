@@ -5,7 +5,8 @@ var user = document.querySelector('.user');
 if (user) {
   var xhr = new XMLHttpRequest();
   var statistic;
-  xhr.open('GET', '/getStatistic', false);
+  var userId = $('#user-id').val();
+  xhr.open('GET', userId + '/getStatistic', false);
   xhr.send();
 
   if (xhr.status != 200) {

@@ -33,9 +33,14 @@ class UserController extends Controller
         ]);
     }
 
-    public function getStatistic()
+    public function getStatistic($playerId)
     {
-        $user = Auth::user();
+        if ($playerId) {
+          $user = User::find($playerId);
+        }
+        else {
+          $user = Auth::user();
+        }
 
         $dates = array();
         foreach ($user->games as $game) {

@@ -14,6 +14,7 @@
               @endif
             </div>
             <div id="user-data">
+                <input type="hidden" id="user-id" value="{{$user->id}}">
                 <h1>{{$user->name}} {{$user->surname}}</h1>
                 <p>{{$user->gender}}</p>
                 <p>{{$user->birthday}} ({{$user->age}})</p>
