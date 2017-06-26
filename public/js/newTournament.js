@@ -163,6 +163,7 @@ if (newTournamentForm) {
 var editTournament = document.getElementById('edit-tournament');
 if (editTournament) {
   $('.bs-wizard-step').addClass('complete');
+  $('.bs-wizard-step').removeClass('disabled');
 
   var currentStep = editTournament.querySelector('#step');
   var steps = editTournament.querySelectorAll('.creation-step');
