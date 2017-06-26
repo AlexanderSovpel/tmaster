@@ -48,7 +48,7 @@
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
-                @if (Auth::user()->is_admin)
+                @if (Auth::check() && Auth::user()->is_admin)
                 <ul class="nav navbar-nav">
                   <li><a href="/">Соревнования</a></li>
                   <li><a href="/players">Игроки</a></li>
