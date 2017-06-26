@@ -183,8 +183,9 @@ if (editTournament) {
       var w = Array.prototype.slice.call($('.bs-wizard-step'));
       var step = w.indexOf(this);
       if (!$(this).hasClass('disabled')) {
+        $(wizardSteps).removeClass('active');
         $(this).addClass('active');
-        $(this).removeClass('complete');
+        // $(this).removeClass('complete');
         currentStep.value = step;
         showStep(steps, step);
         toggleStepBtnVisibility(editTournament);
