@@ -272,13 +272,14 @@ thead {
 }
 
 .tournament h1 {
-  width: 90%;
+  width: 95%;
 }
 
 .tournament > .dropdown,
 .tournament > .dropdown > .dropdown-toggle {
   padding: 0px;
   margin: 0px;
+  margin-top: 0px;
 }
 
 .date {
