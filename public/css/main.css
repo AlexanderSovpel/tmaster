@@ -278,8 +278,7 @@ thead {
 .tournament > .dropdown,
 .tournament > .dropdown > .dropdown-toggle {
   padding: 0px;
-  margin: 0px;
-  margin-top: 0px;
+  margin: 0px !important;
 }
 
 .date {
