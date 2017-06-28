@@ -102,7 +102,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect('/account');
+        return redirect('/'.$user->id.'/account');
     }
 
     public function getContact($id) {
