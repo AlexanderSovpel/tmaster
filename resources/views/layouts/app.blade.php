@@ -70,7 +70,7 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{Auth::id()}}/account">Профиль</a></li>
+                                <li><a href="/{{Auth::id()}}/account">Профиль</a></li>
                                 <li><a href="/account/edit">Настройки</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li>
