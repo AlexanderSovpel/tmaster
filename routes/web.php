@@ -44,7 +44,7 @@ Route::get('/getSquadFilling/{id}', 'SquadController@getSquadFilling');
 Route::get('/addSquadForm', 'SquadController@addSquadForm');
 
 Route::get('/account', 'UserController@showAccount')->middleware('auth');
-Route::get('{playerId}/account', 'UserController@showAccount')->middleware('auth');
+Route::get('/{playerId}/account', 'UserController@showAccount')->middleware('auth');
 Route::get('/account/edit', 'UserController@editAccount')->middleware('auth');
 Route::post('/account/save', 'UserController@saveAccount')->middleware('auth');
 Route::get('/{playerId}/getStatistic', 'UserController@getStatistic')->middleware('auth');
