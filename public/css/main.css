@@ -271,6 +271,16 @@ thead {
     margin: 0px auto 30px;
 }
 
+.tournament h1 {
+  width: 90%;
+}
+
+.tournament > .dropdown,
+.tournament > .dropdown > .dropdown-toggle {
+  padding: 0px;
+  margin: 0px;
+}
+
 .date {
     font-size: 18px;
     font-weight: lighter;

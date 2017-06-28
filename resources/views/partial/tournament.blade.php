@@ -1,9 +1,5 @@
 <article class="tournament panel panel-default">
 <input type="hidden" value="{{$tournament->id}}">
-    <h1>
-        <a href="/{{$tournament->id}}/details">{{ $tournament->name }}</a>
-    </h1>
-
 @if(\Illuminate\Support\Facades\Auth::check() && $user->is_admin)
 <div class="dropdown">
     <button class="btn menu-btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
@@ -20,6 +16,9 @@
   </ul>
 </div>
 @endif
+<h1>
+    <a href="/{{$tournament->id}}/details">{{ $tournament->name }}</a>
+</h1>
 <p class="date">{{date('j.m.Y', strtotime($tournament->squads()->orderBy('date', 'ASC')->orderBy('start_time', 'ASC')->first()->date))}} &mdash; {{date('j.m.Y', strtotime($tournament->roundRobin->date))}}</p>
 @if(!$tournament->finished)
         <p class='tournament-open'>регистрация открыта</p>
