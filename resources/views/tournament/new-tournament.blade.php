@@ -135,12 +135,12 @@
                 <div class="form-group row">
                     <label for="qualification-entries" class="control-label col-md-6">Количество игр в блоке</label>
                     <input type="number" name="qualification_entries" id="qualification-entries"
-                           class="form-control col-md-6" value="6" min="3" max="10" required>
+                           class="form-control col-md-6" value="6" min="1" max="10" required>
                 </div>
                 <div class="form-group row">
                     <label for="qualification-finalists" class="control-label col-md-6">Количество финалистов</label>
                     <input type="number" name="qualification_finalists" id="qualification-finalists"
-                           class="form-control col-md-6" value="6" min="4" max="12" required>
+                           class="form-control col-md-6" value="6" min="0" max="100" required>
                 </div>
             </div>
             <div class="form-group roundrobin">

@@ -244,13 +244,18 @@ class TournamentController extends Controller
             $playersResults[$player->id] = $result;
         }
 
+        $aPlayers = array();
+        foreach($currentSquad->players as $player) {
+          $aPlayers[] = $player;
+        }
+
        $this->sortPlayersByResult($currentSquad->players, $tournamentId, 'q');
 
         return view('tournament.run.results-q-s', [
             'tournament' => Tournament::find($tournamentId),
             'part' => 'q',
             'stage' => 'rest',
-            'players' => $currentSquad->players,
+            'players' => $aPlayers,
             'currentSquadId' => $currentSquadId,
             'playedGames' => $playedGames,
             'playersResults' => $playersResults
