@@ -101,11 +101,11 @@ class TournamentController extends Controller
                 'status' => 'Ошибка!',
                 'message' => 'Вы уже подали заяку на данный поток.'
             ]);
-        } else if ($tournament->qualification->reentries + 1 > $playerEntries && $playerEntries > 0) {
+        } else if ($tournament->qualification->reentries + 1 == $playerEntries && $playerEntries > 0) {
             return view('partial.alerts.application-alert', [
                 'type' => 'danger',
                 'status' => 'Ошибка!',
-                'message' => 'В потоке уже зарегистрировано максимальное количество участников.'
+                'message' => 'Максимальное число переигровок.'
             ]);
         }
 
