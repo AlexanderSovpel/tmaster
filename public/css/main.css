@@ -23,7 +23,6 @@ footer {
     width: 100%;
     background-color: #0f1b5f;
     color: #ffffff;
-    font-size: 18px;
     font-weight: lighter;
     text-align: center;
     line-height: 50px;
@@ -47,13 +46,13 @@ a:hover {
 h1 {
     margin-top: 0px;
     margin-bottom: 10px;
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Cuprum', sans-serif;
     font-size: 40px;
     color: #0f1b5f;
 }
 
 h3 {
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Cuprum', sans-serif;
     color: #0f1b5f;
 }
 
@@ -163,9 +162,9 @@ thead {
     height: 80px;
     padding-top: 20px;
     padding-bottom: 20px;
-    font-family: 'Oswald', sans-serif;
-    font-size: 40px;
-    line-height: 38px;
+    font-family: 'Cuprum', sans-serif;
+    font-size: 54px;
+    line-height: 44px;
 }
 
 #logo {
@@ -273,6 +272,7 @@ thead {
 
 .tournament h1 {
   width: 95%;
+  float: left;
 }
 
 .tournament > .dropdown,
@@ -312,8 +312,8 @@ thead {
 }
 
 .tournament .info .fee {
-    font-family: 'Oswald', sans-serif;
-    font-size: 24px;
+    font-family: 'Cuprum', sans-serif;
+    font-size: 26px;
     color: #0f1b5f;
     margin-bottom: 50px;
 }
@@ -449,7 +449,7 @@ thead {
 .squad h1 {
   margin-top: 0px;
   margin-bottom: 10px;
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Cuprum', sans-serif;
   font-size: 40px;
   color: #0f1b5f;
 }
@@ -712,6 +712,10 @@ tr:nth-child(2n) {
 /* END New Tournament */
 
 /*Running Game*/
+.running {
+    display: flex;
+}
+
 .stages {
   float: left;
     width: 15%;
@@ -873,7 +877,7 @@ tr:nth-child(2n) {
     width: 50px;
     border: none;
   background-color: transparent;
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Cuprum', sans-serif;
     color: #0f1b5f;
 }
 
@@ -1073,6 +1077,13 @@ form.add-player {
 }
 /*END Players Popup*/
 
+/*Login*/
+.login-panel {
+  width: 60%;
+  margin: auto;
+}
+/*END Login*/
+
 #description {
     resize: none;
 }
@@ -1113,9 +1124,146 @@ form.add-player {
         padding: 10px 10px 5px 10px;
     }
 
+    .tournament h1 {
+      width: 90%;
+    }
+
+    h1 {
+      font-size: 2.5em;
+    }
+
+    .info {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .tournament-btn,
+    .tournament-btn-lg {
+      width: 100%;
+    }
+
+    .add-tournament-btn {
+      width: 100%;
+    }
+
+    .running {
+        flex-direction: column;
+    }
+
+    .stages {
+      width: 100%;
+      margin-right: 0px;
+    }
+
+    .game-process {
+      width: 100%;
+    }
+
+    .bs-wizard {
+      width: 100%;
+    }
+
+    .bs-wizard > .bs-wizard-step .bs-wizard-stepnum {
+      display: none;
+      /*font-size: 0.7em;*/
+    }
+
+    .bs-wizard > .bs-wizard-step > .progress {
+      margin: 3.1em 0;
+    }
+
+    .player-result {
+        min-width: 50px;
+    }
+
+    .part > form > table {
+      display: block;
+      overflow: scroll;
+    }
+
+    #result-tabs {
+      font-size: 1em;
+    }
+
+    #results {
+      padding: 0px;
+      font-size: 1em;
+      overflow: scroll;
+    }
+
+    .player-name {
+      min-width: 150px;
+    }
+
+    .squad {
+      width: 100%;
+    }
+
+    .apply {
+      width: 100%;
+    }
+
+    .apply .data {
+      width: auto;
+    }
+
+    .tournament-edit {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .dropdown-menu {
+      left: auto;
+      right: 0px;
+    }
+
+    #controls .btn {
+      font-size: 1em;
+      padding: 0.43em 0.86em;
+    }
+
+    .login-panel {
+      width: 100%;
+    }
+
     .col-md-6 {
-        width: auto;
         float: left;
     }
 
+}
+
+/*Mobile*/
+#app-navbar-collapse.collapsing,
+#app-navbar-collapse.collapse.in {
+  background: #ffffff;
+  width: 70%;
+  float: right;
+  max-height: 100%;
+  height: 700px;
+  padding: 0px 40px;
+  border-color: #eee;
+  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1)
+}
+
+.navbar-toggle {
+  height: 80px;
+  margin: 0px;
+  position: fixed;
+  right: 10px;
+  border: none;
+  border-radius: 0px;
+}
+
+.navbar-default .navbar-toggle:hover {
+  background-color: transparent;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #0f1b5f;
+  height: 4px;
+  border-radius: 0px;
+}
+
+.navbar-toggle:hover .icon-bar {
+  background-color: #9d0d15;
 }
