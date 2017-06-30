@@ -249,7 +249,7 @@ class TournamentController extends Controller
           $aPlayers[] = $player;
         }
 
-       $this->sortPlayersByResult($currentSquad->players, $tournamentId, 'q');
+       $this->sortPlayersByResult($aPlayers, $tournamentId, 'q');
 
         return view('tournament.run.results-q-s', [
             'tournament' => Tournament::find($tournamentId),
