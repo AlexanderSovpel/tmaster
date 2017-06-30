@@ -34,19 +34,15 @@
                         @endfor
                     </ul>
                 </li>
+                @if ($tournament->roundRobin->players)
                 <li
                         @if ($part == 'rr')
                         class="list-group-item active"
                         @else
                         class="list-group-item"
                         @endif
-                >Финал
-                    {{--<ul class="list-group">--}}
-                    {{--@for($j = 0; $j < $tournament->roundRobin->players - 1; ++$j)--}}
-                    {{--<li class="list-group-item">Раунд {{$j + 1}}</li>--}}
-                    {{--@endfor--}}
-                    {{--</ul>--}}
-                </li>
+                >Финал</li>
+                @endif
             </ul>
         </div>
 

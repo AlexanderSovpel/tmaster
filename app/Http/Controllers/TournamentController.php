@@ -321,21 +321,22 @@ class TournamentController extends Controller
                 ->where('tournament_id', $tournamentId)
                 ->where('part', $part)
                 ->max('sum');
-                // ->first();
             $playerBResult = $playerB['results']
                 ->where('tournament_id', $tournamentId)
                 ->where('part', $part)
                 ->max('sum');
-                // ->first();
             return ($playerAResult < $playerBResult);
-            // return ($playerAResult->sum < $playerBResult->sum);
         });
     }
 
     public function runRoundRobinConfirm(Request $request, $tournamentId)
     {
-        $players = session('players');
         $tournament = Tournament::find($tournamentId);
+        if (!$tournament->roundRobin->players) {
+          return TournamentController::getResults($tournamentId);
+        }
+
+        $players = session('players');
         $finalistsCount = 1;
 
         foreach ($players as $player) {
