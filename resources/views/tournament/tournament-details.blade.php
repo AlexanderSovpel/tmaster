@@ -7,7 +7,11 @@
     </ol>
     <article class="tournament panel panel-default">
         <input type="hidden" value="{{$tournament->id}}">
-        <div class="panel-heading"><h1>{{ $tournament->name }}</h1></div>
+        <div class="panel-heading">
+          <h1>{{ $tournament->name }}</h1>
+          <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
         <p class="description">{{$tournament->description}}</p>
         <p class="decree">
             Соревнования проводятся в соответствии с Положением о рейтинговых соревнованиях, этапах Чемпионата Беларуси
@@ -89,5 +93,6 @@
             </li>
             <li class="#">Фотоотчет</li>
         </ol>
+      </div>
     </article>
 @endsection
