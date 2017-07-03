@@ -17,7 +17,7 @@
             <input type="hidden" class="player-id" value="{{$player->id}}">
             <td class="position">{{$key + 1}}</td>
             <td class="player-name">{{$player->surname ." ". $player->name}}</td>
-            <td class="qualification-result">{{$qResults[$player->id]->sum}}</td>
+            <td class="qualification-result">{{(isset($qResults[$player->id]->sum)) ? $qResults[$player->id]->sum : $qResults[$player->id]}}</td>
             @foreach ($fGames[$player->id] as $game)
             <td class="player-result">
               @if(isset($game))
