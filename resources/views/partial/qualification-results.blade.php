@@ -13,7 +13,7 @@
   </thead>
   <tbody>
     @for($i = 0; $i < count($qPlayers); ++$i)
-        <tr class="player">
+        <tr class="player {{($i < $tournament->qualification->finalists) ? 'text-success' : ''}}">
             <input type="hidden" class="player-id" value="{{$qPlayers[$i]->id}}">
             <td class="position">{{$i + 1}}</td>
             <td class="player-name">{{$qPlayers[$i]->surname ." ". $qPlayers[$i]->name}}</td>
