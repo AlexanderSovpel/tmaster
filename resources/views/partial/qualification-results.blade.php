@@ -19,7 +19,7 @@
               @if($i < $tournament->qualification->finalists)
               <span class="label label-success">{{$i + 1}}</span>
               @else
-              {{$i + 1}}
+              <span class="label label-info">{{$i + 1}}</span>
               @endif
             </td>
             <td class="player-name">{{$qPlayers[$i]->surname ." ". $qPlayers[$i]->name}}</td>
