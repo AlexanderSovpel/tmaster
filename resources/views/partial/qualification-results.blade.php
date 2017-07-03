@@ -13,9 +13,15 @@
   </thead>
   <tbody>
     @for($i = 0; $i < count($qPlayers); ++$i)
-        <tr class="player {{($i < $tournament->qualification->finalists) ? 'text-success' : ''}}">
+        <tr class="player">
             <input type="hidden" class="player-id" value="{{$qPlayers[$i]->id}}">
-            <td class="position">{{$i + 1}}</td>
+            <td class="position">
+              @if($i < $tournament->qualification->finalists)
+              <span class="label label-success">{{$i + 1}}</span>
+              @else
+              {{$i + 1}}
+              @endif
+            </td>
             <td class="player-name">{{$qPlayers[$i]->surname ." ". $qPlayers[$i]->name}}</td>
             @foreach ($qGames[$qPlayers[$i]->id] as $game)
             <td class="player-result">
