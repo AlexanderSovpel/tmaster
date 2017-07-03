@@ -7,4 +7,7 @@
         @foreach($tournaments as $tournament)
             @include('partial.tournament')
         @endforeach
+        <div class="pagination-center">
+          {{$tournaments->links()}}
+        </div>
 @endsection

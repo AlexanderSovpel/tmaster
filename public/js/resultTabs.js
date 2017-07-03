@@ -13,11 +13,13 @@ if (results) {
     };
 
     fResultsTab = document.getElementById('show-final-results');
-    fResultsTab.onclick = function (e) {
-        e.preventDefault();
-        toggleResults('final');
-        toggleTabActive(fResultsTab);
-    };
+    if (fResultsTab) {
+      fResultsTab.onclick = function (e) {
+          e.preventDefault();
+          toggleResults('final');
+          toggleTabActive(fResultsTab);
+      };
+    }
 
     allResultsTab = document.getElementById('show-all-results');
     allResultsTab.onclick = function (e) {

@@ -5,16 +5,19 @@
     <form action="/{{$tournament->id}}/run/q/conf/{{$currentSquadId}}" method="get">
         {{ csrf_field() }}
         <table>
-            <tr>
-                <td>№</td>
-                <td>Участник</td>
+          <thead>
+            <tr class="results-header">
+                <th>№</th>
+                <th>Участник</th>
                 @for ($j = 0; $j < $tournament->qualification->entries; ++$j)
-                    <td>{{$j + 1}}</td>
+                    <th>{{$j + 1}}</th>
                 @endfor
-                <td>Гандикап</td>
-                <td>Сумма</td>
-                <td>Средний</td>
+                <th>Г-п</th>
+                <th>Сумма</th>
+                <th>Средний</th>
             </tr>
+          </thead>
+          <tbody>
             @for($i = 0; $i < count($players); ++$i)
                 <tr class="player">
                     <td>{{$i + 1}}</td>
@@ -38,8 +41,9 @@
                     <td id="avg_result_{{$players[$i]->id}}">{{$playersResults[$players[$i]->id]->avg}}</td>
                 </tr>
             @endfor
+          </tbody>
         </table>
-        <button type="submit">завершить игру</button>
+        <button type="submit" class="btn">завершить игру</button>
         <div id="error"></div>
     </form>
 @endsection

@@ -63,6 +63,47 @@ function getPlayersList() {
     });
 }
 
+var addPlayerBtn = document.querySelector('.add-player-btn');
+if (addPlayerBtn) {
+  $('.add-player-btn').click(function() {
+    var tournamentId = document.querySelector('#tournament-id').value;
+    var squadId = $(this).siblings("[name='squad_id']").val();
+    var url = '/' + tournamentId + '/' + squadId + '/getPlayers';
+    $.get(url, function(data) {
+      $(addPlayerBtn).after(data);
+      // console.log(data);
+    }).fail(function(data) {
+      console.log(data.responseText);
+    });
+  });
+}
+
+function closeApply() {
+  $('#popup').remove();
+}
+
+function sendApplication() {
+  var tournamentId = $('#tournament-id').val();
+  var params = {
+      squad: $('#apply-squad').val(),
+      player_id: $('#player-select').val()
+  };
+
+  $.ajax({
+      type: 'POST',
+      url: '/' + tournamentId + '/sendApplication',
+      data: params,
+      headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+      success: function (data) {
+        closeApply();
+          $('.error').html(data);
+          location.reload();
+      }
+  }).fail(function (data) {
+      $('.error').html(data.responseText);
+  });
+}
+
 // var players = document.querySelectorAll('.player');
 // for (var i = 0; i < players.length; ++i) {
 //     var playerId = players[i].querySelector('.player-id').value;

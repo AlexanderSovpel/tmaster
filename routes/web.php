@@ -21,6 +21,7 @@ Route::get('/', 'TournamentController@index');
 Route::get('/{tournamentId}/details', 'TournamentController@details');
 Route::get('/{id}/players', 'TournamentController@getTournamentPlayers');
 Route::get('/{tournamentId}/results', 'TournamentController@getResults');
+Route::get('/{tournamentId}/editTournament', 'TournamentController@editTournament');
 
 Route::get('/{id}/apply', 'TournamentController@getApplication');
 Route::post('/{id}/sendApplication', 'TournamentController@postApplication');
@@ -28,6 +29,7 @@ Route::post('/{id}/removeApplication', 'TournamentController@removeApplication')
 
 Route::get('/newTournament', 'TournamentController@newTournament');
 Route::post('/createTournament', 'TournamentController@createTournament');
+Route::post('/{tournamentId}/saveTournament', 'TournamentController@saveTournament');
 Route::get('/{tournamentId}/deleteTournament', 'TournamentController@deleteTournament');
 
 Route::get('/{tournamentId}/run/q/conf/{currentSquadId}', 'TournamentController@runQualificationConfirm');
@@ -48,6 +50,8 @@ Route::get('/account', 'UserController@showAccount');
 Route::get('/account/edit', 'UserController@editAccount');
 Route::post('/account/save', 'UserController@saveAccount');
 Route::get('/getStatistic', 'UserController@getStatistic');
+Route::get('/players', 'UserController@getPlayers');
+Route::get('/{tournamentId}/{squadId}/getPlayers', 'UserController@getApplicationPlayers');
 //Route::post('/saveTempImage', 'UserController@saveTempImage');
 
 Route::get('/setGameResult', 'GameController@setResult');

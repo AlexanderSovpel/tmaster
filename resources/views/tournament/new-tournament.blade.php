@@ -64,7 +64,7 @@
     </div>
     {{--</div>--}}
     {{--<div id="error"></div>--}}
-    <form method="post" action="/createTournament" id="new-tournament" class="panel panel-default">
+    <form method="post" action="/createTournament" id="new-tournament" class="panel panel-default tournament-edit">
         {{csrf_field()}}
         <input type="hidden" id="step" value="0">
         <div class="creation-step">
@@ -169,12 +169,12 @@
                 <div class="form-group row">
                     <label for="qualification-entries" class="control-label col-md-6">Количество игр в блоке</label>
                     <input type="number" name="qualification_entries" id="qualification-entries"
-                           class="form-control col-md-6" value="6" min="3" max="10" required>
+                           class="form-control col-md-6" value="6" min="1" max="10" required>
                 </div>
                 <div class="form-group row">
                     <label for="qualification-finalists" class="control-label col-md-6">Количество финалистов</label>
                     <input type="number" name="qualification_finalists" id="qualification-finalists"
-                           class="form-control col-md-6" value="6" min="4" max="12" required>
+                           class="form-control col-md-6" value="6" min="0" max="100" required>
                 </div>
             </div>
             <!-- <div class="form-group desperado" hidden>
@@ -266,8 +266,8 @@
                 <div class="form-group row">
                     <label for="rr-players" class="control-label col-md-6">Количество участников</label>
                     <input type="number" name="rr_players" id="rr-players" class="form-control col-md-6" value="6"
-                           min="4"
-                           max="12" required>
+                           min="0"
+                           max="100" required>
                 </div>
                 <div class="form-group row">
                     <label for="rr-win-bonus" class="control-label col-md-6">Бонус за победу</label>
@@ -287,8 +287,8 @@
             <h1>Квалификация</h1>
             <input type="hidden" id="squads-count" name="squads_count" value="2">
             <a href="#" id="add-squad" class="btn">добавить поток</a>
-            @include('partial.squad-form', ['index' => 2])
             @include('partial.squad-form', ['index' => 1])
+            @include('partial.squad-form', ['index' => 2])
         </div>
 
         <div class="creation-step">
@@ -351,15 +351,19 @@
             <h1>Контактная информация</h1>
             <div class="form-group row">
                 <label for="contact-person" class="control-label col-md-6">Контактное лицо</label>
-                <input type="text" id="contact-person" name="contact_person" class="form-control col-md-6" required>
+                <select class="form-control col-md-6" id="contact-person" name="contact_person">
+                  @foreach ($admins as $admin)
+                    <option value="{{$admin->id}}">{{$admin->name}} {{$admin->surname}}</option>
+                  @endforeach
+                </select>
             </div>
             <div class="form-group row">
                 <label for="contact-phone" class="control-label col-md-6">Телефон</label>
-                <input type="text" id="contact-phone" name="contact_phone" class="form-control col-md-6" required>
+                <input type="text" id="contact-phone" name="contact_phone" class="form-control col-md-6" value="{{$admins[0]->phone}}" readonly>
             </div>
             <div class="form-group row">
                 <label for="contact-email" class="control-label col-md-6">Электронная почта</label>
-                <input type="email" id="contact-email" name="contact_email" class="form-control col-md-6" required>
+                <input type="email" id="contact-email" name="contact_email" class="form-control col-md-6" value="{{$admins[0]->email}}" readonly>
             </div>
         </div>
 
@@ -367,6 +371,8 @@
             <button type="button" id="prev-step" class="btn" value="назад">назад</button>
             <button type="button" id="next-step" class="btn" value="далее">далее</button>
             <input type="submit" id="save" class="btn" value="сохранить">
+            <div class="clearfix"></div>
         </div>
     </form>
+    <div id="error"></div>
 @endsection

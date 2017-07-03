@@ -5,7 +5,9 @@
         <div id="info" class="panel-heading">
             <a href="/account/edit" id="edit-link">редактировать</a>
             <div id="user-photo">
-                <img src="{{asset($user->avatar)}}">
+                <img src="{{asset('img/avatars/'.$user->avatar)}}">
+                <div class="change-avatar">изменить фото</div>
+                <div class="delete-avatar"><span aria-hidden="true">&times;</span></div>
             </div>
             <div id="user-data">
                 <h1>{{$user->name}} {{$user->surname}}</h1>

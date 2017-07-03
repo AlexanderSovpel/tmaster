@@ -7,7 +7,7 @@
     <input type="hidden" name="stage" value="{{$stage or ''}}">
     <input type="hidden" name="currentSquad" value="{{$currentSquadId or ''}}">
     <input type="hidden" name="squadFinished" value="{{$squadFinished or ''}}">
-    <div>
+    <div class="running">
         <div class="part-nav stages panel panel-default">
             <h3>Этап</h3>
             <ul class="list-group">
@@ -34,19 +34,15 @@
                         @endfor
                     </ul>
                 </li>
+                @if ($tournament->roundRobin->players)
                 <li
                         @if ($part == 'rr')
                         class="list-group-item active"
                         @else
                         class="list-group-item"
                         @endif
-                >Финал
-                    {{--<ul class="list-group">--}}
-                    {{--@for($j = 0; $j < $tournament->roundRobin->players - 1; ++$j)--}}
-                    {{--<li class="list-group-item">Раунд {{$j + 1}}</li>--}}
-                    {{--@endfor--}}
-                    {{--</ul>--}}
-                </li>
+                >Финал</li>
+                @endif
             </ul>
         </div>
 

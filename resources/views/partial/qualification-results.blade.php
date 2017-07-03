@@ -6,7 +6,7 @@
         @for ($j = 0; $j < $tournament->qualification->entries; ++$j)
             <th class="player-result">{{$j + 1}}</th>
         @endfor
-        <th class="player-bonus">Гандикап</th>
+        <th class="player-bonus">Г-п</th>
         <th class="player-sum">Сумма</th>
         <th class="player-avg">Средний</th>
     </tr>
@@ -15,7 +15,13 @@
     @for($i = 0; $i < count($qPlayers); ++$i)
         <tr class="player">
             <input type="hidden" class="player-id" value="{{$qPlayers[$i]->id}}">
-            <td class="position">{{$i + 1}}</td>
+            <td class="position">
+              @if($i < $tournament->qualification->finalists)
+              <span class="label label-success">{{$i + 1}}</span>
+              @else
+              <span class="label label-info">{{$i + 1}}</span>
+              @endif
+            </td>
             <td class="player-name">{{$qPlayers[$i]->surname ." ". $qPlayers[$i]->name}}</td>
             @foreach ($qGames[$qPlayers[$i]->id] as $game)
             <td class="player-result">

@@ -11,7 +11,6 @@ html {
 
 body {
     font-family: 'Open Sans', sans-serif;
-    padding-top: 120px;
     padding-bottom: 80px;
     font-size: 14px;
     position: relative;
@@ -23,7 +22,6 @@ footer {
     width: 100%;
     background-color: #0f1b5f;
     color: #ffffff;
-    font-size: 18px;
     font-weight: lighter;
     text-align: center;
     line-height: 50px;
@@ -47,13 +45,13 @@ a:hover {
 h1 {
     margin-top: 0px;
     margin-bottom: 10px;
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Cuprum', sans-serif;
     font-size: 40px;
     color: #0f1b5f;
 }
 
 h3 {
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Cuprum', sans-serif;
     color: #0f1b5f;
 }
 
@@ -101,6 +99,11 @@ label {
     box-shadow: none;
 }
 
+button {
+  border-width: 0px;
+  background-color: transparent;
+}
+
 .btn {
     padding: 10px 20px;
     background-color: #9d0d15;
@@ -140,6 +143,11 @@ label {
     border: none;
 }
 
+thead {
+  height: 40px;
+  font-weight: 600;
+  background-color: #dddddd;
+}
 /*END Common*/
 
 /*Header*/
@@ -153,9 +161,9 @@ label {
     height: 80px;
     padding-top: 20px;
     padding-bottom: 20px;
-    font-family: 'Oswald', sans-serif;
-    font-size: 40px;
-    line-height: 38px;
+    font-family: 'Cuprum', sans-serif;
+    font-size: 54px;
+    line-height: 44px;
 }
 
 #logo {
@@ -192,6 +200,11 @@ label {
     padding-bottom: 15px;
 }
 
+.dropdown .dropdown-toggle {
+  height: 50px !important;
+  line-height: 22px !important;
+}
+
 .dropdown-menu {
   font-size: 18px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
@@ -218,6 +231,15 @@ label {
   color: #9d0d15;
   background-color: transparent;
 }
+
+.navbar .navbar-header {
+  margin-right: 40px;
+}
+
+.navbar .collapse.navbar-collapse .navbar-nav > li > a {
+  height: 80px;
+  line-height: 52px;
+}
 /*END Header*/
 
 /*Breadcrumb*/
@@ -242,9 +264,36 @@ label {
 /*END Login*/
 
 /*Index*/
+.pagination-center {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination > li > a {
+  color: #0f1b5f;
+}
+
+.pagination > .active > span,
+.pagination > .active > span:hover {
+  color: #ffffff;
+  background-color: #0f1b5f;
+  border-color: #0f1b5f;
+}
+
 .tournament {
     width: 60%;
     margin: 0px auto 30px;
+}
+
+.tournament h1 {
+  width: 90%;
+  float: left;
+}
+
+.tournament > .dropdown,
+.tournament > .dropdown > .dropdown-toggle {
+  padding: 0px;
+  margin: 0px !important;
 }
 
 .date {
@@ -278,8 +327,8 @@ label {
 }
 
 .tournament .info .fee {
-    font-family: 'Oswald', sans-serif;
-    font-size: 24px;
+    font-family: 'Cuprum', sans-serif;
+    font-size: 26px;
     color: #0f1b5f;
     margin-bottom: 50px;
 }
@@ -399,23 +448,22 @@ label {
 /*END Tournament*/
 
 /*Players*/
+.squads {
+  display: flex;
+  justify-content: space-between;
+}
+
 .squad {
-  width: 48%;
+  width: 45%;
   padding: 30px;
-  margin-right: 2%;
   margin-bottom: 30px;
   float: left;
 }
 
-/*.squad:nth-child(2n+1) {*/
-/*margin-right: 0px;*/
-/*margin-left: 2%;*/
-/*}*/
-
 .squad h1 {
   margin-top: 0px;
   margin-bottom: 10px;
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Cuprum', sans-serif;
   font-size: 40px;
   color: #0f1b5f;
 }
@@ -435,7 +483,7 @@ label {
 }
 
 .squad form {
-  width: 30%;
+  /*width: 30%;*/
   float: left;
 }
 
@@ -542,7 +590,7 @@ tr:nth-child(2n) {
 }
 
 .player-name {
-  width: 200px;
+  min-width: 200px;
 }
 
 .player-result {
@@ -577,7 +625,7 @@ tr:nth-child(2n) {
 .bs-wizard > .bs-wizard-step > .bs-wizard-dot:after {content: ' '; width: 14px; height: 14px; background: #0f1b5f; border-radius: 50px; position: absolute; top: 8px; left: 8px; }
 .bs-wizard > .bs-wizard-step > .progress {position: relative; border-radius: 0px; height: 4px; background-color: #dddddd; box-shadow: none; margin: 18px 0;}
 .bs-wizard > .bs-wizard-step > .progress > .progress-bar {width:0px; box-shadow: none; background: #0f1b5f; transition: none;}
-.bs-wizard > .bs-wizard-step.complete > .progress > .progress-bar {width:100%;}
+.bs-wizard > .bs-wizard-step.complete > .progress > .progress-bar {width:100% !important;}
 .bs-wizard > .bs-wizard-step.active > .bs-wizard-dot {background-color: rgba(15, 27, 95, 0.5)}
 .bs-wizard > .bs-wizard-step.active > .progress > .progress-bar {width:50%;}
 .bs-wizard > .bs-wizard-step:first-child.active > .progress > .progress-bar {width:0%;}
@@ -589,17 +637,20 @@ tr:nth-child(2n) {
 /*END Form Wizard*/
 
 /* New Tournament */
-#new-tournament {
+.tournament-edit {
     width: 60%;
     padding: 30px;
     margin: auto;
     background-color: #ffffff;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    /*font-size: 18px;*/
 }
 
 .creation-step > h1 {
   margin-bottom: 40px;
+}
+
+#next-step {
+  margin-right: 5px;
 }
 
 #next-step, #save {
@@ -617,31 +668,24 @@ tr:nth-child(2n) {
     color: #ffffff;
 }
 
-#new-tournament > .creation-step > .form-group > .form-group > label {
+.tournament-edit > .creation-step > .form-group > .form-group > label {
   vertical-align: middle;
 }
 
-#new-tournament > .creation-step > .form-group > label {
+.tournament-edit > .creation-step > .form-group > label {
     vertical-align: top;
 }
 
-#new-tournament > .creation-step > .form-group > .form-control,
-#new-tournament > .creation-step > .form-group > .form-group > .form-control,
-#new-tournament > .creation-step > .form-group > .form-group > .checkbox,
-#new-tournament > .creation-step > .form-group > .choose-type {
+.tournament-edit > .creation-step > .form-group > .form-control,
+.tournament-edit > .creation-step > .form-group > .form-group > .form-control,
+.tournament-edit > .creation-step > .form-group > .form-group > .checkbox,
+.tournament-edit > .creation-step > .form-group > .choose-type {
   width: 40%;
-    /*margin-left: 20px;*/
   display: inline-block;
 }
 
 .creation-step > .form-group > .input-group {
-    /*width: 40%;*/
   margin-left: 20px;
-    /*display: inline-table;*/
-}
-
-.creation-step > .well > .form-group > label {
-    /*width: 100%;*/
 }
 
 .creation-step > .well > .form-group > .form-control {
@@ -649,7 +693,6 @@ tr:nth-child(2n) {
 }
 
 .well {
-    /*width: 90%;*/
     margin: auto;
     margin-bottom: 20px;
     border-radius: 0px;
@@ -683,6 +726,10 @@ tr:nth-child(2n) {
 /* END New Tournament */
 
 /*Running Game*/
+.running {
+    display: flex;
+}
+
 .stages {
   float: left;
     width: 15%;
@@ -746,22 +793,6 @@ tr:nth-child(2n) {
   display: block;
 }
 
-.input {
-    /*font-size: 18px;*/
-    /*background-color: transparent;*/
-    /*border: none;*/
-    /*border-bottom: solid 2px rgba(15, 27, 95, 0.5);*/
-    /*border-radius: 0px;*/
-    /*box-shadow: none;*/
-}
-
-.input:focus {
-    /*border: none;*/
-    /*border-bottom: solid 2px rgba(15, 27, 95, 1);*/
-    /*border-radius: 0px;*/
-    /*box-shadow: none;*/
-}
-
 .played {
     border: none;
 }
@@ -791,7 +822,6 @@ tr:nth-child(2n) {
 
 .confirm-checkbox:not(checked) + label {
     position: relative; /* будем позиционировать псевдочекбокс относительно label */
-    /*padding: 0 0 0 60px; !* оставляем слева от label место под псевдочекбокс *!*/
 }
 
 .confirm-checkbox:not(checked) + label:before {
@@ -801,7 +831,6 @@ tr:nth-child(2n) {
     background: url('../img/unchecked.png');
     position: absolute;
     top: 4px;
-    /*left: 0px;*/
 }
 
 /* Меняем фон чекбокса, когда он включен. */
@@ -862,7 +891,7 @@ tr:nth-child(2n) {
     width: 50px;
     border: none;
   background-color: transparent;
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Cuprum', sans-serif;
     color: #0f1b5f;
 }
 
@@ -901,11 +930,44 @@ tr:nth-child(2n) {
 }
 
 #user-photo > img {
-    width: auto;
+    width: 100%;
     height: auto;
     max-width: 200px;
     max-height: 200px;
 }
+
+.change-avatar {
+  position: absolute;
+  margin-left: -200px;
+  margin-top: 160px;
+  width: 200px;
+  height: 40px;
+  line-height: 38px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.delete-avatar {
+  position: absolute;
+  padding: 0px 10px;
+  font-size: 20px;
+  margin-left: -31px;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #ffffff;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+#user-photo:hover .change-avatar,
+#user-photo:hover .delete-avatar {
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
 
 #statistics {
     background-color: transparent !important;
@@ -999,13 +1061,14 @@ tr:nth-child(2n) {
     clear: both;
 }
 
-#popup-avatar {
+#popup {
     min-height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     overflow: hidden;
     top: 0px;
+    left: 0px;
     z-index: 100;
 }
 
@@ -1018,6 +1081,7 @@ tr:nth-child(2n) {
     max-height: 500px;
     max-width: 500px;
 }
+
 
 #uploaded-image {
     height: auto;
@@ -1039,7 +1103,33 @@ tr:nth-child(2n) {
 
 /*END User*/
 
+/*Players Popup*/
+.choose-player {
+  margin-top: 40px;
+}
 
+.choose-player #player-select {
+  width: 60%;
+}
+
+form.add-player {
+  width: 100%;
+  float: none;
+}
+
+.add-player-btn {
+  margin-top: 40px;
+  margin-bottom: 0px;
+  float: right;
+}
+/*END Players Popup*/
+
+/*Login*/
+.login-panel {
+  width: 60%;
+  margin: auto;
+}
+/*END Login*/
 
 #description {
     resize: none;
@@ -1061,4 +1151,170 @@ tr:nth-child(2n) {
 
 .btn-file {
     display: none;
+}
+
+@media screen and (max-width: 980px) {
+    .tournament {
+        width: 80%;
+    }
+
+    .col-md-6 {
+        width: 50%;
+        float: left;
+    }
+
+}
+
+@media screen and (max-width: 360px) {
+    .tournament {
+        width: 100%;
+        padding: 10px 10px 5px 10px;
+    }
+
+    .tournament h1 {
+      width: 90%;
+    }
+
+    h1 {
+      font-size: 2.5em;
+    }
+
+    .info {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .tournament-btn,
+    .tournament-btn-lg {
+      width: 100%;
+    }
+
+    .add-tournament-btn {
+      width: 100%;
+    }
+
+    .running {
+        flex-direction: column;
+    }
+
+    .stages {
+      width: 100%;
+      margin-right: 0px;
+    }
+
+    .game-process {
+      width: 100%;
+    }
+
+    .bs-wizard {
+      width: 100%;
+    }
+
+    .bs-wizard > .bs-wizard-step .bs-wizard-stepnum {
+      display: none;
+      /*font-size: 0.7em;*/
+    }
+
+    .bs-wizard > .bs-wizard-step > .progress {
+      margin: 3.1em 0;
+    }
+
+    .player-result {
+        min-width: 50px;
+    }
+
+    .part > form > table {
+      display: block;
+      overflow: scroll;
+    }
+
+    #result-tabs {
+      font-size: 1em;
+    }
+
+    #results {
+      padding: 0px;
+      font-size: 1em;
+      overflow: scroll;
+    }
+
+    .player-name {
+      min-width: 150px;
+    }
+
+    .squads {
+      flex-direction: column;
+    }
+
+    .squad {
+      width: 100%;
+    }
+
+    .apply {
+      width: 100%;
+    }
+
+    .apply .data {
+      width: auto;
+    }
+
+    .tournament-edit {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .dropdown-menu {
+      left: auto;
+      right: 0px;
+    }
+
+    #controls .btn {
+      font-size: 1em;
+      padding: 0.43em 0.86em;
+    }
+
+    .login-panel {
+      width: 100%;
+    }
+
+    .col-md-6 {
+        float: left;
+    }
+
+}
+
+/*Mobile*/
+#app-navbar-collapse.collapsing,
+#app-navbar-collapse.collapse.in {
+  background: #ffffff;
+  width: 70%;
+  float: right;
+  max-height: 100%;
+  height: 700px;
+  padding: 0px 40px;
+  border-color: #eee;
+  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1)
+}
+
+.navbar-toggle {
+  height: 80px;
+  margin: 0px;
+  position: fixed;
+  right: 10px;
+  border: none;
+  border-radius: 0px;
+}
+
+.navbar-default .navbar-toggle:hover {
+  background-color: transparent;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #0f1b5f;
+  height: 4px;
+  border-radius: 0px;
+}
+
+.navbar-toggle:hover .icon-bar {
+  background-color: #9d0d15;
 }

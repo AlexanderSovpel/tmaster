@@ -1,5 +1,6 @@
 var newTournamentForm = document.getElementById('new-tournament');
 if (newTournamentForm) {
+  sessionStorage.setItem('currentStep', 0);
   $('.form-control').change(function() {
     sessionStorage.setItem(this.name, this.value);
     console.log(sessionStorage.getItem(this.name));
@@ -11,13 +12,25 @@ if (newTournamentForm) {
     }
   }
 
+  var contactPerson = document.querySelector('#contact-person');
+  $(contactPerson).change(function() {
+    var adminId = this.options[this.selectedIndex].value;
+    $.get('/getContact/' + adminId, function(data) {
+      var adminUser = JSON.parse(data);
+      $('#contact-phone').val(adminUser.phone);
+      $('#contact-email').val(adminUser.email);
+    }).fail(function(data) {
+        console.log(data);
+      });
+  });
+
   $('#save').click(function(e) {
     e.preventDefault();
     $('#step').val(0);
     sessionStorage.setItem('currentStep', 0);
     $.ajax({
         type: 'POST',
-        url: '/saveTournament',
+        url: '/createTournament',
         data: {
           name: $('#name').val(),
           location: $('#location').val(),
@@ -61,6 +74,7 @@ if (newTournamentForm) {
             location.replace('/');
         }
     }).fail(function (data) {
+        console.log(data.responseText);
         $('#error').html(data.responseText);
     });
   });
@@ -75,16 +89,18 @@ if (newTournamentForm) {
     var saveBtn = newTournamentForm.querySelector('#save');
 
     showStep(steps, currentStep.value);
-    toggleStepBtnVisibility();
+    toggleStepBtnVisibility(newTournamentForm, true);
     var wizardSteps = document.querySelectorAll('.bs-wizard-step');
     for(var i = 0; i < wizardSteps.length; ++i) {
       $(wizardSteps[i]).click(function () {
         var w = Array.prototype.slice.call($('.bs-wizard-step'));
         var step = w.indexOf(this);
         if (!$(this).hasClass('disabled')) {
+          $(this).addClass('active');
+          $(this).removeClass('complete');
           currentStep.value = step;
           showStep(steps, step);
-          toggleStepBtnVisibility();
+          toggleStepBtnVisibility(newTournamentForm, true);
         }
       });
 
@@ -104,7 +120,7 @@ if (newTournamentForm) {
 
         sessionStorage.setItem('currentStep', currentStep.value);
         showStep(steps, currentStep.value);
-        toggleStepBtnVisibility();
+        toggleStepBtnVisibility(newTournamentForm, true);
     };
 
     nextStepBtn.onclick = function () {
@@ -130,7 +146,7 @@ if (newTournamentForm) {
 
         sessionStorage.setItem('currentStep', currentStep.value);
         showStep(steps, currentStep.value);
-        toggleStepBtnVisibility();
+        toggleStepBtnVisibility(newTournamentForm, true);
     };
 
     var partChoiseChbx = document.querySelectorAll('.part-choice');
@@ -144,30 +160,103 @@ if (newTournamentForm) {
             }
         }
     }
+}
 
-    var addSquadBtn = document.getElementById('add-squad');
-    var squadsCount = document.getElementById('squads-count');
-    addSquadBtn.onclick = function () {
-        var xhr = new XMLHttpRequest();
-        var params = '?' + 'index=' + (++squadsCount.value);
+var editTournament = document.getElementById('edit-tournament');
+if (editTournament) {
+  $('.bs-wizard-step').addClass('complete');
+  $('.bs-wizard-step').removeClass('disabled');
 
-        xhr.open('GET', '/addSquadForm' + params, false);
-        xhr.send();
+  var currentStep = editTournament.querySelector('#step');
+  var steps = editTournament.querySelectorAll('.creation-step');
+  var nextStepBtn = editTournament.querySelector('#next-step');
+  var prevStepBtn = editTournament.querySelector('#prev-step');
+  var saveBtn = editTournament.querySelector('#save');
 
-        if (xhr.status != 200) {
-            document.getElementById('error').innerHTML = xhr.responseText;
-        }
-        else {
-            $(this).after(xhr.responseText);
-            console.log(squadsCount.value);
-        }
-    };
+  showStep(steps, currentStep.value);
+  toggleStepBtnVisibility(editTournament);
+  var wizardSteps = document.querySelectorAll('.bs-wizard-step');
+  for(var i = 0; i < wizardSteps.length; ++i) {
+    $(wizardSteps[i]).click(function () {
+      var w = Array.prototype.slice.call($('.bs-wizard-step'));
+      var step = w.indexOf(this);
+      if (!$(this).hasClass('disabled')) {
+        $(wizardSteps).removeClass('active');
+        $(this).addClass('active');
+        // $(this).removeClass('complete');
+        currentStep.value = step;
+        showStep(steps, step);
+        toggleStepBtnVisibility(editTournament);
+      }
+    });
+  }
 
-    var removeSquadBtns = document.querySelectorAll('.remove-squad');
-    for (var i = 0; i < removeSquadBtns.length; ++i) {
-        removeSquadBtns[i].onclick = function () {
-            removeSquad(this);
-        }
+  prevStepBtn.onclick = function () {
+    var prevWizardStep = $('.bs-wizard-step')[currentStep.value];
+    $(prevWizardStep).removeClass('active');
+    $(prevWizardStep).addClass('complete');
+
+      --currentStep.value;
+
+      var currWizardStep = $('.bs-wizard-step')[currentStep.value];
+      $(currWizardStep).removeClass('complete');
+      $(currWizardStep).addClass('active');
+
+      sessionStorage.setItem('currentStep', currentStep.value);
+      showStep(steps, currentStep.value);
+      toggleStepBtnVisibility(editTournament);
+  };
+
+  nextStepBtn.onclick = function () {
+    var currentStepDiv = $('.creation-step')[currentStep.value];
+    var currentStepFields = $(currentStepDiv).find('.form-control');
+    for(var i = 0; i < currentStepFields.length; ++i) {
+      if (!currentStepFields[i].value) {
+        console.log('not all fields are filled!');
+        $('#error').html('<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><span>Заполните все поля!</span></div>');
+        return;
+      }
+    }
+
+    var prevWizardStep = $('.bs-wizard-step')[currentStep.value];
+    $(prevWizardStep).removeClass('active');
+    $(prevWizardStep).addClass('complete');
+
+      ++currentStep.value;
+
+      var currWizardStep = $('.bs-wizard-step')[currentStep.value];
+      $(currWizardStep).removeClass('complete');
+      $(currWizardStep).addClass('active');
+
+      sessionStorage.setItem('currentStep', currentStep.value);
+      showStep(steps, currentStep.value);
+      toggleStepBtnVisibility(editTournament);
+  };
+}
+
+
+var addSquadBtn = document.getElementById('add-squad');
+var squadsCount = document.getElementById('squads-count');
+addSquadBtn.onclick = function () {
+    var xhr = new XMLHttpRequest();
+    var params = '?' + 'index=' + (++squadsCount.value);
+
+    xhr.open('GET', '/addSquadForm' + params, false);
+    xhr.send();
+
+    if (xhr.status != 200) {
+        console.log(xhr.responseText);
+    }
+    else {
+        $(this).parent().append(xhr.responseText);
+        console.log(squadsCount.value);
+    }
+};
+
+var removeSquadBtns = document.querySelectorAll('.remove-squad');
+for (var i = 0; i < removeSquadBtns.length; ++i) {
+    removeSquadBtns[i].onclick = function () {
+        removeSquad(this);
     }
 }
 
@@ -203,19 +292,35 @@ function toggleWizardSteps(currentStep) {
   }
 }
 
-function toggleStepBtnVisibility() {
-    var currentStep = newTournamentForm.querySelector('#step').value;
-    var steps = newTournamentForm.querySelectorAll('.creation-step');
-    var nextStepBtn = newTournamentForm.querySelector('#next-step');
-    var prevStepBtn = newTournamentForm.querySelector('#prev-step');
-    var saveBtn = newTournamentForm.querySelector('#save');
+function toggleStepBtnVisibility(form, isNew) {
+    var currentStep = form.querySelector('#step').value;
+    var steps = form.querySelectorAll('.creation-step');
+    var nextStepBtn = form.querySelector('#next-step');
+    var prevStepBtn = form.querySelector('#prev-step');
+    var saveBtn = form.querySelector('#save');
 
-    (currentStep == 0) ? $(prevStepBtn).css('visibility', 'hidden') : $(prevStepBtn).css('visibility', 'visible');
+    if (currentStep == 0) {
+      $(prevStepBtn).hide();
+    }
+    else {
+      $(prevStepBtn).show();
+      // $(saveBtn).show();
+    }
     (currentStep == steps.length - 1) ? $(nextStepBtn).hide() : $(nextStepBtn).show();
-    (currentStep != steps.length - 1) ? $(saveBtn).hide() : $(saveBtn).show();
+    if (isNew) {
+      (currentStep != steps.length - 1) ? $(saveBtn).hide() : $(saveBtn).show();
+    }
+    else {
+      $(saveBtn).show();
+    }
 }
 
 function togglePartSettingsVisibility(partName) {
     var partBlock = document.getElementsByClassName(partName)[0];
     partBlock.hidden = !(partBlock.hidden);
 }
+
+$('#contact-person').change(function() {
+  $('#contact-phone').val($(this.options[this.selectedIndex]).data('phone'));
+  $('#contact-email').val($(this.options[this.selectedIndex]).data('email'));
+});
