@@ -538,6 +538,7 @@ class TournamentController extends Controller
                 $allResults[] = $result;
             }
         }
+        // 
 
         usort($allResults, function ($resultA, $resultB) {
             return ($resultA->sum < $resultB->sum);
