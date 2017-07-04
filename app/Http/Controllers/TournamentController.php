@@ -491,7 +491,7 @@ class TournamentController extends Controller
                 }
               }
 
-              if (isset($extIndex)) {
+              if (isset($extIndex) && isset($qResult)) {
                 if ($qResults[$player->id]->sum < $qResult->sum) {
                   $qGames[$player->id] = $qualificationGames;
                   $qResults[$player->id] = $qResult;
@@ -538,7 +538,7 @@ class TournamentController extends Controller
                 $allResults[] = $result;
             }
         }
-        // 
+        //
 
         usort($allResults, function ($resultA, $resultB) {
             return ($resultA->sum < $resultB->sum);

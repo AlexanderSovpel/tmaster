@@ -2,6 +2,7 @@
 @section('content')
     <input type="hidden" name="tournament_id" id="tournament-id" value="{{$tournament->id}}">
     @include('partial.breadcrumb', ['page' => 'Участники'])
+    <div class="squads">
     @foreach($tournament->squads()->orderBy('date', 'ASC')->orderBy('start_time', 'ASC')->get() as $index => $squad)
         <article class="squad panel panel-default">
             <div class="panel-heading"><h1>Поток {{$index + 1}}</h1></div>
@@ -46,6 +47,7 @@
             </div>
       </article>
     @endforeach
+    </div>
     <div class="clearfix"></div>
     <div class="error"></div>
 @endsection
