@@ -40,7 +40,7 @@ class TournamentController extends Controller
           ->orderBy('squads.date', 'DESC')
           ->select('tournaments.*')
           ->distinct()
-          ->get();
+          ->paginate(4);
         $user = Auth::user();
 
         return view('index', ['tournaments' => $tournaments, 'user' => $user]);
@@ -188,7 +188,12 @@ class TournamentController extends Controller
 
     public function runQualificationGame(Request $request, $tournamentId, $currentSquadId)
     {
+        $tournament = Tournament::find($tournamentId);
         $currentSquad = Squad::find($currentSquadId);
+        $lanes = array_values(array_unique($request->input('lane')));
+        $currentSquad->lanes = implode(',', $lanes);
+        $currentSquad->save();
+
         $playedGames = array();
         foreach ($currentSquad->players as $player) {
             $games = $player->games
@@ -198,15 +203,19 @@ class TournamentController extends Controller
             foreach ($games as $game) {
                 $playedGames[$player->id][] = $game;
             }
+
+            $player->lane = $request->lane[$index];
+            $player->position = $request->position[$index];
         }
 
         return view('tournament.run.game', [
-            'tournament' => Tournament::find($tournamentId),
+            'tournament' => $tournament,
             'part' => 'q',
             'stage' => 'game',
             'currentSquadId' => $currentSquadId,
             'players' => $currentSquad->players,
-            'playedGames' => $playedGames
+            'playedGames' => $playedGames,
+            'lanes' => $lanes
         ]);
     }
 
@@ -225,22 +234,15 @@ class TournamentController extends Controller
                 ->where('part', 'q')
                 ->where('squad_id', $currentSquadId);
 
-            $sum = 0;
             foreach ($games as $game) {
                 $playedGames[$player->id][] = $game;
-                $sum += $game->result + $game->bonus;
             }
-            $avg = round($sum / $games->count(), 2);
 
-            $result = Result::firstOrNew([
-                'tournament_id' => $tournamentId,
-                'player_id' => $player->id,
-                'part' => 'q',
-                'sum' => $sum,
-                'avg' => $avg,
-                'squad_id' => $currentSquadId
-            ]);
-            $result->save();
+            $result = Result::where('player_id', $player->id)
+                  ->where('tournament_id', $tournamentId)
+                  ->where('part', 'q')
+                  ->where('squad_id', $currentSquadId)
+                  ->first();
             $playersResults[$player->id] = $result;
         }
 
@@ -332,12 +334,12 @@ class TournamentController extends Controller
     public function runRoundRobinConfirm(Request $request, $tournamentId)
     {
         $tournament = Tournament::find($tournamentId);
+        $players = session('players');
+        $finalistsCount = 1;
+
         if (!$tournament->roundRobin->players) {
           return TournamentController::getResults($tournamentId);
         }
-
-        $players = session('players');
-        $finalistsCount = 1;
 
         foreach ($players as $player) {
             if ($finalistsCount++ > $tournament->roundRobin->players) {
@@ -359,9 +361,9 @@ class TournamentController extends Controller
     {
         $tournament = Tournament::find($tournamentId);
         $players = session('players');
-        foreach ($players as $player) {
+        foreach ($players as $key => $player) {
             if (!in_array($player->id, $request->input('confirmed'))) {
-                unset($player);
+                unset($players[$key]);
             }
         }
         session(['players' => $players]);
@@ -378,7 +380,9 @@ class TournamentController extends Controller
     {
         $players = session('players');
         $playedGames = array();
-        foreach ($players as $player) {
+        $lanes = array_values(array_unique($request->input('lane')));
+
+        foreach ($players as $index => $player) {
             $games = Game::where('player_id', $player->id)
                 ->where('tournament_id', $tournamentId)
                 ->where('part', 'rr')->get();
@@ -386,6 +390,9 @@ class TournamentController extends Controller
             foreach ($games as $game) {
                 $playedGames[$player->id][] = $game;
             }
+
+            $player->lane = $request->lane[$index];
+            $player->position = $request->position[$index];
         }
 
         $playersCount = count($players);
@@ -398,40 +405,42 @@ class TournamentController extends Controller
             'players' => $players,
             'lastPlayerIndex' => $playersCount - 1,
             'roundCount' => $roundCount,
-            'playedGames' => $playedGames
+            'playedGames' => $playedGames,
+            'lanes' => $lanes
         ]);
     }
 
     public function roundRobinResults(Request $request, $tournamentId)
     {
+        $tournament = Tournament::find($tournamentId);
+        $tournament->finished = true;
+        $tournament->save();
+
         $players = session('players');
         $playedRoundRobinGames = array();
         $playersResults = array();
         $qualificationResults = array();
+
         foreach ($players as $player) {
             $roundRobinGames = Game::where('player_id', $player->id)
                 ->where('tournament_id', $tournamentId)
                 ->where('part', 'rr')
                 ->get();
-            $sum = 0;
+
             foreach ($roundRobinGames as $roundRobinGame) {
                 $playedRoundRobinGames[$player->id][] = $roundRobinGame;
-                $sum += $roundRobinGame->result + $roundRobinGame->bonus;
             }
-            $avg = round($sum / $roundRobinGames->count(), 2);
+
             $qualificationResult = Result::where('tournament_id', $tournamentId)
                 ->where('player_id', $player->id)
                 ->where('part', 'q')
                 ->max('sum');
-            $sum += $qualificationResult;
-            $roundRobinResult = Result::firstOrNew([
-                'tournament_id' => $tournamentId,
-                'player_id' => $player->id,
-                'part' => 'rr',
-                'sum' => $sum,
-                'avg' => $avg
-            ]);
-            $roundRobinResult->save();
+
+            $roundRobinResult = Result::where('player_id', $player->id)
+                ->where('tournament_id', $tournamentId)
+                ->where('part', 'rr')
+                ->first();
+
             $qualificationResults[$player->id] = $qualificationResult;
             $playersResults[$player->id] = $roundRobinResult;
         }
@@ -456,12 +465,10 @@ class TournamentController extends Controller
     public function getResults($tournamentId)
     {
         $tournament = Tournament::find($tournamentId);
-        $tournament->finished = true;
-        $tournament->save();
-
         $qPlayers = array();
         $qGames = array();
         $qResults = array();
+
         foreach ($tournament->squads as $squad) {
             foreach ($squad->players as $player) {
               $qualificationGames = Game::where('tournament_id', $tournament->id)
@@ -469,7 +476,6 @@ class TournamentController extends Controller
                   ->where('part', 'q')
                   ->where('squad_id', $squad->id)
                   ->get();
-
 
               $qResult = Result::where('tournament_id', $tournamentId)
                   ->where('player_id', $player->id)
@@ -504,9 +510,11 @@ class TournamentController extends Controller
         $fGames = array();
         $fResults = array();
         $fPlayers = array();
+
         $roundRobinGames = Game::where('tournament_id', $tournamentId)
             ->where('part', 'rr')
             ->get();
+
         foreach ($roundRobinGames as $roundRobinGame) {
             $fPlayer = User::find($roundRobinGame->player_id);
             $fPlayers[$fPlayer->id] = $fPlayer;
@@ -520,8 +528,7 @@ class TournamentController extends Controller
             $fResults[$fPlayer->id] = $fResult;
         }
 
-        $fPlayersCount = count($fPlayers);
-        $roundCount = ($fPlayersCount % 2) ? $fPlayersCount : $fPlayersCount - 1;
+        $roundCount = ($tournament->roundRobin->players % 2) ? $tournament->roundRobin->players : $tournament->roundRobin->players - 1;
 
         $this->sortPlayersByResult($fPlayers, $tournamentId, 'rr');
 
@@ -563,7 +570,6 @@ class TournamentController extends Controller
             'max_game' => $request->handicap_max_game
         ]);
         $handicap->save();
-        // echo $handicap;
 
         $qualification = new Qualification([
             'entries' => $request->qualification_entries,
@@ -575,7 +581,6 @@ class TournamentController extends Controller
             'reentry_fee' => $request->reentry_fee
         ]);
         $qualification->save();
-        // echo $qualification;
 
         $roundRobin = new RoundRobin([
             'players' => $request->rr_players,
@@ -586,10 +591,8 @@ class TournamentController extends Controller
             'end_time' => $request->rr_end_time,
         ]);
         $roundRobin->save();
-        // echo $roundRobin;
 
         $contact = User::find($request->contact_person);
-        // echo $contact;
 
         $newTournament = new Tournament([
             'name' => $request->name,
@@ -626,7 +629,6 @@ class TournamentController extends Controller
             $squad->save();
         }
 
-        // echo $newTournament;
         return redirect('/');
     }
 
@@ -665,7 +667,6 @@ class TournamentController extends Controller
     $tournament->qualification->reentry_fee = $request->reentry_fee;
     $tournament->qualification->save();
 
-
     $tournament->roundRobin->players = $request->rr_players;
     $tournament->roundRobin->win_bonus = $request->rr_win_bonus;
     $tournament->roundRobin->draw_bonus = $request->rr_draw_bonus;
@@ -676,6 +677,12 @@ class TournamentController extends Controller
 
     $contact = User::find($request->contact_person);
     $tournament->contact_id = $contact->id;
+
+    foreach ($tournament->squads as $key => $squad) {
+      if (!in_array($squad->id, $request->squad_id)) {
+        $squad->delete();
+      }
+    }
 
     for ($i = 0; $i < $request->squads_count; ++$i) {
       $squad = $tournament->squads()->find($request->squad_id[$i]);
@@ -689,12 +696,6 @@ class TournamentController extends Controller
       $squad->end_time = $request->squad_end_time[$i];
       $squad->max_players = $request->squad_max_players[$i];
       $squad->save();
-    }
-
-    foreach ($tournament->squads as $key => $squad) {
-      if (!in_array($squad->id, $request->squad_id)) {
-        $squad->delete();
-      }
     }
 
     $tournament->save();

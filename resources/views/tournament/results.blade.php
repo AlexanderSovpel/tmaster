@@ -2,7 +2,7 @@
 @section('content')
 @include('partial.breadcrumb', ['page' => 'Результаты'])
         <ul class="nav nav-tabs" id="result-tabs">
-            <li role="presentation">
+            <li role="presentation" class="active">
                 <a href="#" id="show-qualification-results">Квалификация</a>
             </li>
             @if ($tournament->roundRobin->players)
@@ -10,12 +10,12 @@
                 <a href="#" id="show-final-results">Финал</a>
             </li>
             @endif
-            <li role="presentation" class="active">
+            <li role="presentation" >
                 <a href="#" id="show-all-results" >Итоги</a>
             </li>
         </ul>
         <div id="results">
-            <div id="qualification-results" hidden>
+            <div id="qualification-results" >
                 @include('partial.qualification-results')
             </div>
             @if ($tournament->roundRobin->players)
@@ -23,7 +23,7 @@
                 @include('partial.final-results')
             </div>
             @endif
-            <div id="all-results" >
+            <div id="all-results" hidden>
                 @include('partial.all-results')
             </div>
         </div>

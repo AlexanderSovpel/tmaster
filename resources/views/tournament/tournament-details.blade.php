@@ -9,6 +9,24 @@
         <input type="hidden" value="{{$tournament->id}}">
         <div class="panel-heading">
           <h1>{{ $tournament->name }}</h1>
+
+          @if(\Illuminate\Support\Facades\Auth::check() && $user->is_admin)
+          <div class="dropdown">
+            <button class="btn menu-btn dropdown-toggle" type="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <span class="glyphicon glyphicon-option-vertical"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+              @if(!$tournament->finished)
+              <li><a href="/{{$tournament->id}}/run/q/conf/{{$tournament->squads[0]->id}}">Провести</a></li>
+              <li><a href="/{{$tournament->id}}/editTournament">Редактировать</a></li>
+              <li role="separator" class="divider"></li>
+              @endif
+              <li><a href="/{{$tournament->id}}/deleteTournament">Удалить</a></li>
+            </ul>
+          </div>
+          @endif
+
           <div class="clearfix"></div>
         </div>
         <div class="panel-body">
@@ -84,14 +102,7 @@
         <div class="clearfix"></div>
         <ol class="breadcrumb">
             <li><a href="/{{$tournament->id}}/players">Участники</a></li>
-            <li>
-                @if($tournament->finished)
-                    <a href="/{{$tournament->id}}/results">Результаты</a>
-                @else
-                    Результаты
-                @endif
-            </li>
-            <li class="#">Фотоотчет</li>
+            <li><a href="/{{$tournament->id}}/results">Результаты</a></li>
         </ol>
       </div>
     </article>

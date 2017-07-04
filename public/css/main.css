@@ -11,7 +11,6 @@ html {
 
 body {
     font-family: 'Open Sans', sans-serif;
-    padding-top: 120px;
     padding-bottom: 80px;
     font-size: 14px;
     position: relative;
@@ -265,13 +264,29 @@ thead {
 /*END Login*/
 
 /*Index*/
+.pagination-center {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination > li > a {
+  color: #0f1b5f;
+}
+
+.pagination > .active > span,
+.pagination > .active > span:hover {
+  color: #ffffff;
+  background-color: #0f1b5f;
+  border-color: #0f1b5f;
+}
+
 .tournament {
     width: 60%;
     margin: 0px auto 30px;
 }
 
 .tournament h1 {
-  width: 95%;
+  width: 90%;
   float: left;
 }
 
@@ -433,18 +448,17 @@ thead {
 /*END Tournament*/
 
 /*Players*/
+.squads {
+  display: flex;
+  justify-content: space-between;
+}
+
 .squad {
-  width: 48%;
+  width: 45%;
   padding: 30px;
-  margin-right: 2%;
   margin-bottom: 30px;
   float: left;
 }
-
-/*.squad:nth-child(2n+1) {*/
-  /*margin-right: 0px;*/
-  /*margin-left: 2%;*/
-/*}*/
 
 .squad h1 {
   margin-top: 0px;
@@ -469,7 +483,7 @@ thead {
 }
 
 .squad form {
-  width: 30%;
+  /*width: 30%;*/
   float: left;
 }
 
@@ -714,6 +728,7 @@ tr:nth-child(2n) {
 /*Running Game*/
 .running {
     display: flex;
+    align-items: flex-start;
 }
 
 .stages {
@@ -779,6 +794,35 @@ tr:nth-child(2n) {
   display: block;
 }
 
+.qualification-games,
+.round-robin-games,
+.lanes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /*justify-content: center;*/
+}
+
+.lane {
+  margin-bottom: 20px;
+}
+
+.lane-players {
+  display: flex;
+  justify-content: space-between;
+}
+
+.finish-game {
+  width: 50%;
+  margin: 20px auto 0px;
+}
+
+.pagination > .active > a,
+.pagination > .active > a:focus {
+  background-color: #0f1b5f;
+  border-color: #0f1b5f;
+}
+
 .played {
     border: none;
 }
@@ -826,7 +870,7 @@ tr:nth-child(2n) {
 
 .round {
     margin: 10px auto 40px;
-    width: 80%;
+    /*width: 80%;*/
   font-size: 18px;
 }
 
@@ -836,24 +880,24 @@ tr:nth-child(2n) {
 
 .opponents {
     /*height: 40px;*/
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
 }
 
 .opponent {
     width: 45%;
-    float: left;
-    margin-left: 10px;
-    margin-bottom: 10px;
+    /*float: left;*/
+    /*margin-left: 10px;*/
+    /*margin-bottom: 10px;*/
 }
 
 .opponent:nth-child(2n) {
-    float: right;
+    /*float: right;*/
 }
 
 .opponent-name {
     width: 150px;
-  background-color: transparent;
-  border: none;
+    background-color: transparent;
+    border: none;
     text-align: right;
 }
 
@@ -863,8 +907,8 @@ tr:nth-child(2n) {
 
 .opponent-result {
     border: none;
-  border-bottom: solid 2px rgba(15, 27, 95, 0.5);
-  box-shadow: none;
+    border-bottom: solid 2px rgba(15, 27, 95, 0.5);
+    box-shadow: none;
     text-align: center;
 }
 
@@ -873,10 +917,11 @@ tr:nth-child(2n) {
   box-shadow: none;
 }
 
+.player-bonus,
 .opponent-bonus {
     width: 50px;
     border: none;
-  background-color: transparent;
+    background-color: transparent;
     font-family: 'Cuprum', sans-serif;
     color: #0f1b5f;
 }
@@ -921,6 +966,39 @@ tr:nth-child(2n) {
     max-width: 200px;
     max-height: 200px;
 }
+
+.change-avatar {
+  position: absolute;
+  margin-left: -200px;
+  margin-top: 160px;
+  width: 200px;
+  height: 40px;
+  line-height: 38px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.delete-avatar {
+  position: absolute;
+  padding: 0px 10px;
+  font-size: 20px;
+  margin-left: -31px;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #ffffff;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+#user-photo:hover .change-avatar,
+#user-photo:hover .delete-avatar {
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
 
 #statistics {
     background-color: transparent !important;
@@ -1193,6 +1271,10 @@ form.add-player {
 
     .player-name {
       min-width: 150px;
+    }
+
+    .squads {
+      flex-direction: column;
     }
 
     .squad {

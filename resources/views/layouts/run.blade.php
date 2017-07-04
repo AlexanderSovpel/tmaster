@@ -7,7 +7,7 @@
     <input type="hidden" name="stage" value="{{$stage or ''}}">
     <input type="hidden" name="currentSquad" value="{{$currentSquadId or ''}}">
     <input type="hidden" name="squadFinished" value="{{$squadFinished or ''}}">
-    <div>
+    <div class="running">
         <div class="part-nav stages panel panel-default">
             <h3>Этап</h3>
             <ul class="list-group">
@@ -80,9 +80,8 @@
                     <a href="#" class="bs-wizard-dot"></a>
                 </div>
             </div>
-            <article class="part panel panel-default">
-                @yield('process')
-            </article>
+
+            @yield('process')
         </div>
     </div>
 @endsection

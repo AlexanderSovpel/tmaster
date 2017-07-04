@@ -1,10 +1,10 @@
 @extends('layouts.run')
 
 @section('process')
+  <article class="panel panel-default part">
     <div class="panel-heading"><h1>Регистрация участников</h1></div>
     <form action="/{{$tournament->id}}/run/{{$part}}/draw/{{$currentSquadId or ''}}" method="get" class="panel-body">
         {{ csrf_field() }}
-        <!-- <input type="hidden" name="players" value="{{json_encode($players)}}"> -->
         <table>
           <thead>
             <tr>
@@ -27,4 +27,5 @@
         </table>
         <button type="submit" class="btn">начать жеребьёвку</button>
     </form>
+  </article>
 @endsection

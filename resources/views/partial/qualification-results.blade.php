@@ -1,4 +1,4 @@
-<table class="table">
+<table>
   <thead>
     <tr class="results-header">
         <th class="position">№</th>
@@ -6,7 +6,7 @@
         @for ($j = 0; $j < $tournament->qualification->entries; ++$j)
             <th class="player-result">{{$j + 1}}</th>
         @endfor
-        <th class="player-bonus">Г-п</th>
+        <th class="">Г-п</th>
         <th class="player-sum">Сумма</th>
         <th class="player-avg">Средний</th>
     </tr>
@@ -23,13 +23,13 @@
               @endif
             </td>
             <td class="player-name">{{$qPlayers[$i]->surname ." ". $qPlayers[$i]->name}}</td>
-            @foreach ($qGames[$qPlayers[$i]->id] as $game)
+            @for ($j = 0; $j < $tournament->qualification->entries; ++$j)
             <td class="player-result">
-              @if(isset($game))
-              {{$game->result}}
+              @if (isset($qGames[$qPlayers[$i]->id][$j]))
+              {{$qGames[$qPlayers[$i]->id][$j]->result}}
               @endif
             </td>
-            @endforeach
+            @endfor
             <td id="handicap_{{$qPlayers[$i]->id}}" class="player-bonus">
                 @if($qPlayers[$i]->gender == $tournament->handicap->type)
                     {{$tournament->handicap->value}}
@@ -37,8 +37,8 @@
                     {{0}}
                 @endif
             </td>
-            <td id="sum_result_{{$qPlayers[$i]->id}}" class="player-sum">{{$qResults[$qPlayers[$i]->id]->sum}}</td>
-            <td id="avg_result_{{$qPlayers[$i]->id}}" class="player-avg">{{number_format($qResults[$qPlayers[$i]->id]->avg, 2, ',', ' ')}}</td>
+            <td id="sum_result_{{$qPlayers[$i]->id}}" class="player-sum">{{(isset($qResults[$qPlayers[$i]->id])) ? $qResults[$qPlayers[$i]->id]->sum : ''}}</td>
+            <td id="avg_result_{{$qPlayers[$i]->id}}" class="player-avg">{{(isset($qResults[$qPlayers[$i]->id])) ? number_format($qResults[$qPlayers[$i]->id]->avg, 2, ',', ' ') : ''}}</td>
         </tr>
     @endfor
   </tbody>
