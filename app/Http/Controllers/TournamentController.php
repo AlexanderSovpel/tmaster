@@ -195,7 +195,7 @@ class TournamentController extends Controller
         $currentSquad->save();
 
         $playedGames = array();
-        foreach ($currentSquad->players as $player) {
+        foreach ($currentSquad->players as $index => $player) {
             $games = $player->games
                 ->where('tournament_id', $tournamentId)
                 ->where('part', 'q')
