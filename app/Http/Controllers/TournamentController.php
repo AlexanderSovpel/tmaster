@@ -534,7 +534,7 @@ class TournamentController extends Controller
 
         $allResults = $fResults;
         foreach ($qResults as $key => $result) {
-            if (!isset($fResults[$result->player_id])) {
+            if ($result && !isset($fResults[$result->player_id])) {
                 $allResults[] = $result;
             }
         }
