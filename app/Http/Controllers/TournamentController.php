@@ -212,6 +212,7 @@ class TournamentController extends Controller
             'tournament' => $tournament,
             'part' => 'q',
             'stage' => 'game',
+            'currentSquad' => $currentSquad,
             'currentSquadId' => $currentSquadId,
             'players' => $currentSquad->players,
             'playedGames' => $playedGames,
