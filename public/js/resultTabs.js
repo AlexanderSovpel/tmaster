@@ -41,3 +41,8 @@ function toggleTabActive(tab) {
     }
     $(tab).parent().addClass('active');
 }
+
+$('[data-toggle=modal]').click(function () {
+  $('#game-id').val($(this).data('id'));
+  $('#game-result').val($(this).data('result'));
+});
