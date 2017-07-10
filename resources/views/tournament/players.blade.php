@@ -21,7 +21,7 @@
                                 <button type="submit" class="remove-btn btn-link">Отозвать заявку</button>
                             </form>
                         @endif
-                        @if(\Illuminate\Support\Facades\Auth::user()->is_admin)
+                        @if(\Illuminate\Support\Facades\Auth::user()->is_admin && !$tournament->finished)
                         <form action="/{{$tournament->id}}/removeApplication/{{$player->id}}" method="post">
                             {{ csrf_field() }}
                             <input type="hidden" name="currentSquad" value="{{$squad->id}}">
