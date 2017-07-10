@@ -2,7 +2,7 @@
   <div class="panel-heading">
     <h1>Раунд {{$roundIndex + 1}}</h1>
   </div>
-    <form action="/{{$tournament->id}}/run/rr/rest" method="post" class="panel-body lanes">
+    <form action="/{{$tournament->id}}/run/rr/rest" method="get" class="panel-body lanes">
         {{ csrf_field() }}
 
         @for($laneIndex = 0, $j = 0, $h = $lastPlayerIndex; $laneIndex < count($lanes); ++$laneIndex, ++$j, --$h)
