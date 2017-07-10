@@ -38,6 +38,7 @@
         <div class="modal-body">
           <input type="hidden" id="game-id">
           <input type="text" id="game-result" class="form-control">
+          <input type="text" id="game-bonus" class="form-control">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn cancel-btn" data-dismiss="modal">Отменить</button>
