@@ -26,7 +26,10 @@
             @for ($j = 0; $j < $tournament->qualification->entries; ++$j)
             <td class="player-result">
               @if (isset($qGames[$qPlayers[$i]->id][$j]))
-              <button type="button" data-toggle="modal" data-target="#changeResult" data-id="{{$qGames[$qPlayers[$i]->id][$j]->id}}" data-result="{{$qGames[$qPlayers[$i]->id][$j]->result}}">
+              <button type="button" data-toggle="modal" data-target="#changeResult"
+                data-id="{{$qGames[$qPlayers[$i]->id][$j]->id}}"
+                data-result="{{$qGames[$qPlayers[$i]->id][$j]->result}}"
+                data-bonus="{{$qGames[$qPlayers[$i]->id][$j]->bonus}}">
               {{$qGames[$qPlayers[$i]->id][$j]->result}}
               </button>
               @endif

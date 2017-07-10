@@ -45,4 +45,25 @@ function toggleTabActive(tab) {
 $('[data-toggle=modal]').click(function () {
   $('#game-id').val($(this).data('id'));
   $('#game-result').val($(this).data('result'));
+  $('#game-bonus').val($(this).data('bonus'));
+});
+
+$('#save-result').click(function() {
+  $.ajax({
+      type: 'POST',
+      url: '/changeGameById',
+      data: {
+        id: $('#game-id').val(),
+        result: $('#game-result').val(),
+        bonus: $('#game-bonus').val()
+      },
+      headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+      success: function (data) {
+          console.log(data);
+      },
+      fail: function(data) {
+        console.log(data.responseText);
+      },
+    });
+
 });

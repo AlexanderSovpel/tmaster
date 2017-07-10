@@ -54,5 +54,6 @@ Route::get('/account/{playerId}/toggleAdmin', 'UserController@toggleAdmin')->mid
 
 Route::get('/setGameResult', 'GameController@setResult');
 Route::get('/changeGameResult', 'GameController@changeResult');
+Route::get('/changeGameById', 'GameController@changeById');
 Route::get('/sumBlock', 'GameController@sumBlock');
 Route::get('/updateBonus', 'GameController@updateBonus');

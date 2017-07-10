@@ -41,7 +41,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn cancel-btn" data-dismiss="modal">Отменить</button>
-          <button type="submit" class="btn" data-dismiss="modal" id="toggle-admin">Сохранить</button>
+          <button type="submit" class="btn" data-dismiss="modal" id="save-result">Сохранить</button>
         </div>
       </div>
     </div>

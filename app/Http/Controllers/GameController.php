@@ -44,6 +44,18 @@ class GameController extends Controller
         return array($game, $result);
     }
 
+    public function changeById(Request $request) {
+      $game = Game::find($request->id);
+
+      if ($game) {
+        $game->result = ($request->has('result')) ? $request->result : $game->result;
+        $game->bonus = ($request->has('bonus')) ? $request->bonus : $game->bonus;
+        $game->save();
+      }
+
+      return $game;
+    }
+
     public function updateBonus(Request $request)
     {
         $game = Game::where('player_id', $request->input('player_id'))
