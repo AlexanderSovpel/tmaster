@@ -3,7 +3,7 @@
 @section('process')
 <article class="panel panel-default part">
     <div class="panel-heading"><h1>Жеребьёвка</h1></div>
-    <form action="/{{$tournament->id}}/run/{{$part}}/game/{{$currentSquadId or ''}}" method="get" class="panel-body">
+    <form action="/{{$tournament->id}}/run/{{$part}}/game/{{$currentSquadId or ''}}" method="post" class="panel-body">
         {{ csrf_field() }}
         <table>
           <thead>

@@ -30,8 +30,8 @@ Route::get('/{tournamentId}/editTournament', 'TournamentController@editTournamen
 Route::post('/{tournamentId}/saveTournament', 'TournamentController@saveTournament');
 
 Route::get('/{tournamentId}/run/q/conf/{currentSquadId}', 'TournamentController@runQualificationConfirm')->middleware('auth');
-Route::get('/{tournamentId}/run/q/draw/{currentSquadId}', 'TournamentController@runQualificationDraw');
-Route::get('/{tournamentId}/run/q/game/{currentSquadId}', 'TournamentController@runQualificationGame');
+Route::post('/{tournamentId}/run/q/draw/{currentSquadId}', 'TournamentController@runQualificationDraw');
+Route::post('/{tournamentId}/run/q/game/{currentSquadId}', 'TournamentController@runQualificationGame');
 Route::post('/{tournamentId}/run/q/rest/{currentSquadId}', 'TournamentController@qualificationSquadResults');
 Route::get('/{tournamentId}/run/q/rest', 'TournamentController@qualificationResults');
 
