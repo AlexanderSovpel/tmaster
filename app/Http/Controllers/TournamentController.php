@@ -578,7 +578,7 @@ class TournamentController extends Controller
             'games' => $request->qualification_games,
             'finalists' => $request->qualification_finalists,
             'fee' => $request->qualification_fee,
-            'allow_reentry' => $request->allow_reentry,
+            'allow_reentry' => (boolean)$request->allow_reentry,
             'reentries' => $request->reentries_amount,
             'reentry_fee' => $request->reentry_fee
         ]);
