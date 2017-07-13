@@ -10,7 +10,7 @@ if (results) {
       e.preventDefault();
       toggleResultTabs(this);
 
-      var tabIndex = resultTabs.indexOf(this);
+      var tabIndex = Array.prototype.indexOf.call(resultTabs, this);
       var table = document.querySelectorAll('.result-table')[tabIndex];
       toggleResultTables(table);
     });
