@@ -323,7 +323,7 @@ class TournamentController extends Controller
             'qResults' => $qResults]);
     }
 
-    private function sortPlayersByResult(&$players, $tournamentId, $part, $squadId = null)
+    private function sortPlayersByResult(&$players, $tournamentId, $part, $squadId)
     {
         usort($players, function ($playerA, $playerB) use ($tournamentId, $part) {
             $playerAResult = $playerA['results']
@@ -332,7 +332,7 @@ class TournamentController extends Controller
             $playerBResult = $playerB['results']
                 ->where('tournament_id', $tournamentId)
                 ->where('part', $part);
-            if (isset($squadId) && $squadId != null) {
+            if ($squadId) {
               $playerAResult = $playerAResult->where('squad_id', $squadId);
               $playerBResult = $playerBResult->where('squad_id', $squadId);
             }
@@ -543,7 +543,7 @@ class TournamentController extends Controller
         #echo $player . ' - ' . $bestSquadGames . ' - ' . $bestSquadResult . '<br>';
       }
 
-      $this->sortPlayersByResult($qPlayers, $tournament->id, 'q');
+      $this->sortPlayersByResult($qPlayers, $tournament->id, 'q', null);
 
       return array($qPlayers, $qGames, $qResults);
     }
@@ -573,7 +573,7 @@ class TournamentController extends Controller
         #echo $roundRobinPlayer . ' - ' . $roundRobinGames . ' - ' . $result . '<br>';
       }
 
-      $this->sortPlayersByResult($rrPlayers, $tournament->id, 'rr');
+      $this->sortPlayersByResult($rrPlayers, $tournament->id, 'rr', null);
 
       return array($rrPlayers, $rrGames, $rrResults);
     }
