@@ -520,21 +520,22 @@ class TournamentController extends Controller
             ->where('player_id', $player->id)
             ->where('part', 'q')
             ->max('sum');
-        $bestSquadResult = Result::where('tournament_id', $tournament->id)
-            ->where('player_id', $player->id)
-            ->where('part', 'q')
-            ->where('sum', $bestSquadResultSum)
-            ->first();
-        $qResults[$player->id] = $bestSquadResult;
+        if($bestSquadResultSum) {
+          $bestSquadResult = Result::where('tournament_id', $tournament->id)
+              ->where('player_id', $player->id)
+              ->where('part', 'q')
+              ->where('sum', $bestSquadResultSum)
+              ->first();
+          $qResults[$player->id] = $bestSquadResult;
 
-        $bestSquadId = $bestSquadResult->squad_id;
-        $bestSquadGames = Game::where('tournament_id', $tournament->id)
-            ->where('player_id', $player->id)
-            ->where('part', 'q')
-            ->where('squad_id', $bestSquadId)
-            ->get();
-        $qGames[$player->id] = $bestSquadGames;
-
+          $bestSquadId = $bestSquadResult->squad_id;
+          $bestSquadGames = Game::where('tournament_id', $tournament->id)
+              ->where('player_id', $player->id)
+              ->where('part', 'q')
+              ->where('squad_id', $bestSquadId)
+              ->get();
+          $qGames[$player->id] = $bestSquadGames;
+        }
         #echo $player . ' - ' . $bestSquadGames . ' - ' . $bestSquadResult . '<br>';
       }
 
