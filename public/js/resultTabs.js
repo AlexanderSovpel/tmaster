@@ -49,13 +49,13 @@ if (results) {
 // }
 
 function toggleResultTables(table) {
-  $('.result-table').removeClass('active');
-  $(table).addClass('active');
+  $('.result-table').hide();
+  $(table).show();
 }
 
 function toggleResultTabs(tab) {
-  $('.result-tab').hide();
-  $(tab).show();
+  $('.result-tab').removeClass('active');
+  $(tab).addClass('active');
 }
 
 // function toggleTabActive(tab) {
