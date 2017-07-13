@@ -49,8 +49,8 @@ if (results) {
 // }
 
 function toggleResultTables(table) {
-  $('.result-table').hide();
-  $(table).show();
+  $('.result-table').removeClass('active');
+  $(table).addClass('active');
 }
 
 function toggleResultTabs(tab) {
