@@ -31,8 +31,8 @@
                     {{0}}
                 @endif
             </td>
-            <td id="sum_result_{{$sPlayers[$squadId][$i]->id}}">{{$sResults[$squadId][$sPlayers[$squadId][$i]->id]->sum or 0}}</td>
-            <td id="avg_result_{{$sPlayers[$squadId][$i]->id}}">{{number_format($sResults[$squadId][$sPlayers[$squadId][$i]->id]->avg, 2, ',', ' ') or 0}}</td>
+            <td id="sum_result_{{$sPlayers[$squadId][$i]->id}}">{{(isset($sResults[$squadId][$sPlayers[$squadId][$i]->id])) ? $sResults[$squadId][$sPlayers[$squadId][$i]->id]->sum : 0}}</td>
+            <td id="avg_result_{{$sPlayers[$squadId][$i]->id}}">{{(isset($sResults[$squadId][$sPlayers[$squadId][$i]->id])) ? number_format($sResults[$squadId][$sPlayers[$squadId][$i]->id]->avg, 2, ',', ' ') : 0}}</td>
         </tr>
     @endfor
   </tbody>
