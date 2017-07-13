@@ -492,7 +492,7 @@ class TournamentController extends Controller
         $sResults[$player->id] = $squadResult;
       }
 
-      $this->sortPlayersByResult($sPlayers[$squad->id], $tournament->id, 'q');
+      $this->sortPlayersByResult($sPlayers, $tournament->id, 'q');
 
       return array($sPlayers, $sGames, $sResults);
     }
