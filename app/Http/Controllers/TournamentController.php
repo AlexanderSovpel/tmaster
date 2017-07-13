@@ -534,6 +534,8 @@ class TournamentController extends Controller
             ->where('squad_id', $bestSquadId)
             ->get();
         $qGames[$player->id] = $bestSquadGames;
+
+        echo $player . ' - ' . $bestSquadGames . ' - ' . $bestSquadResult . '<br>';
       }
 
       $this->sortPlayersByResult($qPlayers, $tournament->id, 'q');
