@@ -535,7 +535,7 @@ class TournamentController extends Controller
             ->get();
         $qGames[$player->id] = $bestSquadGames;
 
-        echo $player . ' - ' . $bestSquadGames . ' - ' . $bestSquadResult . '<br>';
+        #echo $player . ' - ' . $bestSquadGames . ' - ' . $bestSquadResult . '<br>';
       }
 
       $this->sortPlayersByResult($qPlayers, $tournament->id, 'q');
@@ -565,7 +565,7 @@ class TournamentController extends Controller
 
         $rrResults[$playerId] = $result;
 
-        echo $roundRobinPlayer . ' - ' . $roundRobinGames . ' - ' . $result . '<br>';
+        #echo $roundRobinPlayer . ' - ' . $roundRobinGames . ' - ' . $result . '<br>';
       }
 
       $this->sortPlayersByResult($rrPlayers, $tournament->id, 'rr');
