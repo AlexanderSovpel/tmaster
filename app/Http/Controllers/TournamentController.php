@@ -629,7 +629,7 @@ class TournamentController extends Controller
         $fGames = array();
         $fResults = array();
         $fPlayers = array();
-        list($fGames, $fResults, $fPlayers) = $this->getRoundRobinResults($tournament);
+        list($fPlayers, $fGames, $fResults) = $this->getRoundRobinResults($tournament);
 
         // $roundRobinGames = Game::where('tournament_id', $tournamentId)
         //     ->where('part', 'rr')
@@ -660,9 +660,9 @@ class TournamentController extends Controller
         }
         //
 
-        // usort($allResults, function ($resultA, $resultB) {
-        //     return ($resultA->sum < $resultB->sum);
-        // });
+        usort($allResults, function ($resultA, $resultB) {
+            return ($resultA->sum < $resultB->sum);
+        });
 
         return view('tournament.results', [
             'tournament' => $tournament,
