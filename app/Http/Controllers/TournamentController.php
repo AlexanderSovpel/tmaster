@@ -550,7 +550,7 @@ class TournamentController extends Controller
           ->where('part', 'rr')
           ->get();
       foreach ($roundRobinResults as $result) {
-        $playerId = $result->player_id
+        $playerId = $result->player_id;
 
         $rrPlayers[] = User::find($playerId);
 
