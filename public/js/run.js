@@ -94,13 +94,13 @@ $('.player-result, .opponent-result').change(function() {
 
 function checkResults(gameIndex) {
   var resultFelds = $(games[gameIndex]).find('.player-result, .opponent-result');
-  var player = $(games[gameIndex]).find('.played');
+  var played = $(games[gameIndex]).find('.played');
 
   // var empty = ($(games[gameIndex]).find('.player-result, .opponent-result').filter(function() {
     // return this.value === "";
   // }));
   // if (empty.length) {
-  if(resultFelds.length == player.length) {
+  if(resultFelds.length != played.length) {
     $(finishGameBtns[gameIndex]).prop('disabled', true);
   }
   else {
