@@ -4,7 +4,7 @@ if (resultTabs) {
 }
 var results = document.querySelector('#results');
 if (results) {
-  var resultTabs = $('.result-tab');
+  var resultTabs = document.querySelectorAll('.result-tab');
   // for(var i = 0; i < resultTabs.length; ++i) {
     $(resultTabs).click(function(e) {
       e.preventDefault();
