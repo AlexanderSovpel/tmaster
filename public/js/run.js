@@ -60,6 +60,9 @@ $('.post-result').click(function() {
 
     $(player.querySelector('.player-result')).addClass('played');
     $(this).hide();
+
+    var currentGame = $('#current-game').val();
+    checkResults(currentGame);
 });
 
 $('.post-opponent-result').click(function() {
@@ -73,7 +76,12 @@ $('.post-opponent-result').click(function() {
     var part = document.getElementsByName('part')[0].value;
     var squadId = document.getElementsByName('currentSquad')[0].value;
     setResult(playerId, tournamentId, part, squadId, playerResult, playerOldResult, playerBonus, player);
+
+    $(player.querySelector('.opponent-result')).addClass('played');
     $(this).hide();
+
+    var currentGame = $('#current-game').val();
+    checkResults(currentGame);
 });
 
 var games = $('.game');
@@ -87,19 +95,14 @@ $(gamePaginationLinks[0]).removeClass('disabled');
 
 // checkResults(0);
 
-$('.player-result, .opponent-result').change(function() {
-  var currentGame = $('#current-game').val();
-  checkResults(currentGame);
-});
+// $('.player-result, .opponent-result').change(function() {
+//   var currentGame = $('#current-game').val();
+//   checkResults(currentGame);
+// });
 
 function checkResults(gameIndex) {
   var resultFelds = $(games[gameIndex]).find('.player-result, .opponent-result');
   var played = $(games[gameIndex]).find('.played');
-
-  // var empty = ($(games[gameIndex]).find('.player-result, .opponent-result').filter(function() {
-    // return this.value === "";
-  // }));
-  // if (empty.length) {
   if(resultFelds.length != played.length) {
     $(finishGameBtns[gameIndex]).prop('disabled', true);
   }
