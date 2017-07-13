@@ -332,7 +332,7 @@ class TournamentController extends Controller
             $playerBResult = $playerB['results']
                 ->where('tournament_id', $tournamentId)
                 ->where('part', $part);
-            if ($squadId) {
+            if (isset($squadId) && $squadId != null) {
               $playerAResult = $playerAResult->where('squad_id', $squadId);
               $playerBResult = $playerBResult->where('squad_id', $squadId);
             }
