@@ -552,7 +552,8 @@ class TournamentController extends Controller
       foreach ($roundRobinResults as $result) {
         $playerId = $result->player_id;
 
-        $rrPlayers[] = User::find($playerId);
+        $roundRobinPlayer = User::find($playerId);
+        $rrPlayers[] = $roundRobinPlayer;
 
         $roundRobinGames = Game::where('tournament_id', $tournament->id)
             ->where('player_id', $playerId)
@@ -561,6 +562,8 @@ class TournamentController extends Controller
         $rrGames[$playerId] = $roundRobinGames;
 
         $rrResults[$playerId] = $result;
+
+        echo $roundRobinPlayer . ' - ' . $roundRobinGames . ' - ' . $result . '<br>';
       }
 
       $this->sortPlayersByResult($rrPlayers, $tournament->id, 'rr');
@@ -655,9 +658,9 @@ class TournamentController extends Controller
         }
         //
 
-        // usort($allResults, function ($resultA, $resultB) {
-        //     return ($resultA->sum < $resultB->sum);
-        // });
+        usort($allResults, function ($resultA, $resultB) {
+            return ($resultA->sum < $resultB->sum);
+        });
 
         return view('tournament.results', [
             'tournament' => $tournament,
