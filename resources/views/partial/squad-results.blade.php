@@ -17,13 +17,13 @@
             <td>{{$i + 1}}</td>
             <input type="hidden" class="player-id" value="{{$sPlayers[$squadId][$i]->id}}">
             <td>{{$sPlayers[$squadId][$i]->surname ." ". $sPlayers[$squadId][$i]->name}}</td>
-            @foreach ($sGames[$squadId][$sPlayers[$squadId][$i]->id] as $game)
+            @for ($j = 0; $j < $tournament->qualification->entries; ++$j)
                 <td>
-                    @if(isset($game))
-                        {{$game->result}}
+                    @if(isset($sGames[$squadId][$sPlayers[$squadId][$i]->id][$j]))
+                        {{$sGames[$squadId][$sPlayers[$squadId][$i]->id][$j]->result}}
                     @endif
                 </td>
-            @endforeach
+            @endfor
             <td id="handicap_{{$sPlayers[$squadId][$i]->id}}" class="player-bonus">
                 @if($sPlayers[$squadId][$i]->gender == $tournament->handicap->type)
                     {{$tournament->handicap->value}}
