@@ -93,10 +93,14 @@ $('.player-result, .opponent-result').change(function() {
 });
 
 function checkResults(gameIndex) {
-  var empty = ($(games[gameIndex]).find('.player-result, .opponent-result').filter(function() {
-    return this.value === "";
-  }));
-  if (empty.length) {
+  var resultFelds = ($(games[gameIndex]).find('.player-result, .opponent-result');
+  var player = ($(games[gameIndex]).find('.played');
+
+  // var empty = ($(games[gameIndex]).find('.player-result, .opponent-result').filter(function() {
+    // return this.value === "";
+  // }));
+  // if (empty.length) {
+  if(resultFelds.length == player.length) {
     $(finishGameBtns[gameIndex]).prop('disabled', true);
   }
   else {
