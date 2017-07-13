@@ -17,6 +17,7 @@
             <input type="hidden" class="player-id" value="{{$player->id}}">
             <td class="position">{{$key + 1}}</td>
             <td class="player-name">{{$player->surname ." ". $player->name}}</td>
+            {{--
             <td class="qualification-result">{{(isset($qResults[$player->id]->sum)) ? $qResults[$player->id]->sum : $qResults[$player->id]}}</td>
             @for ($j = 0; $j < $roundCount; ++$j)
               <td class="player-result">
@@ -26,6 +27,7 @@
             @endfor
             <td id="sum_result_{{$player->id}}" class="player-sum">{{$fResults[$player->id]->sum or ''}}</td>
             <td id="avg_result_{{$player->id}}" class="player-avg">{{$fResults[$player->id]->avg or ''}}</td>
+            --}}
         </tr>
     @endforeach
 </table>
