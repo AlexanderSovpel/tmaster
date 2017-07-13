@@ -5,13 +5,16 @@ if (resultTabs) {
 var results = document.querySelector('#results');
 if (results) {
   var resultTabs = $('.result-tab');
-  for(var i = 0; i < resultTabs.length; ++i) {
-    $(resultTabs[i]).click(function(e) {
+  // for(var i = 0; i < resultTabs.length; ++i) {
+    $(resultTabs).click(function(e) {
       e.preventDefault();
-      toggleResultTabs(i);
-      toggleResultTables(i);
+      toggleResultTabs(this);
+
+      var tabIndex = resultTabs.indexOf(this);
+      var table = document.querySelectorAll('.result-table')[tabIndex];
+      toggleResultTables(table);
     });
-  }
+  // }
 
     // results = results.children;
     // qResultsTab = document.getElementById('show-qualification-results');
@@ -45,16 +48,14 @@ if (results) {
 //     }
 // }
 
-function toggleResultTables(index) {
+function toggleResultTables(table) {
   $('.result-table').hide();
-  var resultTable = document.querySelectorAll('.result-table')[index];
-  $(resultTable).show();
+  $(table).show();
 }
 
-function toggleResultTabs(index) {
+function toggleResultTabs(tab) {
   $('.result-tab').hide();
-  var resultTab = document.querySelectorAll('.result-tab')[index];
-  $(resultTab).show();
+  $(tab).show();
 }
 
 // function toggleTabActive(tab) {
