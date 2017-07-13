@@ -323,17 +323,21 @@ class TournamentController extends Controller
             'qResults' => $qResults]);
     }
 
-    private function sortPlayersByResult(&$players, $tournamentId, $part)
+    private function sortPlayersByResult(&$players, $tournamentId, $part, $squadId)
     {
         usort($players, function ($playerA, $playerB) use ($tournamentId, $part) {
             $playerAResult = $playerA['results']
                 ->where('tournament_id', $tournamentId)
-                ->where('part', $part)
-                ->max('sum');
+                ->where('part', $part);
             $playerBResult = $playerB['results']
                 ->where('tournament_id', $tournamentId)
-                ->where('part', $part)
-                ->max('sum');
+                ->where('part', $part);
+            if ($squadId) {
+              $playerAResult = $playerAResult->where('squad_id', $squadId);
+              $playerBResult = $playerBResult->where('squad_id', $squadId);
+            }
+            $playerAResult = $playerAResult->max('sum');
+            $playerBResult = $playerBResult->max('sum');
             return ($playerAResult < $playerBResult);
         });
     }
@@ -589,6 +593,7 @@ class TournamentController extends Controller
         $qGames = array();
         $qResults = array();
         list($qPlayers, $qGames, $qResults) = $this->getQualificationResults($tournament);
+
         // foreach ($tournament->squads as $squad) {
         //     foreach ($squad->players as $player) {
         //       $qualificationGames = Game::where('tournament_id', $tournament->id)
