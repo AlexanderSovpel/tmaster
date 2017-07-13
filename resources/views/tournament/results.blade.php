@@ -2,28 +2,38 @@
 @section('content')
   @include('partial.breadcrumb', ['page' => 'Результаты'])
   <ul class="nav nav-tabs" id="result-tabs">
-      <li role="presentation" class="active">
+      @foreach($tournament->squads as $squad)
+      <li role="presentation" class="result-tab">
+          <a href="#" id="show-squad-{{$squad->id}}-results">Квалификация</a>
+      </li>
+      @endforeach
+      <li role="presentation" class="active result-tab">
           <a href="#" id="show-qualification-results">Квалификация</a>
       </li>
       @if ($tournament->roundRobin->players)
-      <li role="presentation" >
+      <li role="presentation" class="result-tab">
           <a href="#" id="show-final-results">Финал</a>
       </li>
       @endif
-      <li role="presentation" >
+      <li role="presentation" class="result-tab">
           <a href="#" id="show-all-results" >Итоги</a>
       </li>
   </ul>
   <div id="results">
-      <div id="qualification-results" >
+      @foreach($tournament->squads as $squad)
+      <div id="squad-{{$squad->id}}-results" class="result-table">
+          @include('partial.squad-results', ['squadId' => $squad->id])
+      </div>
+      @endforeach
+      <div id="qualification-results" class="result-table">
           @include('partial.qualification-results')
       </div>
       @if ($tournament->roundRobin->players)
-      <div id="final-results" hidden>
+      <div id="final-results" class="result-table" hidden>
           @include('partial.final-results')
       </div>
       @endif
-      <div id="all-results" hidden>
+      <div id="all-results" class="result-table" hidden>
           @include('partial.all-results')
       </div>
   </div>

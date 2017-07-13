@@ -222,40 +222,44 @@ class TournamentController extends Controller
 
     public function qualificationSquadResults(Request $request, $tournamentId, $currentSquadId)
     {
+      $tournament = Tournament::find($tournamentId);
+
         $currentSquad = Squad::find($currentSquadId);
         $currentSquad->finished = true;
         $currentSquad->save();
 
         $playersResults = array();
         $playedGames = array();
-        foreach ($currentSquad->players as $player) {
-            $games = $player->games
-                ->where('player_id', $player->id)
-                ->where('tournament_id', $tournamentId)
-                ->where('part', 'q')
-                ->where('squad_id', $currentSquadId);
-
-            foreach ($games as $game) {
-                $playedGames[$player->id][] = $game;
-            }
-
-            $result = Result::where('player_id', $player->id)
-                  ->where('tournament_id', $tournamentId)
-                  ->where('part', 'q')
-                  ->where('squad_id', $currentSquadId)
-                  ->first();
-            $playersResults[$player->id] = $result;
-        }
-
         $aPlayers = array();
-        foreach($currentSquad->players as $player) {
-          $aPlayers[] = $player;
-        }
+        list($aPlayers, $playedGames, $playersResults) $this->getSquadResults($tournament, $currentSquad);
 
-       $this->sortPlayersByResult($aPlayers, $tournamentId, 'q');
+      //   foreach ($currentSquad->players as $player) {
+      //       $games = $player->games
+      //           ->where('player_id', $player->id)
+      //           ->where('tournament_id', $tournamentId)
+      //           ->where('part', 'q')
+      //           ->where('squad_id', $currentSquadId);
+       //
+      //       foreach ($games as $game) {
+      //           $playedGames[$player->id][] = $game;
+      //       }
+       //
+      //       $result = Result::where('player_id', $player->id)
+      //             ->where('tournament_id', $tournamentId)
+      //             ->where('part', 'q')
+      //             ->where('squad_id', $currentSquadId)
+      //             ->first();
+      //       $playersResults[$player->id] = $result;
+      //   }
+       //
+      //   foreach($currentSquad->players as $player) {
+      //     $aPlayers[] = $player;
+      //   }
+       //
+      //  $this->sortPlayersByResult($aPlayers, $tournamentId, 'q');
 
         return view('tournament.run.results-q-s', [
-            'tournament' => Tournament::find($tournamentId),
+            'tournament' => $tournament,
             'part' => 'q',
             'stage' => 'rest',
             'players' => $aPlayers,
@@ -271,41 +275,43 @@ class TournamentController extends Controller
         $qPlayers = array();
         $qGames = array();
         $qResults = array();
-        foreach ($tournament->squads as $squad) {
-            foreach ($squad->players as $player) {
-              $games = $player->games()
-                  ->where('tournament_id', $tournament->id)
-                  ->where('squad_id', $squad->id)
-                  ->where('part', 'q')->get();
+        list($qPlayers, $qGames, $qResults) = $this->getQualificationResults($tournament);
 
-              $result = Result::where('tournament_id', $tournamentId)
-                  ->where('player_id', $player->id)
-                  ->where('part', 'q')
-                  ->where('squad_id', $squad->id)
-                  ->first();
-
-              $extIndex = null;
-              foreach ($qPlayers as $index => $q) {
-                if ($q->id == $player->id) {
-                  $extIndex = $index;
-                  break;
-                }
-              }
-              if (isset($extIndex)) {
-                if ($qResults[$player->id]->sum < $result->sum) {
-                  $qGames[$player->id] = $games;
-                  $qResults[$player->id] = $result;
-                }
-              }
-              else {
-                array_push($qPlayers, $player);
-                $qGames[$player->id] = $games;
-                $qResults[$player->id] = $result;
-              }
-            }
-        }
-
-        $this->sortPlayersByResult($qPlayers, $tournamentId, 'q');
+        // foreach ($tournament->squads as $squad) {
+        //     foreach ($squad->players as $player) {
+        //       $games = $player->games()
+        //           ->where('tournament_id', $tournament->id)
+        //           ->where('squad_id', $squad->id)
+        //           ->where('part', 'q')->get();
+        //
+        //       $result = Result::where('tournament_id', $tournamentId)
+        //           ->where('player_id', $player->id)
+        //           ->where('part', 'q')
+        //           ->where('squad_id', $squad->id)
+        //           ->first();
+        //
+        //       $extIndex = null;
+        //       foreach ($qPlayers as $index => $q) {
+        //         if ($q->id == $player->id) {
+        //           $extIndex = $index;
+        //           break;
+        //         }
+        //       }
+        //       if (isset($extIndex)) {
+        //         if ($qResults[$player->id]->sum < $result->sum) {
+        //           $qGames[$player->id] = $games;
+        //           $qResults[$player->id] = $result;
+        //         }
+        //       }
+        //       else {
+        //         array_push($qPlayers, $player);
+        //         $qGames[$player->id] = $games;
+        //         $qResults[$player->id] = $result;
+        //       }
+        //     }
+        // }
+        //
+        // $this->sortPlayersByResult($qPlayers, $tournamentId, 'q');
         session(['players' => $qPlayers]);
 
         return view('tournament.run.results-q', [
@@ -463,75 +469,183 @@ class TournamentController extends Controller
         ]);
     }
 
+    private function getSquadResults($tournament, $squad) {
+      $sPlayers = array();
+      $sGames = array();
+      $sResults = array();
+
+      foreach ($squad->players as $player) {
+        $sPlayers[] = $player;
+
+        $squadGames = Game::where('tournament_id', $tournament->id)
+            ->where('player_id', $player->id)
+            ->where('part', 'q')
+            ->where('squad_id', $squad->id)
+            ->get();
+        $sGames[$player->id] = $squadGames;
+
+        $squadResult = $qResult = Result::where('tournament_id', $tournament->id)
+            ->where('player_id', $player->id)
+            ->where('part', 'q')
+            ->where('squad_id', $squad->id)
+            ->first();
+        $sResults[$player->id] = $squadResult;
+      }
+
+      $this->sortPlayersByResult($sPlayers[$squad->id], $tournament->id, 'q');
+
+      return array($sPlayers, $sGames, $sResults);
+    }
+
+    private function getQualificationResults($tournament) {
+      $qPlayers = array();
+      $qGames = array();
+      $qResults = array();
+
+      $qPlayersId = array();
+      foreach ($tournament->squads as $squad) {
+        foreach ($squad->players as $player) {
+          $qPlayersId[] = $player->id;
+        }
+      }
+
+      $qPlayersId = array_unique($qPlayersId);
+      foreach($qPlayersId as $playerId) {
+        $player = User::find($playerId);
+        $qPlayers[] = $player;
+      }
+
+      foreach($qPlayers as $player) {
+        $bestSquadResultSum = Result::where('tournament_id', $tournament->id)
+            ->where('player_id', $player->id)
+            ->where('part', 'q')
+            ->max('sum');
+        $bestSquadResult = Result::where('tournament_id', $tournament->id)
+            ->where('player_id', $player->id)
+            ->where('part', 'q')
+            ->where('sum', $bestSquadResultSum)
+            ->first();
+        $qResults[$player->id] = $bestSquadResult;
+
+        $bestSquadId = $bestSquadResult->squad_id;
+        $bestSquadGames = Game::where('tournament_id', $tournament->id)
+            ->where('player_id', $player->id)
+            ->where('part', 'q')
+            ->where('squad_id', $bestSquadId)
+            ->get();
+        $qGames[$player->id] = $bestSquadGames;
+      }
+
+      $this->sortPlayersByResult($qPlayers, $tournament->id, 'q');
+
+      return array($qPlayers, $qGames, $qResults);
+    }
+
+    private function getRoundRobinResults($tournament) {
+      $rrPlayers = array();
+      $rrGames = array();
+      $rrResults = array();
+
+      $roundRobinResults = Result::where('tournament_id', $tournament->id)
+          ->where('part', 'rr')
+          ->get();
+      foreach ($roundRobinResults as $result) {
+        $playerId = $result->player_id
+
+        $rrPlayers[] = User::find($playerId);
+
+        $roundRobinGames = Game::where('tournament_id', $tournament->id)
+            ->where('player_id', $playerId)
+            ->where('part', 'rr')
+            ->get();
+        $rrGames[$playerId] = $roundRobinGames;
+
+        $rrResults[$playerId] = $result;
+      }
+
+      $this->sortPlayersByResult($rrPlayers, $tournament->id, 'rr');
+
+      return array($rrPlayers, $rrGames, $rrResults);
+    }
+
     public function getResults($tournamentId)
     {
         $tournament = Tournament::find($tournamentId);
+
+        $sPlayers = array();
+        $sGames = array();
+        $sResults = array();
+        foreach($tournament->squads as $squad) {
+          list($sPlayers[$squad->id], $sGames[$squad->id], $sResults[$squad->id]) = $this->getSquadResults($tournament);
+        }
+
         $qPlayers = array();
         $qGames = array();
         $qResults = array();
-
-        foreach ($tournament->squads as $squad) {
-            foreach ($squad->players as $player) {
-              $qualificationGames = Game::where('tournament_id', $tournament->id)
-                  ->where('player_id', $player->id)
-                  ->where('part', 'q')
-                  ->where('squad_id', $squad->id)
-                  ->get();
-
-              $qResult = Result::where('tournament_id', $tournamentId)
-                  ->where('player_id', $player->id)
-                  ->where('part', 'q')
-                  ->where('squad_id', $squad->id)
-                  ->first();
-
-              $extIndex = null;
-              foreach ($qPlayers as $index => $q) {
-                if ($q->id == $player->id) {
-                  $extIndex = $index;
-                  break;
-                }
-              }
-
-              if (isset($extIndex) && isset($qResult)) {
-                if ($qResults[$player->id]->sum < $qResult->sum) {
-                  $qGames[$player->id] = $qualificationGames;
-                  $qResults[$player->id] = $qResult;
-                }
-              }
-              else {
-                array_push($qPlayers, $player);
-                $qGames[$player->id] = $qualificationGames;
-                $qResults[$player->id] = $qResult;
-              }
-            }
-        }
-
-        $this->sortPlayersByResult($qPlayers, $tournamentId, 'q');
+        list($qPlayers, $qGames, $qResults) = $this->getQualificationResults($tournament);
+        // foreach ($tournament->squads as $squad) {
+        //     foreach ($squad->players as $player) {
+        //       $qualificationGames = Game::where('tournament_id', $tournament->id)
+        //           ->where('player_id', $player->id)
+        //           ->where('part', 'q')
+        //           ->where('squad_id', $squad->id)
+        //           ->get();
+        //
+        //       $qResult = Result::where('tournament_id', $tournamentId)
+        //           ->where('player_id', $player->id)
+        //           ->where('part', 'q')
+        //           ->where('squad_id', $squad->id)
+        //           ->first();
+        //
+        //       $extIndex = null;
+        //       foreach ($qPlayers as $index => $q) {
+        //         if ($q->id == $player->id) {
+        //           $extIndex = $index;
+        //           break;
+        //         }
+        //       }
+        //
+        //       if (isset($extIndex) && isset($qResult)) {
+        //         if ($qResults[$player->id]->sum < $qResult->sum) {
+        //           $qGames[$player->id] = $qualificationGames;
+        //           $qResults[$player->id] = $qResult;
+        //         }
+        //       }
+        //       else {
+        //         array_push($qPlayers, $player);
+        //         $qGames[$player->id] = $qualificationGames;
+        //         $qResults[$player->id] = $qResult;
+        //       }
+        //     }
+        // }
+        //
+        // $this->sortPlayersByResult($qPlayers, $tournamentId, 'q');
 
         $fGames = array();
         $fResults = array();
         $fPlayers = array();
+        list($fGames, $fResults, $fPlayers) = $this->getRoundRobinResults($tournament);
 
-        $roundRobinGames = Game::where('tournament_id', $tournamentId)
-            ->where('part', 'rr')
-            ->get();
-
-        foreach ($roundRobinGames as $roundRobinGame) {
-            $fPlayer = User::find($roundRobinGame->player_id);
-            $fPlayers[$fPlayer->id] = $fPlayer;
-
-            $fGames[$fPlayer->id][] = $roundRobinGame;
-
-            $fResult = Result::where('tournament_id', $tournamentId)
-                ->where('player_id', $fPlayer->id)
-                ->where('part', 'rr')
-                ->first();
-            $fResults[$fPlayer->id] = $fResult;
-        }
+        // $roundRobinGames = Game::where('tournament_id', $tournamentId)
+        //     ->where('part', 'rr')
+        //     ->get();
+        //
+        // foreach ($roundRobinGames as $roundRobinGame) {
+        //     $fPlayer = User::find($roundRobinGame->player_id);
+        //     $fPlayers[$fPlayer->id] = $fPlayer;
+        //
+        //     $fGames[$fPlayer->id][] = $roundRobinGame;
+        //
+        //     $fResult = Result::where('tournament_id', $tournamentId)
+        //         ->where('player_id', $fPlayer->id)
+        //         ->where('part', 'rr')
+        //         ->first();
+        //     $fResults[$fPlayer->id] = $fResult;
+        // }
 
         $roundCount = ($tournament->roundRobin->players % 2) ? $tournament->roundRobin->players : $tournament->roundRobin->players - 1;
 
-        $this->sortPlayersByResult($fPlayers, $tournamentId, 'rr');
+        // $this->sortPlayersByResult($fPlayers, $tournamentId, 'rr');
 
         $allResults = $fResults;
         foreach ($qResults as $key => $result) {
@@ -547,6 +661,9 @@ class TournamentController extends Controller
 
         return view('tournament.results', [
             'tournament' => $tournament,
+            'sPlayers' => $sPlayers,
+            'sGames' => $sGames,
+            'sResults' => $sResults,
             'qPlayers' => $qPlayers,
             'qGames' => $qGames,
             'qResults' => $qResults,
