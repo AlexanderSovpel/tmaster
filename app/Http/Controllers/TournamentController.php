@@ -660,9 +660,9 @@ class TournamentController extends Controller
         }
         //
 
-        usort($allResults, function ($resultA, $resultB) {
-            return ($resultA->sum < $resultB->sum);
-        });
+        // usort($allResults, function ($resultA, $resultB) {
+        //     return ($resultA->sum < $resultB->sum);
+        // });
 
         return view('tournament.results', [
             'tournament' => $tournament,
