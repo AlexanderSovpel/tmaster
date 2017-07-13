@@ -325,7 +325,7 @@ class TournamentController extends Controller
 
     private function sortPlayersByResult(&$players, $tournamentId, $part, $squadId)
     {
-        usort($players, function ($playerA, $playerB) use ($tournamentId, $part) {
+        usort($players, function ($playerA, $playerB) use ($tournamentId, $part, $squadId) {
             $playerAResult = $playerA['results']
                 ->where('tournament_id', $tournamentId)
                 ->where('part', $part);
