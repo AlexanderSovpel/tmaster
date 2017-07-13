@@ -576,7 +576,7 @@ class TournamentController extends Controller
         $sGames = array();
         $sResults = array();
         foreach($tournament->squads as $squad) {
-          list($sPlayers[$squad->id], $sGames[$squad->id], $sResults[$squad->id]) = $this->getSquadResults($tournament);
+          list($sPlayers[$squad->id], $sGames[$squad->id], $sResults[$squad->id]) = $this->getSquadResults($tournament, $squad);
         }
 
         $qPlayers = array();
