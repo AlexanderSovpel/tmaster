@@ -24,7 +24,7 @@ if (newTournamentForm) {
     }
   });
 
-  $('#has-round-robin').change(function() {
+  $('#has-roundrobin').change(function() {
     if ($(this).prop('checked')) {
       $('#rr-players').parent().show();
       $('#rr-win-bonus').parent().show();
