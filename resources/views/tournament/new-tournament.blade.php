@@ -144,9 +144,13 @@
                 </div>
             </div>
             <div class="form-group roundrobin">
-                <div class="checkbox">
-                    <label><h3>Round Robin</h3><input type="checkbox" id="has-round-robin" name="has_round_robin" value="true" checked></label>
+                <div class="form-group row">
+                  <label class="control-label  text-left">
+                    <input type="checkbox" id="has-roundrobin" name="has_roundrobin" class="pull-left" value="true" checked="checked">
+                    <h3 class="col-md-6">Round Robin</h3>
+                  </label>
                 </div>
+
                 <div class="form-group row">
                     <label for="rr-players" class="control-label col-md-6">Количество участников</label>
                     <input type="number" name="rr_players" id="rr-players" class="form-control col-md-6 required" value="6"

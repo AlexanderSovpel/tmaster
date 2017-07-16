@@ -724,6 +724,11 @@ tr:nth-child(2n) {
 .remove-squad {
   float: right;
 }
+
+#has-roundrobin {
+  margin-top: 22px;
+  margin-bottom: 11px;
+}
 /* END New Tournament */
 
 /*Running Game*/
