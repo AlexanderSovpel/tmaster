@@ -67,11 +67,11 @@
             <h1>Общая информация</h1>
             <div class="form-group row">
                 <label for="name" class="control-label col-md-6">Название</label>
-                <input type="text" name="name" id="name" class="form-control col-md-6" required value="{{$tournament->name}}">
+                <input type="text" name="name" id="name" class="form-control col-md-6 required" required value="{{$tournament->name}}">
             </div>
             <div class="form-group row">
                 <label for="location" class="control-label col-md-6">Место проведения</label>
-                <input type="text" name="location" id="location" class="form-control col-md-6" required value="{{$tournament->location}}">
+                <input type="text" name="location" id="location" class="form-control col-md-6 required" required value="{{$tournament->location}}">
             </div>
             <div class="form-group row">
                 <label class="control-label col-md-6">Тип турнира</label>
@@ -147,12 +147,12 @@
             </div>
             <div class="form-group row">
                 <label for="handicap-value" class="control-label col-md-6">Значение</label>
-                <input type="number" id="handicap-value" name="handicap_value" class="form-control col-md-6" value="{{$tournament->handicap->value}}"
+                <input type="number" id="handicap-value" name="handicap_value" class="form-control col-md-6 required" value="{{$tournament->handicap->value}}"
                        min="-30" max="30" required>
             </div>
             <div class="form-group row">
                 <label for="handicap-max-game" class="control-label col-md-6">Максимальная игра</label>
-                <input type="number" id="handicap-max-game" name="handicap_max_game" class="form-control col-md-6"
+                <input type="number" id="handicap-max-game" name="handicap_max_game" class="form-control col-md-6 required"
                        value="{{$tournament->handicap->max_game}}" min="290" max="340" required>
             </div>
         </div>
@@ -164,18 +164,18 @@
                 <div class="form-group row">
                     <label for="qualification-games" class="control-label col-md-6">Количество блоков игр</label>
                     <input type="number" name="qualification_games" id="qualification-games"
-                           class="form-control col-md-6"
+                           class="form-control col-md-6 required"
                            value="{{$tournament->qualification->games}}" min="1" max="5" required>
                 </div>
                 <div class="form-group row">
                     <label for="qualification-entries" class="control-label col-md-6">Количество игр в блоке</label>
                     <input type="number" name="qualification_entries" id="qualification-entries"
-                           class="form-control col-md-6" value="{{$tournament->qualification->entries}}" min="3" max="10" required>
+                           class="form-control col-md-6 required" value="{{$tournament->qualification->entries}}" min="3" max="10" required>
                 </div>
                 <div class="form-group row">
                     <label for="qualification-finalists" class="control-label col-md-6">Количество финалистов</label>
                     <input type="number" name="qualification_finalists" id="qualification-finalists"
-                           class="form-control col-md-6" value="{{$tournament->qualification->finalists}}" min="4" max="12" required>
+                           class="form-control col-md-6 required" value="{{$tournament->qualification->finalists}}" min="4" max="12" required>
                 </div>
             </div>
             <div class="form-group roundrobin">
@@ -192,18 +192,18 @@
 
                 <div class="form-group row">
                     <label for="rr-players" class="control-label col-md-6">Количество участников</label>
-                    <input type="number" name="rr_players" id="rr-players" class="form-control col-md-6" value="{{(isset($tournament->roundRobin)) ? $tournament->roundRobin->players : 0}}"
+                    <input type="number" name="rr_players" id="rr-players" class="form-control col-md-6 required" value="{{(isset($tournament->roundRobin)) ? $tournament->roundRobin->players : 0}}"
                            min="0"
                            max="100" required>
                 </div>
                 <div class="form-group row">
                     <label for="rr-win-bonus" class="control-label col-md-6">Бонус за победу</label>
-                    <input type="number" name="rr_win_bonus" id="rr-win-bonus" class="form-control col-md-6" value="{{(isset($tournament->roundRobin)) ? $tournament->roundRobin->win_bonus : 0}}"
+                    <input type="number" name="rr_win_bonus" id="rr-win-bonus" class="form-control col-md-6 required" value="{{(isset($tournament->roundRobin)) ? $tournament->roundRobin->win_bonus : 0}}"
                            min="0" max="25" required>
                 </div>
                 <div class="form-group row">
                     <label for="rr-draw-bonus" class="control-label col-md-6">Бонус за ничью</label>
-                    <input type="number" name="rr_draw_bonus" id="rr-draw-bonus" class="form-control col-md-6"
+                    <input type="number" name="rr_draw_bonus" id="rr-draw-bonus" class="form-control col-md-6 required"
                            value="{{(isset($tournament->roundRobin)) ? $tournament->roundRobin->draw_bonus : 0}}"
                            min="0" max="15" required>
                 </div>
@@ -221,30 +221,41 @@
                 <a href="#" class="remove-squad" onclick="removeSquad(this)"><span class="glyphicon glyphicon-remove remove"></span></a>
                 <div class="form-group row">
                     <label class="control-label col-md-6" for="squad-date-{{$index}}">Дата проведения</label>
-                    <input type="date" id="squad-date-{{$index}}" name="squad_date[]" class="form-control squad-date col-md-4"
+                    <input type="date" id="squad-date-{{$index}}"
+                           name="squad_date[]"
+                           class="form-control squad-date col-md-4 required"
                            pattern="^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$"
                            title="Дата в формате гггг-мм-дд"
                            value="{{$squad->date}}">
                 </div>
                 <div class="form-group row">
                     <label class="control-label col-md-6" for="squad-start-time-{{$index}}">Время начала</label>
-                    <input type="time" id="squad-start-time-{{$index}}" name="squad_start_time[]"
-                           class="form-control squad-start-time col-md-4"
-                           pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" title="Время в формате чч:мм"
-                           value="{{date('H:i', strtotime($squad->start_time))}}">
+                    <input type="time" id="squad-start-time-{{$index}}"
+                           name="squad_start_time[]"
+                           class="form-control squad-start-time col-md-4 required"
+                           pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"
+                           title="Время в формате чч:мм"
+                           value="{{date('H:i', strtotime($squad->start_time))}}"
+                           required>
                 </div>
                 <div class="form-group row">
                     <label class="control-label col-md-6" for="squad-end-time-{{$index}}">Время окончания</label>
-                    <input type="time" id="squad-end-time-{{$index}}" name="squad_end_time[]"
-                           class="form-control squad-end-time col-md-4"
-                           pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" title="Время в формате чч:мм"
-                           value="{{date('H:i', strtotime($squad->end_time))}}">
+                    <input type="time" id="squad-end-time-{{$index}}"
+                           name="squad_end_time[]"
+                           class="form-control squad-end-time col-md-4 required"
+                           pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"
+                           title="Время в формате чч:мм"
+                           value="{{date('H:i', strtotime($squad->end_time))}}"
+                           required>
                 </div>
                 <div class="form-group row">
                     <label class="control-label col-md-6" for="squad-max-players-{{$index}}">Количество участников</label>
-                    <input type="number" id="squad-max-players-{{$index}}" name="squad_max_players[]"
-                           class="form-control squad-max-players col-md-4" value="{{$squad->max_players}}" min="4"
-                           max="50" required>
+                    <input type="number" id="squad-max-players-{{$index}}"
+                           name="squad_max_players[]"
+                           class="form-control squad-max-players col-md-4 required"
+                           value="{{$squad->max_players}}" min="4"
+                           max="50"
+                           required>
                 </div>
             </div>
             @endforeach
@@ -255,7 +266,7 @@
             <div class="form-group row">
                 <label for="qualification-fee" class="control-label col-md-6">Стоимость участия</label>
                 <div class="input-group col-md-6">
-                    <input type="text" id="qualification-fee" name="qualification_fee" class="form-control"
+                    <input type="text" id="qualification-fee" name="qualification_fee" class="form-control required"
                            value="{{$tournament->qualification->fee}}" required>
                     <span class="input-group-addon">BYN</span>
                 </div>
@@ -272,13 +283,13 @@
             </div>
             <div class="form-group row">
                 <label for="reentries-amount" class="control-label col-md-6">Количество переигровок</label>
-                <input type="number" name="reentries_amount" id="reentries-amount" class="form-control col-md-6"
+                <input type="number" name="reentries_amount" id="reentries-amount" class="form-control col-md-6 required"
                        value="{{$tournament->qualification->reentries}}" min="1" max="4" required>
             </div>
             <div class="form-group row">
                 <label for="reentry-fee" class="control-label col-md-6">Стоимость переигровки</label>
                 <div class="input-group col-md-6">
-                    <input type="text" id="reentry-fee" name="reentry_fee" class="form-control" value="{{$tournament->qualification->reentry_fee}}" required>
+                    <input type="text" id="reentry-fee" name="reentry_fee" class="form-control required" value="{{$tournament->qualification->reentry_fee}}" required>
                     <span class="input-group-addon">BYN</span>
                 </div>
             </div>
@@ -289,20 +300,20 @@
             @if(isset($tournament->roundRobin))
             <div class="form-group row">
                 <label for="rr-date" class="control-label col-md-6">Дата проведения</label>
-                <input type="date" id="rr-date" name="rr_date" class="form-control col-md-6"
+                <input type="date" id="rr-date" name="rr_date" class="form-control col-md-6 required"
                        pattern="^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$"
                        title="Дата в формате гггг-мм-дд"
                        value="{{$tournament->roundRobin->date}}">
             </div>
             <div class="form-group row">
                 <label for="rr-start-time" class="control-label col-md-6">Время начала</label>
-                <input type="time" id="rr-start-time" name="rr_start_time" class="form-control col-md-6"
+                <input type="time" id="rr-start-time" name="rr_start_time" class="form-control col-md-6 required"
                        pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" title="Время в формате чч:мм"
                        value="{{date('H:i', strtotime($tournament->roundRobin->start_time))}}">
             </div>
             <div class="form-group row">
                 <label for="rr-end-time" class="control-label col-md-6">Время окончания</label>
-                <input type="time" id="rr-end-time" name="rr_end_time" class="form-control col-md-6"
+                <input type="time" id="rr-end-time" name="rr_end_time" class="form-control col-md-6 required"
                        pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" title="Время в формате чч:мм"
                        value="{{date('H:i', strtotime($tournament->roundRobin->end_time))}}">
             </div>
