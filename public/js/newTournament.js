@@ -192,6 +192,19 @@ if (editTournament) {
   $('.bs-wizard-step').addClass('complete');
   $('.bs-wizard-step').removeClass('disabled');
 
+  $('#has-roundrobin').change(function() {
+    if ($(this).prop('checked')) {
+      $('#rr-players').parent().show();
+      $('#rr-win-bonus').parent().show();
+      $('#rr-draw-bonus').parent().show();
+    }
+    else {
+      $('#rr-players').parent().hide();
+      $('#rr-win-bonus').parent().hide();
+      $('#rr-draw-bonus').parent().hide();
+    }
+  });
+
   var currentStep = editTournament.querySelector('#step');
   var steps = editTournament.querySelectorAll('.creation-step');
   var nextStepBtn = editTournament.querySelector('#next-step');
