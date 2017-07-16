@@ -12,6 +12,18 @@ if (newTournamentForm) {
     }
   }
 
+  var allowReentry = $('#allow-reentry');
+  $(allowReentry).change(function() {
+    if ($(this).prop('checked')) {
+      $('#reentries-amount').prop('disabled', false);
+      $('#reentry-fee').prop('disabled', false);
+    }
+    else {
+      $('#reentries-amount').prop('disabled', true);
+      $('#reentry-fee').prop('disabled', true);
+    }
+  });
+
   var contactPerson = document.querySelector('#contact-person');
   $(contactPerson).change(function() {
     var adminId = this.options[this.selectedIndex].value;

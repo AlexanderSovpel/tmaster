@@ -191,13 +191,13 @@
             </div>
             <div class="form-group row">
                 <label for="reentries-amount" class="control-label col-md-6">Количество переигровок</label>
-                <input type="number" name="reentries_amount" id="reentries-amount" class="form-control col-md-6"
+                <input type="number" name="reentries_amount" id="reentries-amount" class="form-control col-md-6 required"
                        value="1" min="1" max="4" required>
             </div>
             <div class="form-group row">
                 <label for="reentry-fee" class="control-label col-md-6">Стоимость переигровки</label>
                 <div class="input-group col-md-6">
-                    <input type="text" id="reentry-fee" name="reentry_fee" class="form-control" value="60" required>
+                    <input type="text" id="reentry-fee" name="reentry_fee" class="form-control required" value="60" required>
                     <span class="input-group-addon">BYN</span>
                 </div>
             </div>
