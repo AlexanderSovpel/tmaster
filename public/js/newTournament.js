@@ -12,16 +12,8 @@ if (newTournamentForm) {
     }
   }
 
-  var allowReentry = $('#allow-reentry');
-  $(allowReentry).change(function() {
-    if ($(this).prop('checked')) {
-      $('#reentries-amount').prop('disabled', false);
-      $('#reentry-fee').prop('disabled', false);
-    }
-    else {
-      $('#reentries-amount').prop('disabled', true);
-      $('#reentry-fee').prop('disabled', true);
-    }
+  $('#allow-reentry').change(function() {
+    checkReentry();
   });
 
   $('#has-roundrobin').change(function() {
@@ -187,6 +179,10 @@ if (editTournament) {
     checkRoundRobin();
   });
 
+  $('#allow-reentry').change(function() {
+    checkReentry();
+  });
+
   var currentStep = editTournament.querySelector('#step');
   var steps = editTournament.querySelectorAll('.creation-step');
   var nextStepBtn = editTournament.querySelector('#next-step');
@@ -253,6 +249,7 @@ if (editTournament) {
   };
 
   checkRoundRobin();
+  checkReentry();
 }
 
 
@@ -272,6 +269,17 @@ function checkRoundRobin() {
     $('#rr-date').prop('disabled', true);
     $('#rr-start-time').prop('disabled', true);
     $('#rr-end-time').prop('disabled', true);
+  }
+}
+
+function checkReentry() {
+  if ($('#allow-reentry').prop('checked')) {
+    $('#reentries-amount').prop('disabled', false);
+    $('#reentry-fee').prop('disabled', false);
+  }
+  else {
+    $('#reentries-amount').prop('disabled', true);
+    $('#reentry-fee').prop('disabled', true);
   }
 }
 
