@@ -739,7 +739,7 @@ class TournamentController extends Controller
             'description' => $request->description,
             'handicap_id' => $handicap->id,
             'qualification_id' => $qualification->id,
-            'roundrobin_id' => $roundRobin->id,
+            // 'roundrobin_id' => $roundRobin->id,
             'contact_id' => $contact->id,
             'finished' => false
         ]);
@@ -752,6 +752,7 @@ class TournamentController extends Controller
         $qualification->save();
 
         if ($request->has_roundrobin) {
+          $newTournament->roundrobin_id = $roundRobin->id;
           $roundRobin->tournament_id = $newTournament->id;
           $roundRobin->save();
         }
