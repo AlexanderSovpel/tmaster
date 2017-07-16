@@ -297,29 +297,40 @@
 
         <div class="creation-step">
             <h1>Финал</h1>
-            @if(isset($tournament->roundRobin))
             <div class="form-group row">
                 <label for="rr-date" class="control-label col-md-6">Дата проведения</label>
                 <input type="date" id="rr-date" name="rr_date" class="form-control col-md-6 required"
                        pattern="^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$"
                        title="Дата в формате гггг-мм-дд"
-                       value="{{$tournament->roundRobin->date}}">
+                       @if(isset($tournament->roundRobin))
+                       value="{{$tournament->roundRobin->date}}"
+                       @else
+                       disabled
+                       @endif
+                       >
             </div>
             <div class="form-group row">
                 <label for="rr-start-time" class="control-label col-md-6">Время начала</label>
                 <input type="time" id="rr-start-time" name="rr_start_time" class="form-control col-md-6 required"
                        pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" title="Время в формате чч:мм"
-                       value="{{date('H:i', strtotime($tournament->roundRobin->start_time))}}">
+                       @if(isset($tournament->roundRobin))
+                       value="{{date('H:i', strtotime($tournament->roundRobin->start_time))}}"
+                       @else
+                       disabled
+                       @endif
+                       >
             </div>
             <div class="form-group row">
                 <label for="rr-end-time" class="control-label col-md-6">Время окончания</label>
                 <input type="time" id="rr-end-time" name="rr_end_time" class="form-control col-md-6 required"
                        pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" title="Время в формате чч:мм"
-                       value="{{date('H:i', strtotime($tournament->roundRobin->end_time))}}">
+                       @if(isset($tournament->roundRobin))
+                       value="{{date('H:i', strtotime($tournament->roundRobin->end_time))}}"
+                       @else
+                       disabled
+                       @endif
+                       >
             </div>
-            @else
-            <p>Финальная часть отсутствует.</p>
-            @endif
         </div>
 
         <div class="creation-step">

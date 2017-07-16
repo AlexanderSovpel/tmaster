@@ -346,6 +346,8 @@ class TournamentController extends Controller
     {
         $tournament = Tournament::find($tournamentId);
         if (!$tournament->roundrobin_id) {
+          $tournament->finished = true;
+          $tournament->save();
           return redirect($tournament->id . '/results');
         }
 

@@ -25,16 +25,7 @@ if (newTournamentForm) {
   });
 
   $('#has-roundrobin').change(function() {
-    if ($(this).prop('checked')) {
-      $('#rr-players').parent().show();
-      $('#rr-win-bonus').parent().show();
-      $('#rr-draw-bonus').parent().show();
-    }
-    else {
-      $('#rr-players').parent().hide();
-      $('#rr-win-bonus').parent().hide();
-      $('#rr-draw-bonus').parent().hide();
-    }
+    checkRoundRobin();
   });
 
   var contactPerson = document.querySelector('#contact-person');
@@ -193,16 +184,7 @@ if (editTournament) {
   $('.bs-wizard-step').removeClass('disabled');
 
   $('#has-roundrobin').change(function() {
-    if ($(this).prop('checked')) {
-      $('#rr-players').parent().show();
-      $('#rr-win-bonus').parent().show();
-      $('#rr-draw-bonus').parent().show();
-    }
-    else {
-      $('#rr-players').parent().hide();
-      $('#rr-win-bonus').parent().hide();
-      $('#rr-draw-bonus').parent().hide();
-    }
+    checkRoundRobin();
   });
 
   var currentStep = editTournament.querySelector('#step');
@@ -270,18 +252,28 @@ if (editTournament) {
       toggleStepBtnVisibility(editTournament);
   };
 
+  checkRoundRobin();
+}
+
+
+function checkRoundRobin() {
   if ($('#has-roundrobin').prop('checked')) {
     $('#rr-players').parent().show();
     $('#rr-win-bonus').parent().show();
     $('#rr-draw-bonus').parent().show();
+    $('#rr-date').prop('disabled', false);
+    $('#rr-start-time').prop('disabled', false);
+    $('#rr-end-time').prop('disabled', false);
   }
   else {
     $('#rr-players').parent().hide();
     $('#rr-win-bonus').parent().hide();
     $('#rr-draw-bonus').parent().hide();
+    $('#rr-date').prop('disabled', true);
+    $('#rr-start-time').prop('disabled', true);
+    $('#rr-end-time').prop('disabled', true);
   }
 }
-
 
 var addSquadBtn = document.getElementById('add-squad');
 var squadsCount = document.getElementById('squads-count');
