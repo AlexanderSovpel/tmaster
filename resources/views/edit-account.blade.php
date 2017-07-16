@@ -2,7 +2,7 @@
 
 @section('content')
     <ol class="breadcrumb">
-        <li><a href="/account">{{$user->name}} {{$user->surname}}</a></li>
+        <li><a href="/{{$user->id}}/account">{{$user->name}} {{$user->surname}}</a></li>
         <li>Редактирование профиля</li>
     </ol>
     <div class="row">
@@ -103,7 +103,7 @@
 
                         <div class="form-group">
                             <div class="col-md-6">
-                                <a href="/account" class="btn cancel-btn">Отменить</a>
+                                <a href="/{{$user->id}}/account" class="btn cancel-btn">Отменить</a>
                             </div>
                             <div class="col-md-6">
                                 <button type="submit" class="btn save-btn">
