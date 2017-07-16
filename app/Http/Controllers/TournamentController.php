@@ -764,13 +764,15 @@ class TournamentController extends Controller
         $tournament->roundRobin->save();
       }
       else {
-        $tournament->roundRobin = new RoundRobin(['players' => $request->rr_players,
+        $roundRobin = new RoundRobin(['players' => $request->rr_players,
           'win_bonus' => $request->rr_win_bonus,
           'draw_bonus' => $request->rr_draw_bonus,
           'date' => $request->rr_date,
           'start_time' => $request->rr_start_time,
           'end_time' => $request->rr_end_time]);
-        $tournament->roundRobin->save();
+        $roundRobin->tournament_id = $tournament->id;
+        $roundRobin->save();
+        $tournament->roundrobin_id = $roundRobin->id;
       }
     }
     else {
