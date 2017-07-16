@@ -19,11 +19,12 @@
   </div>
   @endif
 
-  <p class="date">{{date('j.m.Y',
-    strtotime($tournament->squads()->orderBy('date', 'ASC')
-    ->orderBy('start_time', 'ASC')->first()->date))}} &mdash; {{(isset($tournament->roundRobin)) ? date('j.m.Y',
-    strtotime($tournament->roundRobin->date)) : strtotime($tournament->squads()->orderBy('date', 'DESC')
-    ->orderBy('start_time', 'DESC')->first()->date))}}</p>
+  <p class="date">
+    {{date('j.m.Y', strtotime($tournament->squads()->orderBy('date', 'ASC')->orderBy('start_time', 'ASC')->first()->date))}} &mdash;
+    {{(isset($tournament->roundRobin)) ?
+      date('j.m.Y', strtotime($tournament->roundRobin->date)) :
+      date('j.m.Y', strtotime($tournament->squads()->orderBy('date', 'DESC')->orderBy('start_time', 'DESC')->first()->date))}}
+    </p>
 
   @if(!$tournament->finished)
   <p class='tournament-open'>регистрация открыта</p>
