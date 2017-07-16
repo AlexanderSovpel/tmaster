@@ -598,10 +598,10 @@ class TournamentController extends Controller
         $qResults = array();
         list($qPlayers, $qGames, $qResults) = $this->getQualificationResults($tournament);
 
+        $fGames = array();
+        $fResults = array();
+        $fPlayers = array();
         if (isset($tournament->roundRobin)) {
-          $fGames = array();
-          $fResults = array();
-          $fPlayers = array();
           list($fPlayers, $fGames, $fResults) = $this->getRoundRobinResults($tournament);
           $roundCount = ($tournament->roundRobin->players % 2) ? $tournament->roundRobin->players : $tournament->roundRobin->players - 1;
         }
