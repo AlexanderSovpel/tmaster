@@ -37,7 +37,12 @@
         </p>
         <div class="details row">
             <p class="control-label col-md-6">Даты проведения</p>
-            <p class="detail col-md-6">{{date('j.m.Y', strtotime($tournament->squads()->orderBy('date', 'ASC')->orderBy('start_time', 'ASC')->first()->date))}} &mdash; {{date('j.m.Y', strtotime($tournament->roundRobin->date))}}</p>
+            <p class="detail col-md-6">
+              {{date('j.m.Y', strtotime($tournament->squads()->orderBy('date', 'ASC')->orderBy('start_time', 'ASC')->first()->date))}} &mdash;
+              {{(isset($tournament->roundRobin)) ?
+                date('j.m.Y', strtotime($tournament->roundRobin->date)) :
+                date('j.m.Y', strtotime($tournament->squads()->orderBy('date', 'DESC')->orderBy('start_time', 'DESC')->first()->date))}}
+            </p>
             <p class="control-label col-md-6">Место проведения</p>
             <p class="detail col-md-6">{{$tournament->location}}</p>
             <p class="control-label col-md-6">Вступительный взнос</p>
@@ -81,6 +86,7 @@
                     </ul>
                 </li>
             @endforeach
+            @if(isset($tournament->roundrobin))
             <li class="schedule-day">
                 {{date('j.m.Y', strtotime($tournament->roundrobin->date))}}:
                 <ul>
@@ -91,6 +97,7 @@
                     </li>
                 </ul>
             </li>
+            @endif
         </ul>
         @if(!$tournament->finished && \Illuminate\Support\Facades\Auth::check())
             @if($user->is_admin)

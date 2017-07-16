@@ -12,7 +12,7 @@
       <li role="presentation" class="active result-tab">
           <a href="#" id="show-qualification-results">Квалификация</a>
       </li>
-      @if ($tournament->roundRobin->players)
+      @if (isset($tournament->roundRobin))
       <li role="presentation" class="result-tab">
           <a href="#" id="show-final-results">Финал</a>
       </li>
@@ -32,7 +32,7 @@
       <div id="qualification-results" class="result-table">
           @include('partial.qualification-results')
       </div>
-      @if ($tournament->roundRobin->players)
+      @if (isset($tournament->roundRobin))
       <div id="final-results" class="result-table" hidden>
           @include('partial.final-results')
       </div>
