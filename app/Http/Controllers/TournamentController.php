@@ -751,13 +751,15 @@ class TournamentController extends Controller
     $tournament->qualification->reentry_fee = $request->reentry_fee;
     $tournament->qualification->save();
 
-    $tournament->roundRobin->players = $request->rr_players;
-    $tournament->roundRobin->win_bonus = $request->rr_win_bonus;
-    $tournament->roundRobin->draw_bonus = $request->rr_draw_bonus;
-    $tournament->roundRobin->date = $request->rr_date;
-    $tournament->roundRobin->start_time = $request->rr_start_time;
-    $tournament->roundRobin->end_time = $request->rr_end_time;
-    $tournament->roundRobin->save();
+    if ($request->has_roundrobin) {
+      $tournament->roundRobin->players = $request->rr_players;
+      $tournament->roundRobin->win_bonus = $request->rr_win_bonus;
+      $tournament->roundRobin->draw_bonus = $request->rr_draw_bonus;
+      $tournament->roundRobin->date = $request->rr_date;
+      $tournament->roundRobin->start_time = $request->rr_start_time;
+      $tournament->roundRobin->end_time = $request->rr_end_time;
+      $tournament->roundRobin->save();
+    }
 
     $contact = User::find($request->contact_person);
     $tournament->contact_id = $contact->id;

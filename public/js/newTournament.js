@@ -256,6 +256,17 @@ if (editTournament) {
       showStep(steps, currentStep.value);
       toggleStepBtnVisibility(editTournament);
   };
+
+  if ($('#has-roundrobin').prop('checked')) {
+    $('#rr-players').parent().show();
+    $('#rr-win-bonus').parent().show();
+    $('#rr-draw-bonus').parent().show();
+  }
+  else {
+    $('#rr-players').parent().hide();
+    $('#rr-win-bonus').parent().hide();
+    $('#rr-draw-bonus').parent().hide();
+  }
 }
 
 

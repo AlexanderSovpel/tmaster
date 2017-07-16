@@ -317,6 +317,8 @@
                        pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" title="Время в формате чч:мм"
                        value="{{date('H:i', strtotime($tournament->roundRobin->end_time))}}">
             </div>
+            @else
+            <p>Финальная часть отсутствует.</p>
             @endif
         </div>
 
