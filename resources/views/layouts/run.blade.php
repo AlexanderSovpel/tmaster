@@ -34,7 +34,7 @@
                         @endfor
                     </ul>
                 </li>
-                @if ($tournament->roundRobin->players)
+                @if (isset($tournament->roundRobin))
                 <li
                         @if ($part == 'rr')
                         class="list-group-item active"

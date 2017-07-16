@@ -6,7 +6,7 @@
   <form action="/{{$tournament->id}}/run/rr/conf/" method="get" class="panel-body">
       {{ csrf_field() }}
       @include('partial.qualification-results')
-      @if ($tournament->roundRobin->players)
+      @if (isset($tournament->roundRobin))
       <button type="submit" class="btn">начать финал</button>
       @else
       <button type="submit" class="btn">завершить соревнование</button>

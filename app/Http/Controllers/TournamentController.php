@@ -352,9 +352,9 @@ class TournamentController extends Controller
         $players = session('players');
         $finalistsCount = 1;
 
-        if (!$tournament->roundRobin->players) {
-          return TournamentController::getResults($tournamentId);
-        }
+        // if (!$tournament->roundRobin->players) {
+        //   return TournamentController::getResults($tournamentId);
+        // }
 
         foreach ($players as $player) {
             if ($finalistsCount++ > $tournament->roundRobin->players) {

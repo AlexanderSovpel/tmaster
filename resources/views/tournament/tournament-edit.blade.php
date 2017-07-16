@@ -179,23 +179,33 @@
                 </div>
             </div>
             <div class="form-group roundrobin">
-                <h3>Round Robin</h3>
+              <div class="form-group row">
+                <label class="control-label  text-left">
+                  <input type="checkbox" id="has-roundrobin" name="has_roundrobin" class="pull-left" value="true"
+                  @if (isset($tournament->roundRobin))
+                  checked
+                  @endif
+                  >
+                  <h3 class="col-md-6">Round Robin</h3>
+                </label>
+              </div>
+
                 <div class="form-group row">
                     <label for="rr-players" class="control-label col-md-6">Количество участников</label>
-                    <input type="number" name="rr_players" id="rr-players" class="form-control col-md-6" value="{{$tournament->roundRobin->players}}"
+                    <input type="number" name="rr_players" id="rr-players" class="form-control col-md-6" value="{{(isset($tournament->roundRobin)) ? $tournament->roundRobin->players : 0}}"
                            min="0"
                            max="100" required>
                 </div>
                 <div class="form-group row">
                     <label for="rr-win-bonus" class="control-label col-md-6">Бонус за победу</label>
-                    <input type="number" name="rr_win_bonus" id="rr-win-bonus" class="form-control col-md-6" value="{{$tournament->roundRobin->win_bonus}}"
-                           min="15" max="25" required>
+                    <input type="number" name="rr_win_bonus" id="rr-win-bonus" class="form-control col-md-6" value="{{(isset($tournament->roundRobin)) ? $tournament->roundRobin->win_bonus : 0}}"
+                           min="0" max="25" required>
                 </div>
                 <div class="form-group row">
                     <label for="rr-draw-bonus" class="control-label col-md-6">Бонус за ничью</label>
                     <input type="number" name="rr_draw_bonus" id="rr-draw-bonus" class="form-control col-md-6"
-                           value="{{$tournament->roundRobin->draw_bonus}}"
-                           min="5" max="15" required>
+                           value="{{(isset($tournament->roundRobin)) ? $tournament->roundRobin->draw_bonus : 0}}"
+                           min="0" max="15" required>
                 </div>
             </div>
         </div>
@@ -276,6 +286,7 @@
 
         <div class="creation-step">
             <h1>Финал</h1>
+            @if(isset($tournament->roundRobin))
             <div class="form-group row">
                 <label for="rr-date" class="control-label col-md-6">Дата проведения</label>
                 <input type="date" id="rr-date" name="rr_date" class="form-control col-md-6"
@@ -295,6 +306,7 @@
                        pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" title="Время в формате чч:мм"
                        value="{{date('H:i', strtotime($tournament->roundRobin->end_time))}}">
             </div>
+            @endif
         </div>
 
         <div class="creation-step">
