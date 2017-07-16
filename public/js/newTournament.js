@@ -125,10 +125,10 @@ if (newTournamentForm) {
 
     nextStepBtn.onclick = function () {
       var currentStepDiv = $('.creation-step')[currentStep.value];
-      var currentStepFields = $(currentStepDiv).find('.form-control');
-      for(var i = 0; i < currentStepFields.length; ++i) {
-        if (!currentStepFields[i].value) {
-          console.log('not all fields are filled!');
+      var currentStepRequired = $(currentStepDiv).find('.required');
+      for(var i = 0; i < currentStepRequired.length; ++i) {
+        if (!currentStepRequired[i].value) {
+          // console.log('not all fields are filled!');
           $('#error').html('<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><span>Заполните все поля!</span></div>');
           return;
         }

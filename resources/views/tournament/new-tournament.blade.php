@@ -68,11 +68,11 @@
             <h1>Общая информация</h1>
             <div class="form-group row">
                 <label for="name" class="control-label col-md-6">Название</label>
-                <input type="text" name="name" id="name" class="form-control col-md-6" required>
+                <input type="text" name="name" id="name" class="form-control col-md-6 required" required>
             </div>
             <div class="form-group row">
                 <label for="location" class="control-label col-md-6">Место проведения</label>
-                <input type="text" name="location" id="location" class="form-control col-md-6" required>
+                <input type="text" name="location" id="location" class="form-control col-md-6 required" required>
             </div>
             <div class="form-group row">
                 <label class="control-label col-md-6">Тип турнира</label>
@@ -95,7 +95,7 @@
             </div>
             <div class="form-group row">
                 <label for="description" class="control-label col-md-6">Описание</label>
-                <textarea name="description" id="description" class="form-control col-md-6" required></textarea>
+                <textarea name="description" id="description" class="form-control col-md-6"></textarea>
             </div>
         </div>
 
@@ -112,12 +112,12 @@
             </div>
             <div class="form-group row">
                 <label for="handicap-value" class="control-label col-md-6">Значение</label>
-                <input type="number" id="handicap-value" name="handicap_value" class="form-control col-md-6" value="8"
+                <input type="number" id="handicap-value" name="handicap_value" class="form-control col-md-6 required" value="8"
                        min="-30" max="30" required>
             </div>
             <div class="form-group row">
                 <label for="handicap-max-game" class="control-label col-md-6">Максимальная игра</label>
-                <input type="number" id="handicap-max-game" name="handicap_max_game" class="form-control col-md-6"
+                <input type="number" id="handicap-max-game" name="handicap_max_game" class="form-control col-md-6 required"
                        value="300" min="290" max="340" required>
             </div>
         </div>
@@ -129,36 +129,36 @@
                 <div class="form-group row">
                     <label for="qualification-games" class="control-label col-md-6">Количество блоков игр</label>
                     <input type="number" name="qualification_games" id="qualification-games"
-                           class="form-control col-md-6"
+                           class="form-control col-md-6 required"
                            value="1" min="1" max="5" required>
                 </div>
                 <div class="form-group row">
                     <label for="qualification-entries" class="control-label col-md-6">Количество игр в блоке</label>
                     <input type="number" name="qualification_entries" id="qualification-entries"
-                           class="form-control col-md-6" value="6" min="1" max="10" required>
+                           class="form-control col-md-6 required" value="6" min="1" max="10" required>
                 </div>
                 <div class="form-group row">
                     <label for="qualification-finalists" class="control-label col-md-6">Количество финалистов</label>
                     <input type="number" name="qualification_finalists" id="qualification-finalists"
-                           class="form-control col-md-6" value="6" min="0" max="100" required>
+                           class="form-control col-md-6 required" value="6" min="0" max="100" required>
                 </div>
             </div>
             <div class="form-group roundrobin">
                 <h3>Round Robin</h3>
                 <div class="form-group row">
                     <label for="rr-players" class="control-label col-md-6">Количество участников</label>
-                    <input type="number" name="rr_players" id="rr-players" class="form-control col-md-6" value="6"
+                    <input type="number" name="rr_players" id="rr-players" class="form-control col-md-6 required" value="6"
                            min="0"
                            max="100" required>
                 </div>
                 <div class="form-group row">
                     <label for="rr-win-bonus" class="control-label col-md-6">Бонус за победу</label>
-                    <input type="number" name="rr_win_bonus" id="rr-win-bonus" class="form-control col-md-6" value="20"
+                    <input type="number" name="rr_win_bonus" id="rr-win-bonus" class="form-control col-md-6 required" value="20"
                            min="15" max="25" required>
                 </div>
                 <div class="form-group row">
                     <label for="rr-draw-bonus" class="control-label col-md-6">Бонус за ничью</label>
-                    <input type="number" name="rr_draw_bonus" id="rr-draw-bonus" class="form-control col-md-6"
+                    <input type="number" name="rr_draw_bonus" id="rr-draw-bonus" class="form-control col-md-6 required"
                            value="10"
                            min="5" max="15" required>
                 </div>
@@ -178,7 +178,7 @@
             <div class="form-group row">
                 <label for="qualification-fee" class="control-label col-md-6">Стоимость участия</label>
                 <div class="input-group col-md-6">
-                    <input type="text" id="qualification-fee" name="qualification_fee" class="form-control"
+                    <input type="text" id="qualification-fee" name="qualification_fee" class="form-control required"
                            value="50" required>
                     <span class="input-group-addon">BYN</span>
                 </div>
@@ -207,18 +207,18 @@
             <h1>Финал</h1>
             <div class="form-group row">
                 <label for="rr-date" class="control-label col-md-6">Дата проведения</label>
-                <input type="date" id="rr-date" name="rr_date" class="form-control col-md-6"
+                <input type="date" id="rr-date" name="rr_date" class="form-control col-md-6 required"
                        pattern="^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$"
                        title="Дата в формате гггг-мм-дд">
             </div>
             <div class="form-group row">
                 <label for="rr-start-time" class="control-label col-md-6">Время начала</label>
-                <input type="time" id="rr-start-time" name="rr_start_time" class="form-control col-md-6"
+                <input type="time" id="rr-start-time" name="rr_start_time" class="form-control col-md-6 required"
                        pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" title="Время в формате чч:мм">
             </div>
             <div class="form-group row">
                 <label for="rr-end-time" class="control-label col-md-6">Время окончания</label>
-                <input type="time" id="rr-end-time" name="rr_end_time" class="form-control col-md-6"
+                <input type="time" id="rr-end-time" name="rr_end_time" class="form-control col-md-6 required"
                        pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" title="Время в формате чч:мм">
             </div>
         </div>
