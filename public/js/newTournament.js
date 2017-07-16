@@ -24,6 +24,19 @@ if (newTournamentForm) {
     }
   });
 
+  $('#has-round-robin').change(function() {
+    if ($(this).prop('checked')) {
+      $('#rr-players').parent().show();
+      $('#rr-win-bonus').parent().show();
+      $('#rr-draw-bonus').parent().show();
+    }
+    else {
+      $('#rr-players').parent().hide();
+      $('#rr-win-bonus').parent().hide();
+      $('#rr-draw-bonus').parent().hide();
+    }
+  });
+
   var contactPerson = document.querySelector('#contact-person');
   $(contactPerson).change(function() {
     var adminId = this.options[this.selectedIndex].value;
