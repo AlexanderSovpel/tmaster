@@ -598,69 +598,13 @@ class TournamentController extends Controller
         $qResults = array();
         list($qPlayers, $qGames, $qResults) = $this->getQualificationResults($tournament);
 
-        // foreach ($tournament->squads as $squad) {
-        //     foreach ($squad->players as $player) {
-        //       $qualificationGames = Game::where('tournament_id', $tournament->id)
-        //           ->where('player_id', $player->id)
-        //           ->where('part', 'q')
-        //           ->where('squad_id', $squad->id)
-        //           ->get();
-        //
-        //       $qResult = Result::where('tournament_id', $tournamentId)
-        //           ->where('player_id', $player->id)
-        //           ->where('part', 'q')
-        //           ->where('squad_id', $squad->id)
-        //           ->first();
-        //
-        //       $extIndex = null;
-        //       foreach ($qPlayers as $index => $q) {
-        //         if ($q->id == $player->id) {
-        //           $extIndex = $index;
-        //           break;
-        //         }
-        //       }
-        //
-        //       if (isset($extIndex) && isset($qResult)) {
-        //         if ($qResults[$player->id]->sum < $qResult->sum) {
-        //           $qGames[$player->id] = $qualificationGames;
-        //           $qResults[$player->id] = $qResult;
-        //         }
-        //       }
-        //       else {
-        //         array_push($qPlayers, $player);
-        //         $qGames[$player->id] = $qualificationGames;
-        //         $qResults[$player->id] = $qResult;
-        //       }
-        //     }
-        // }
-        //
-        // $this->sortPlayersByResult($qPlayers, $tournamentId, 'q');
-
-        $fGames = array();
-        $fResults = array();
-        $fPlayers = array();
-        list($fPlayers, $fGames, $fResults) = $this->getRoundRobinResults($tournament);
-
-        // $roundRobinGames = Game::where('tournament_id', $tournamentId)
-        //     ->where('part', 'rr')
-        //     ->get();
-        //
-        // foreach ($roundRobinGames as $roundRobinGame) {
-        //     $fPlayer = User::find($roundRobinGame->player_id);
-        //     $fPlayers[$fPlayer->id] = $fPlayer;
-        //
-        //     $fGames[$fPlayer->id][] = $roundRobinGame;
-        //
-        //     $fResult = Result::where('tournament_id', $tournamentId)
-        //         ->where('player_id', $fPlayer->id)
-        //         ->where('part', 'rr')
-        //         ->first();
-        //     $fResults[$fPlayer->id] = $fResult;
-        // }
-
-        $roundCount = ($tournament->roundRobin->players % 2) ? $tournament->roundRobin->players : $tournament->roundRobin->players - 1;
-
-        // $this->sortPlayersByResult($fPlayers, $tournamentId, 'rr');
+        if (isset($tournament->roundRobin)) {
+          $fGames = array();
+          $fResults = array();
+          $fPlayers = array();
+          list($fPlayers, $fGames, $fResults) = $this->getRoundRobinResults($tournament);
+          $roundCount = ($tournament->roundRobin->players % 2) ? $tournament->roundRobin->players : $tournament->roundRobin->players - 1;
+        }
 
         $allResults = $fResults;
         foreach ($qResults as $key => $result) {
@@ -668,7 +612,6 @@ class TournamentController extends Controller
                 $allResults[] = $result;
             }
         }
-        //
 
         usort($allResults, function ($resultA, $resultB) {
             return ($resultA->sum < $resultB->sum);
