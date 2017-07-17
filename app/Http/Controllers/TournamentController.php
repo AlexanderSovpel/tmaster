@@ -233,31 +233,6 @@ class TournamentController extends Controller
         $aPlayers = array();
         list($aPlayers, $playedGames, $playersResults) = $this->getSquadResults($tournament, $currentSquad);
 
-      //   foreach ($currentSquad->players as $player) {
-      //       $games = $player->games
-      //           ->where('player_id', $player->id)
-      //           ->where('tournament_id', $tournamentId)
-      //           ->where('part', 'q')
-      //           ->where('squad_id', $currentSquadId);
-       //
-      //       foreach ($games as $game) {
-      //           $playedGames[$player->id][] = $game;
-      //       }
-       //
-      //       $result = Result::where('player_id', $player->id)
-      //             ->where('tournament_id', $tournamentId)
-      //             ->where('part', 'q')
-      //             ->where('squad_id', $currentSquadId)
-      //             ->first();
-      //       $playersResults[$player->id] = $result;
-      //   }
-       //
-      //   foreach($currentSquad->players as $player) {
-      //     $aPlayers[] = $player;
-      //   }
-       //
-      //  $this->sortPlayersByResult($aPlayers, $tournamentId, 'q');
-
         return view('tournament.run.results-q-s', [
             'tournament' => $tournament,
             'part' => 'q',
@@ -277,41 +252,6 @@ class TournamentController extends Controller
         $qResults = array();
         list($qPlayers, $qGames, $qResults) = $this->getQualificationResults($tournament);
 
-        // foreach ($tournament->squads as $squad) {
-        //     foreach ($squad->players as $player) {
-        //       $games = $player->games()
-        //           ->where('tournament_id', $tournament->id)
-        //           ->where('squad_id', $squad->id)
-        //           ->where('part', 'q')->get();
-        //
-        //       $result = Result::where('tournament_id', $tournamentId)
-        //           ->where('player_id', $player->id)
-        //           ->where('part', 'q')
-        //           ->where('squad_id', $squad->id)
-        //           ->first();
-        //
-        //       $extIndex = null;
-        //       foreach ($qPlayers as $index => $q) {
-        //         if ($q->id == $player->id) {
-        //           $extIndex = $index;
-        //           break;
-        //         }
-        //       }
-        //       if (isset($extIndex)) {
-        //         if ($qResults[$player->id]->sum < $result->sum) {
-        //           $qGames[$player->id] = $games;
-        //           $qResults[$player->id] = $result;
-        //         }
-        //       }
-        //       else {
-        //         array_push($qPlayers, $player);
-        //         $qGames[$player->id] = $games;
-        //         $qResults[$player->id] = $result;
-        //       }
-        //     }
-        // }
-        //
-        // $this->sortPlayersByResult($qPlayers, $tournamentId, 'q');
         session(['players' => $qPlayers]);
 
         return view('tournament.run.results-q', [
@@ -345,7 +285,7 @@ class TournamentController extends Controller
     public function runRoundRobinConfirm(Request $request, $tournamentId)
     {
         $tournament = Tournament::find($tournamentId);
-        if (!$tournament->roundrobin_id) {
+        if (!isset($tournament->roundRobin)) {
           $tournament->finished = true;
           $tournament->save();
           return redirect($tournament->id . '/results');
@@ -353,10 +293,6 @@ class TournamentController extends Controller
 
         $players = session('players');
         $finalistsCount = 1;
-
-        // if (!$tournament->roundRobin->players) {
-        //   return TournamentController::getResults($tournamentId);
-        // }
 
         foreach ($players as $player) {
             if ($finalistsCount++ > $tournament->roundRobin->players) {
@@ -662,7 +598,7 @@ class TournamentController extends Controller
         ]);
         $qualification->save();
 
-        if ($request->has_roundrobin) {
+        if ($request->input('has_roundrobin')) {
           $roundRobin = new RoundRobin([
               'players' => $request->rr_players,
               'win_bonus' => $request->rr_win_bonus,
@@ -697,8 +633,10 @@ class TournamentController extends Controller
         $qualification->tournament_id = $newTournament->id;
         $qualification->save();
 
-        if ($request->has_roundrobin) {
+        if ($request->input('has_roundrobin')) {
           $newTournament->roundrobin_id = $roundRobin->id;
+          $newTournament->save();
+
           $roundRobin->tournament_id = $newTournament->id;
           $roundRobin->save();
         }
