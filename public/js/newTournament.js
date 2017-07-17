@@ -54,6 +54,8 @@ if (newTournamentForm) {
           qualification_entries: $('#qualification-entries').val(),
           qualification_finalists: $('#qualification-finalists').val(),
 
+          has_roundrobin: $('#has-roundrobin').val(),
+
           rr_players: $('#rr-players').val(),
           rr_win_bonus: $('#rr-win-bonus').val(),
           rr_draw_bonus: $('#rr-draw-bonus').val(),
@@ -80,7 +82,7 @@ if (newTournamentForm) {
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         success: function (data) {
           console.log(data);
-            // location.replace('/');
+          location.replace('/');
         }
     }).fail(function (data) {
         console.log(data.responseText);
