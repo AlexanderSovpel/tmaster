@@ -580,79 +580,79 @@ class TournamentController extends Controller
 
     public function createTournament(Request $request)
     {
-        $handicap = new Handicap([
-            'type' => $request->handicap_type,
-            'value' => $request->handicap_value,
-            'max_game' => $request->handicap_max_game
-        ]);
-        $handicap->save();
-
-        $qualification = new Qualification([
-            'entries' => $request->qualification_entries,
-            'games' => $request->qualification_games,
-            'finalists' => $request->qualification_finalists,
-            'fee' => $request->qualification_fee,
-            'allow_reentry' => (boolean)$request->allow_reentry,
-            'reentries' => $request->reentries_amount,
-            'reentry_fee' => $request->reentry_fee
-        ]);
-        $qualification->save();
-
-        if ((boolean)$request->input('has_roundrobin')) {
-          echo "Has Round-Robin.<br>";
-          $roundRobin = new RoundRobin([
-              'players' => $request->rr_players,
-              'win_bonus' => $request->rr_win_bonus,
-              'draw_bonus' => $request->rr_draw_bonus,
-              'date' => $request->rr_date,
-              'start_time' => $request->rr_start_time,
-              'end_time' => $request->rr_end_time,
-          ]);
-          $roundRobin->save();
-        }
-
-
-        $contact = User::find($request->contact_person);
-
-        $newTournament = new Tournament([
-            'name' => $request->name,
-            'location' => $request->location,
-            'type' => $request->type,
-            'oil_type' => $request->oil_type,
-            'description' => $request->description,
-            'handicap_id' => $handicap->id,
-            'qualification_id' => $qualification->id,
-            // 'roundrobin_id' => $roundRobin->id,
-            'contact_id' => $contact->id,
-            'finished' => false
-        ]);
-        $newTournament->save();
-
-        $handicap->tournament_id = $newTournament->id;
-        $handicap->save();
-
-        $qualification->tournament_id = $newTournament->id;
-        $qualification->save();
-
-        if ((boolean)$request->input('has_roundrobin')) {
-          $newTournament->roundrobin_id = $roundRobin->id;
-          $newTournament->save();
-
-          $roundRobin->tournament_id = $newTournament->id;
-          $roundRobin->save();
-        }
-
-        for ($i = 0; $i < $request->squads_count; ++$i) {
-            $squad = new Squad([
-                'tournament_id' => $newTournament->id,
-                'date' => $request->squad_date[$i],
-                'start_time' => $request->squad_start_time[$i],
-                'end_time' => $request->squad_end_time[$i],
-                'max_players' => $request->squad_max_players[$i],
-                'finished' => false
-            ]);
-            $squad->save();
-        }
+        // $handicap = new Handicap([
+        //     'type' => $request->handicap_type,
+        //     'value' => $request->handicap_value,
+        //     'max_game' => $request->handicap_max_game
+        // ]);
+        // $handicap->save();
+        //
+        // $qualification = new Qualification([
+        //     'entries' => $request->qualification_entries,
+        //     'games' => $request->qualification_games,
+        //     'finalists' => $request->qualification_finalists,
+        //     'fee' => $request->qualification_fee,
+        //     'allow_reentry' => (boolean)$request->allow_reentry,
+        //     'reentries' => $request->reentries_amount,
+        //     'reentry_fee' => $request->reentry_fee
+        // ]);
+        // $qualification->save();
+        //
+        // if ((boolean)$request->input('has_roundrobin')) {
+        //   echo "Has Round-Robin.<br>";
+        //   $roundRobin = new RoundRobin([
+        //       'players' => $request->rr_players,
+        //       'win_bonus' => $request->rr_win_bonus,
+        //       'draw_bonus' => $request->rr_draw_bonus,
+        //       'date' => $request->rr_date,
+        //       'start_time' => $request->rr_start_time,
+        //       'end_time' => $request->rr_end_time,
+        //   ]);
+        //   $roundRobin->save();
+        // }
+        //
+        //
+        // $contact = User::find($request->contact_person);
+        //
+        // $newTournament = new Tournament([
+        //     'name' => $request->name,
+        //     'location' => $request->location,
+        //     'type' => $request->type,
+        //     'oil_type' => $request->oil_type,
+        //     'description' => $request->description,
+        //     'handicap_id' => $handicap->id,
+        //     'qualification_id' => $qualification->id,
+        //     // 'roundrobin_id' => $roundRobin->id,
+        //     'contact_id' => $contact->id,
+        //     'finished' => false
+        // ]);
+        // $newTournament->save();
+        //
+        // $handicap->tournament_id = $newTournament->id;
+        // $handicap->save();
+        //
+        // $qualification->tournament_id = $newTournament->id;
+        // $qualification->save();
+        //
+        // if ((boolean)$request->input('has_roundrobin')) {
+        //   $newTournament->roundrobin_id = $roundRobin->id;
+        //   $newTournament->save();
+        //
+        //   $roundRobin->tournament_id = $newTournament->id;
+        //   $roundRobin->save();
+        // }
+        //
+        // for ($i = 0; $i < $request->squads_count; ++$i) {
+        //     $squad = new Squad([
+        //         'tournament_id' => $newTournament->id,
+        //         'date' => $request->squad_date[$i],
+        //         'start_time' => $request->squad_start_time[$i],
+        //         'end_time' => $request->squad_end_time[$i],
+        //         'max_players' => $request->squad_max_players[$i],
+        //         'finished' => false
+        //     ]);
+        //     $squad->save();
+        // }
 
         // return redirect('/');
         return "hello";
