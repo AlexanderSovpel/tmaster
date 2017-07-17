@@ -655,6 +655,7 @@ class TournamentController extends Controller
         }
 
         // return redirect('/');
+        return "hello";
     }
 
     public function deleteTournament($tournamentId) {
