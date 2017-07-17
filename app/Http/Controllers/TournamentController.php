@@ -599,6 +599,7 @@ class TournamentController extends Controller
         $qualification->save();
 
         if ((boolean)$request->input('has_roundrobin')) {
+          echo "Has Round-Robin.<br>";
           $roundRobin = new RoundRobin([
               'players' => $request->rr_players,
               'win_bonus' => $request->rr_win_bonus,
@@ -653,7 +654,7 @@ class TournamentController extends Controller
             $squad->save();
         }
 
-        return redirect('/');
+        // return redirect('/');
     }
 
     public function deleteTournament($tournamentId) {
