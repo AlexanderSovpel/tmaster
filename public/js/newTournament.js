@@ -79,7 +79,8 @@ if (newTournamentForm) {
         },
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         success: function (data) {
-            location.replace('/');
+          console.log(data.responseText);
+            // location.replace('/');
         }
     }).fail(function (data) {
         console.log(data.responseText);
