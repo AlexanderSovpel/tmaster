@@ -156,7 +156,7 @@ class TournamentController extends Controller
             'tournament' => $tournament,
             'part' => 'q',
             'stage' => 'conf',
-            'players' => $currentSquad->players,
+            'players' => $currentSquad->players()->orderBy('surname', 'ASC')->get(),
             'currentSquadId' => $currentSquadId
         ]);
     }
@@ -178,7 +178,7 @@ class TournamentController extends Controller
                 'tournament' => Tournament::find($tournamentId),
                 'part' => 'q',
                 'stage' => 'draw',
-                'players' => $currentSquad->players,
+                'players' => $currentSquad->players()->orderBy('surname', 'ASC')->get(),
                 'currentSquadId' => $currentSquad->id
             ]);
         } else {

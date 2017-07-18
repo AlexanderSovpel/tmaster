@@ -14,7 +14,7 @@
             </tr>
           </thead>
           <tbody>
-            @foreach($players()->orderBy('surname', 'ASC')->get() as $player)
+            @foreach($players as $player)
                 <tr>
                     <td>{{"$player->surname $player->name"}}</td>
                     <td><input type="text" name="lane[]" class="form-control input" value=""></td>
