@@ -14,9 +14,14 @@
                 <label for="opponent-{{$players[$j]->id}}" class="input-group-addon opponent-name">
                     {{$players[$j]->surname.' '.$players[$j]->name}}
                 </label>
-                <input type="text"
+                <input type="number"
                        id="opponent-{{$players[$j]->id}}"
-                       class="form-control opponent-result"
+                       class="form-control opponent-result
+                       @if(isset($playedGames[$player->id][$roundIndex]))
+                       played
+                       @endif
+                       "
+                       min="0" max="300"
                        value="{{$playedGames[$players[$j]->id][$roundIndex]->result or ''}}"
                        old_value="{{$playedGames[$players[$j]->id][$roundIndex]->result or ''}}"
                        onfocus="this.old_value = this.value">

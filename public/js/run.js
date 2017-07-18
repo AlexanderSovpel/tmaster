@@ -46,6 +46,17 @@ $('.opponent-result').focus(function () {
     }
 });
 
+$('.player-result, .opponent-result').change(function() {
+  var max = parseInt($(this).attr('max'));
+  var min = parseInt($(this).attr('min'));
+  if ($(this).val() > max) {
+    $(this).val(max);
+  }
+  else if ($(this).val() < min) {
+    $(this).val(min);
+  }
+});
+
 $('.post-result').click(function() {
   var player = this.closest('.player');
   // var resultDiv = this.closest('.player-result');
