@@ -13,7 +13,7 @@
             </tr>
           </thead>
           <tbody>
-            @foreach($players as $player)
+            @foreach($players->orderBy('surname', 'ASC')->get() as $player)
                 <tr>
                     <td>{{"$player->surname $player->name"}}</td>
                     <td>
