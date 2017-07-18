@@ -13,20 +13,19 @@
                 <ol class="players-list">
                     @foreach($squad->players as $player)
                       <li>{{$player->surname}} {{$player->name}}</li>
-                      @if (\Illuminate\Support\Facades\Auth::check())
-                        @if ($player->id == \Illuminate\Support\Facades\Auth::id() && !$tournament->finished)
-                            <form action="/{{$tournament->id}}/removeApplication/{{$player->id}}" method="post">
-                                {{ csrf_field() }}
-                                <input type="hidden" name="currentSquad" value="{{$squad->id}}">
-                                <button type="submit" class="remove-btn btn-link">Отозвать заявку</button>
-                            </form>
-                        @endif
-                        @if(\Illuminate\Support\Facades\Auth::user()->is_admin && !$tournament->finished)
-                        <form action="/{{$tournament->id}}/removeApplication/{{$player->id}}" method="post">
-                            {{ csrf_field() }}
-                            <input type="hidden" name="currentSquad" value="{{$squad->id}}">
-                            <button type="submit" class="remove-btn btn-link">Удалить</button>
-                        </form>
+                      @if (\Illuminate\Support\Facades\Auth::check() && !$tournament->finished)
+                        @if ($player->id == \Illuminate\Support\Facades\Auth::id())
+                          <form action="/{{$tournament->id}}/removeApplication/{{$player->id}}" method="post">
+                              {{ csrf_field() }}
+                              <input type="hidden" name="currentSquad" value="{{$squad->id}}">
+                              <button type="submit" class="remove-btn btn-link">Отозвать заявку</button>
+                          </form>
+                        @elseif(\Illuminate\Support\Facades\Auth::user()->is_admin && !$tournament->finished)
+                          <form action="/{{$tournament->id}}/removeApplication/{{$player->id}}" method="post">
+                              {{ csrf_field() }}
+                              <input type="hidden" name="currentSquad" value="{{$squad->id}}">
+                              <button type="submit" class="remove-btn btn-link">Удалить</button>
+                          </form>
                         @endif
                       @endif
                     @endforeach
