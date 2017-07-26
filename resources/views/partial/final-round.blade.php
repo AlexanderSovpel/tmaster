@@ -17,7 +17,7 @@
                 <input type="number"
                        id="opponent-{{$players[$j]->id}}"
                        class="form-control opponent-result
-                       @if(isset($playedGames[$player->id][$roundIndex]))
+                       @if(isset($playedGames[$players->id][$roundIndex]))
                        played
                        @endif
                        "
