@@ -398,7 +398,7 @@ class TournamentController extends Controller
             $playersResults[$player->id] = $roundRobinResult;
         }
 
-       $this->sortPlayersByResult($players, $tournamentId, 'rr');
+       $this->sortPlayersByResult($players, $tournamentId, 'rr', null);
 
         $playersCount = count($players);
         $roundCount = ($playersCount % 2) ? $playersCount : $playersCount - 1;
