@@ -17,7 +17,7 @@
                 <input type="number"
                        id="opponent-{{$players[$j]->id}}"
                        class="form-control opponent-result
-                       @if(isset($playedGames[$players->id][$roundIndex]))
+                       @if(isset($playedGames[$players[$j]->id][$roundIndex]))
                        played
                        @endif
                        "
@@ -43,9 +43,14 @@
                 <span class="opponent-bonus input-group-addon">
                     {{$playedGames[$players[$h]->id][$roundIndex]->bonus or ''}}
                 </span>
-                <input type="text"
+                <input type="number"
                        id="opponent-{{$players[$h]->id}}"
-                       class="form-control opponent-result"
+                       class="form-control opponent-result
+                       @if(isset($playedGames[$players[$j]->id][$roundIndex]))
+                       played
+                       @endif
+                       "
+                       min="0" max="300"
                        value="{{$playedGames[$players[$h]->id][$roundIndex]->result or ''}}"
                        old_value="{{$playedGames[$players[$h]->id][$roundIndex]->result or ''}}"
                        onfocus="this.old_value = this.value">
