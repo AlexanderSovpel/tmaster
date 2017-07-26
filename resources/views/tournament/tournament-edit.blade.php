@@ -192,19 +192,19 @@
 
                 <div class="form-group row">
                     <label for="rr-players" class="control-label col-md-6">Количество участников</label>
-                    <input type="number" name="rr_players" id="rr-players" class="form-control col-md-6 required" value="{{(isset($tournament->roundRobin)) ? $tournament->roundRobin->players : 0}}"
+                    <input type="number" name="rr_players" id="rr-players" class="form-control col-md-6 required" value="{{(isset($tournament->roundRobin)) ? $tournament->roundRobin->players : 6}}"
                            min="0"
                            max="100" required>
                 </div>
                 <div class="form-group row">
                     <label for="rr-win-bonus" class="control-label col-md-6">Бонус за победу</label>
-                    <input type="number" name="rr_win_bonus" id="rr-win-bonus" class="form-control col-md-6 required" value="{{(isset($tournament->roundRobin)) ? $tournament->roundRobin->win_bonus : 0}}"
+                    <input type="number" name="rr_win_bonus" id="rr-win-bonus" class="form-control col-md-6 required" value="{{(isset($tournament->roundRobin)) ? $tournament->roundRobin->win_bonus : 20}}"
                            min="0" max="25" required>
                 </div>
                 <div class="form-group row">
                     <label for="rr-draw-bonus" class="control-label col-md-6">Бонус за ничью</label>
                     <input type="number" name="rr_draw_bonus" id="rr-draw-bonus" class="form-control col-md-6 required"
-                           value="{{(isset($tournament->roundRobin)) ? $tournament->roundRobin->draw_bonus : 0}}"
+                           value="{{(isset($tournament->roundRobin)) ? $tournament->roundRobin->draw_bonus : 10}}"
                            min="0" max="15" required>
                 </div>
             </div>
@@ -305,6 +305,7 @@
                        @if(isset($tournament->roundRobin))
                        value="{{$tournament->roundRobin->date}}"
                        @else
+                       value="{{$tournament->squads()->orderBy('date', 'DESC')->orderBy('start_time', 'DESC')->first()->date}}"
                        disabled
                        @endif
                        >
@@ -316,6 +317,7 @@
                        @if(isset($tournament->roundRobin))
                        value="{{date('H:i', strtotime($tournament->roundRobin->start_time))}}"
                        @else
+                       value="{{date('H:i', strtotime($tournament->squads()->orderBy('date', 'DESC')->orderBy('start_time', 'DESC')->first()->start_time))}}"
                        disabled
                        @endif
                        >
