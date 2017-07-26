@@ -300,6 +300,7 @@ class TournamentController extends Controller
                 unset($players[$playerId]);
             }
         }
+        $players = array_values($players);
         session(['players' => $players]);
 
         return view('tournament.run.confirm', [
