@@ -333,23 +333,24 @@ class TournamentController extends Controller
     public function runRoundRobinGame(Request $request, $tournamentId)
     {
         $players = session('players');
+        $playersCount = count($players);
         $playedGames = array();
         $lanes = array_values(array_unique($request->input('lane')));
 
-        foreach ($players as $index => $player) {
-            $games = Game::where('player_id', $player->id)
+        // foreach ($players as $index => $player) {
+        for ($i = 0; $i < $playersCount; ++$i) {
+            $games = Game::where('player_id', $players[$i]->id)
                 ->where('tournament_id', $tournamentId)
                 ->where('part', 'rr')->get();
 
             foreach ($games as $game) {
-                $playedGames[$player->id][] = $game;
+                $playedGames[$players[$i]->id][] = $game;
             }
 
-            $player->lane = $request->lane[$index];
-            $player->position = $request->position[$index];
+            $players[$i]->lane = $request->lane[$index];
+            $players[$i]->position = $request->position[$index];
         }
 
-        $playersCount = count($players);
         $roundCount = ($playersCount % 2) ? $playersCount : $playersCount - 1;
 
         return view('tournament.run.game-rr', [
