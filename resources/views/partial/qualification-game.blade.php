@@ -31,11 +31,11 @@
                     +0
                 @endif
               </span>
-              <span class="input-group-btn">
-                  <button class="btn btn-secondary post-result" type="button">
-                      <span class="glyphicon glyphicon-ok"></span>
-                  </button>
-              </span>
+              {{--<span class="input-group-btn">--}}
+                  {{--<button class="btn btn-secondary post-result" type="button">--}}
+                      {{--<span class="glyphicon glyphicon-ok"></span>--}}
+                  {{--</button>--}}
+              {{--</span>--}}
           </div>
           @endif
         @endforeach
