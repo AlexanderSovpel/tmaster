@@ -36,15 +36,15 @@ for (var i = 0; i < wizardSteps.length; ++i) {
 //     }
 // });
 
-$('.opponent-result').focus(function () {
-    var postButton = $(this).parent().find('.post-opponent-result');
-    $(postButton).show();
-}).blur(function () {
-    if (!this.value || this.value == this.old_value) {
-        var postButton = $(this).parent().find('.post-opponent-result');
-        $(postButton).hide();
-    }
-});
+// $('.opponent-result').focus(function () {
+//     var postButton = $(this).parent().find('.post-opponent-result');
+//     $(postButton).show();
+// }).blur(function () {
+//     if (!this.value || this.value == this.old_value) {
+//         var postButton = $(this).parent().find('.post-opponent-result');
+//         $(postButton).hide();
+//     }
+// });
 
 $('.player-result, .opponent-result').change(function() {
   var max = parseInt($(this).attr('max'));
@@ -65,6 +65,11 @@ $('.player-result, .opponent-result').change(function() {
   else {
       // нужно ли выполнять какие-то действия?
       $(this).val(min);
+  }
+
+  if (part == 'rr') {
+      var player = $(this).parent();
+      countBonus(player);
   }
 });
 
@@ -147,7 +152,7 @@ $(finishGameBtns).click(function() {
         var playerResult = players[i].querySelector('.player-result').value;
         var playerOldResult = players[i].querySelector('.player-result').old_value;
         var playerBonus = players[i].querySelector('.player-bonus').innerHTML.trim();
-        setResult(playerId, tournamentId, part, squadId, playerResult, playerOldResult, playerBonus);
+        setResult(playerId, tournamentId, part, squadId, playerResult, playerOldResult, playerBonus, players[i]);
         $(players[i].querySelector('.player-result')).addClass('played');
     }
 
@@ -193,12 +198,12 @@ function setResult(playerId, tournamentId, part, squadId, playerResult, playerOl
             }
 
             $.get(request + data, function(data) {
-                if (part == 'q') {
-                  fillBlockSum(playerId, tournamentId, part, squadId);
-                }
-                else {
-                  countBonus(player);
-                }
+                // if (part == 'q') {
+                  // fillBlockSum(playerId, tournamentId, part, squadId);
+                // }
+                // else {
+                //   countBonus(player);
+                // }
                 console.log(data);
             }).fail(function(data) {
                 console.log(data.responseText);

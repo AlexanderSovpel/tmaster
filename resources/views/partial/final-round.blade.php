@@ -28,18 +28,18 @@
                 <span class="opponent-bonus input-group-addon">
                     {{$playedGames[$players[$j]->id][$roundIndex]->bonus or ''}}
                 </span>
-                <span class="input-group-btn">
-                    <button class="btn btn-secondary post-opponent-result" type="button">
-                        <span class="glyphicon glyphicon-ok"></span>
-                    </button>
-                </span>
+                {{--<span class="input-group-btn">--}}
+                    {{--<button class="btn btn-secondary post-opponent-result" type="button">--}}
+                        {{--<span class="glyphicon glyphicon-ok"></span>--}}
+                    {{--</button>--}}
+                {{--</span>--}}
             </div>
             <div class="input-group opponent">
-                <span class="input-group-btn">
-                    <button class="btn btn-secondary post-opponent-result" type="button">
-                        <span class="glyphicon glyphicon-ok"></span>
-                    </button>
-                </span>
+                {{--<span class="input-group-btn">--}}
+                    {{--<button class="btn btn-secondary post-opponent-result" type="button">--}}
+                        {{--<span class="glyphicon glyphicon-ok"></span>--}}
+                    {{--</button>--}}
+                {{--</span>--}}
                 <span class="opponent-bonus input-group-addon">
                     {{$playedGames[$players[$h]->id][$roundIndex]->bonus or ''}}
                 </span>
