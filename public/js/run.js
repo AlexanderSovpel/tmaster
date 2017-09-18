@@ -49,8 +49,9 @@ $('.opponent-result').focus(function () {
 $('.player-result, .opponent-result').change(function() {
   var max = parseInt($(this).attr('max'));
   var min = parseInt($(this).attr('min'));
+  var result = parseInt($(this).val());
 
-  if (Number.isInteger($(this).val())) {
+  if (!Number.isNaN(result)) {
       if ($(this).val() > max) {
           $(this).val(max);
       }
