@@ -140,7 +140,8 @@ $(finishGameBtns).click(function() {
     var part = document.getElementsByName('part')[0].value;
     var squadId = document.getElementsByName('currentSquad')[0].value;
 
-    var players = document.querySelectorAll('.player');
+    var currentGame = $('#current-game').val();
+    var players = $(games[currentGame]).find('.player');
     for (var i = 0; i < players.length; ++i) {
         var playerId = players[i].querySelector('.player-id').value;
         var playerResult = players[i].querySelector('.player-result').value;
@@ -150,7 +151,6 @@ $(finishGameBtns).click(function() {
         $(players[i].querySelector('.player-result')).addClass('played');
     }
 
-    var currentGame = $('#current-game').val();
     $('#current-game').val(++currentGame);
 
     $(this).hide();
