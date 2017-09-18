@@ -69,7 +69,7 @@ $('.player-result, .opponent-result').change(function() {
 
   if (part == 'rr') {
       var player = $(this).parent();
-      countBonus(player);
+      countBonus(player[0]);
   }
 });
 
