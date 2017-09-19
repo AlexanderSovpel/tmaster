@@ -155,12 +155,11 @@ $(finishGameBtns).click(function() {
 
     }
 
-    $(currentGame).val(++currentGame);
-
     if ($(currentGame).val() == gamesCount - 1) {
       location.href('/' + tournamentId + '/run/' + part + '/rest/' + squadId);
     }
     else {
+      $(currentGame).val(++currentGame);
       $(this).hide();
       showGame(currentGame);
       $(gamePaginationLinks[currentGame]).removeClass('disabled');
