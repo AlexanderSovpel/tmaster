@@ -156,7 +156,7 @@ $(finishGameBtns).click(function() {
     }
 
     if (currentGame == gamesCount - 1) {
-      location.href('/' + tournamentId + '/run/' + part + '/rest/' + squadId);
+      location.href = '/' + tournamentId + '/run/' + part + '/rest/' + squadId;
     }
     else {
       $('#current-game').val(++currentGame);
