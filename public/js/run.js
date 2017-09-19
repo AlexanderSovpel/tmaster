@@ -156,7 +156,20 @@ $(finishGameBtns).click(function() {
     }
 
     if (currentGame == gamesCount - 1) {
-      location.href = '/' + tournamentId + '/run/' + part + '/rest/' + squadId;
+      // location.href = '/' + tournamentId + '/run/' + part + '/rest/' + squadId;
+
+      $.ajax({
+              type: 'POST',
+              url: '/' + tournamentId + '/run/' + part + '/rest/' + squadId,
+              data: null,
+              headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+              success: function (data) {
+                console.log(data);
+              },
+              error: function (data) {
+                console.log(data);
+              }
+            });
     }
     else {
       $('#current-game').val(++currentGame);
