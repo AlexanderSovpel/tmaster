@@ -155,15 +155,15 @@ $(finishGameBtns).click(function() {
 
     }
 
-    if ($(currentGame).val() == gamesCount - 1) {
-      location.href('/' + tournamentId + '/run/' + part + '/rest/' + squadId);
-    }
-    else {
+    // if ($(currentGame).val() == gamesCount) {
+      // location.href('/' + tournamentId + '/run/' + part + '/rest/' + squadId);
+    // }
+    // else {
       $(currentGame).val(++currentGame);
       $(this).hide();
       showGame(currentGame);
       $(gamePaginationLinks[currentGame]).removeClass('disabled');
-    }
+    // }
 });
 
 var paginationLinks = $('#game-pagination > li > a');
