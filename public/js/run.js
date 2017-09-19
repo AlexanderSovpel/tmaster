@@ -167,7 +167,7 @@ $(finishGameBtns).click(function() {
                 document.body = data;
               },
               error: function (data) {
-                console.log(data);
+                document.body = data;
               }
             });
     }
