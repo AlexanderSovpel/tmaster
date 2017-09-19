@@ -26,26 +26,6 @@ for (var i = 0; i < wizardSteps.length; ++i) {
     }
 }
 
-// $('.player-result').focus(function () {
-//     var postButton = $(this).parent().find('.post-result');
-//     $(postButton).show();
-// }).blur(function () {
-//     if (!this.value || this.value == this.old_value) {
-//       var postButton = $(this).parent().find('.post-result');
-//         $(postButton).hide();
-//     }
-// });
-
-// $('.opponent-result').focus(function () {
-//     var postButton = $(this).parent().find('.post-opponent-result');
-//     $(postButton).show();
-// }).blur(function () {
-//     if (!this.value || this.value == this.old_value) {
-//         var postButton = $(this).parent().find('.post-opponent-result');
-//         $(postButton).hide();
-//     }
-// });
-
 $('.player-result, .opponent-result').change(function() {
   var max = parseInt($(this).attr('max'));
   var min = parseInt($(this).attr('min'));
@@ -79,43 +59,6 @@ $('.player-result, .opponent-result').change(function() {
   setResult(playerId, tournamentId, part, squadId, playerResult, playerOldResult, playerBonus, players[i]);
 });
 
-// $('.post-result').click(function() {
-  // var player = this.closest('.player');
-  // var playerId = player.querySelector('.player-id').value;
-  // var playerResult = player.querySelector('.player-result').value;
-  // var playerOldResult = player.querySelector('.player-result').old_value;
-  // var playerBonus = player.querySelector('.player-bonus').innerHTML.trim();
-  // var tournamentId = document.getElementsByName('tournament')[0].value;
-  // var part = document.getElementsByName('part')[0].value;
-  // var squadId = document.getElementsByName('currentSquad')[0].value;
-  // setResult(playerId, tournamentId, part, squadId, playerResult, playerOldResult, playerBonus);
-  //
-  //   $(player.querySelector('.player-result')).addClass('played');
-  //   $(this).hide();
-  //
-  //   var currentGame = $('#current-game').val();
-  //   toggleFinishBtn(currentGame);
-// });
-
-// $('.post-opponent-result').click(function() {
-    // var player = this.closest('.opponent');
-    // var playerId = player.querySelector('.opponent-id').value;
-    // var playerResult = player.querySelector('.opponent-result').value;
-    // var playerOldResult = player.querySelector('.opponent-result').old_value;
-    // var playerBonus = player.querySelector('.opponent-bonus').innerHTML;
-    // playerBonus = (playerBonus) ? playerBonus : 0;
-    // var tournamentId = document.getElementsByName('tournament')[0].value;
-    // var part = document.getElementsByName('part')[0].value;
-    // var squadId = document.getElementsByName('currentSquad')[0].value;
-    // setResult(playerId, tournamentId, part, squadId, playerResult, playerOldResult, playerBonus, player);
-    //
-    // $(player.querySelector('.opponent-result')).addClass('played');
-    // $(this).hide();
-    //
-    // var currentGame = $('#current-game').val();
-    // toggleFinishBtn(currentGame);
-// });
-
 var games = $('.game');
 var gamesCount = games.length;
 var gamePaginationLinks = $('#game-pagination').children();
@@ -125,13 +68,6 @@ finishGameBtns.prop('disabled', true);
 showGame(0);
 $(gamePaginationLinks).addClass('disabled');
 $(gamePaginationLinks[0]).removeClass('disabled');
-
-// toggleFinishBtn(0);
-
-// $('.player-result, .opponent-result').change(function() {
-//   var currentGame = $('#current-game').val();
-//   toggleFinishBtn(currentGame);
-// });
 
 function toggleFinishBtn(gameIndex) {
   var resultFelds = $(games[gameIndex]).find('.player-result, .opponent-result');
@@ -187,12 +123,6 @@ function setResult(playerId, tournamentId, part, squadId, playerResult, playerOl
             }
 
             $.get(request + data, function(data) {
-                // if (part == 'q') {
-                  // fillBlockSum(playerId, tournamentId, part, squadId);
-                // }
-                // else {
-                //   countBonus(player);
-                // }
                 console.log(data);
             }).fail(function(data) {
                 console.log(data.responseText);
@@ -247,9 +177,9 @@ function countBonus(player) {
     var opponentBonus = opponent.querySelector('.opponent-bonus');
     var opponentOldBonus = opponentBonus.innerHTML;
 
-    var tournamentId = document.getElementsByName('tournament')[0].value;
-    var part = document.getElementsByName('part')[0].value;
-    var squadId = document.getElementsByName('currentSquad')[0].value;
+    // var tournamentId = document.getElementsByName('tournament')[0].value;
+    // var part = document.getElementsByName('part')[0].value;
+    // var squadId = document.getElementsByName('currentSquad')[0].value;
 
     if (opponentResult) {
         if (playerResult > opponentResult) {

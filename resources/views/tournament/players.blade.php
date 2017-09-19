@@ -9,7 +9,7 @@
             <div class="panel-body">
                 <input type="hidden" value="{{$squad->id}}" name="squad_id">
                 <p class="date">{{date('j.m.Y', strtotime($squad->date))}}, {{date('H:i', strtotime($squad->start_time))}} &ndash; {{date('H:i', strtotime($squad->end_time))}}</p>
-                <p class="players-label">Участники:</p>
+                <p class="players-label">Заявки:</p>
                 <ol class="players-list">
                     @foreach($squad->players as $player)
                       <li>{{$player->surname}} {{$player->name}}</li>
