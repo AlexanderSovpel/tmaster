@@ -108,7 +108,7 @@
         @endif
         <div class="clearfix"></div>
         <ol class="breadcrumb">
-            <li><a href="/{{$tournament->id}}/players">Участники</a></li>
+            <li><a href="/{{$tournament->id}}/players">Заявки</a></li>
             <li><a href="/{{$tournament->id}}/results">Результаты</a></li>
         </ol>
       </div>

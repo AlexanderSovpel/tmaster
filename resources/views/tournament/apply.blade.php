@@ -27,7 +27,7 @@
                 <span id="fill" class="data col-md-6"></span>
             </div>
             <div class="form-group row">
-                <label for="players" class="col-md-6">Участники</label>
+                <label for="players" class="col-md-6">Заявки</label>
                 <ol class="players-list data col-md-6" id="players">
                 </ol>
                 <div class="clearfix"></div>

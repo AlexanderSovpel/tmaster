@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <input type="hidden" name="tournament_id" id="tournament-id" value="{{$tournament->id}}">
-    @include('partial.breadcrumb', ['page' => 'Участники'])
+    @include('partial.breadcrumb', ['page' => 'Заявки'])
     <div class="squads">
     @foreach($tournament->squads()->orderBy('date', 'ASC')->orderBy('start_time', 'ASC')->get() as $index => $squad)
         <article class="squad panel panel-default">
