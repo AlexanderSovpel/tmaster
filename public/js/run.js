@@ -164,7 +164,7 @@ $(finishGameBtns).click(function() {
               data: null,
               headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
               success: function (data) {
-                console.log(data);
+                document.body = data;
               },
               error: function (data) {
                 console.log(data);
