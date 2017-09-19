@@ -72,10 +72,10 @@ $('.player-result, .opponent-result').change(function() {
       countBonus(player);
   }
 
-  var playerId = player.querySelector('.player-id').value;
-  var playerResult = player.querySelector('.player-result').value;
-  var playerOldResult = player.querySelector('.player-result').old_value;
-  var playerBonus = player.querySelector('.player-bonus').innerHTML.trim();
+  var playerId = player.querySelector('.player-id, .opponent-id').value;
+  var playerResult = player.querySelector('.player-result, .opponent-result').value;
+  var playerOldResult = player.querySelector('.player-result, .opponent-result').old_value;
+  var playerBonus = player.querySelector('.player-bonus, .opponent-bonus').innerHTML.trim();
   setResult(playerId, tournamentId, part, squadId, playerResult, playerOldResult, playerBonus, players[i]);
 });
 
