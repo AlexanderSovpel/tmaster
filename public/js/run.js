@@ -60,17 +60,23 @@ $('.player-result, .opponent-result').change(function() {
       }
 
       $(this).addClass('played');
-      checkResults($('#current-game').val());
+      toggleFinishBtn($('#current-game').val());
   }
   else {
       // нужно ли выполнять какие-то действия?
       $(this).val(min);
   }
 
+  var player = $(this).parent()[0];
   if (part == 'rr') {
-      var player = $(this).parent();
-      countBonus(player[0]);
+      countBonus(player);
   }
+
+  var playerId = player.querySelector('.player-id').value;
+  var playerResult = player.querySelector('.player-result').value;
+  var playerOldResult = player.querySelector('.player-result').old_value;
+  var playerBonus = player.querySelector('.player-bonus').innerHTML.trim();
+  setResult(playerId, tournamentId, part, squadId, playerResult, playerOldResult, playerBonus, players[i]);
 });
 
 // $('.post-result').click(function() {
@@ -88,7 +94,7 @@ $('.player-result, .opponent-result').change(function() {
   //   $(this).hide();
   //
   //   var currentGame = $('#current-game').val();
-  //   checkResults(currentGame);
+  //   toggleFinishBtn(currentGame);
 // });
 
 // $('.post-opponent-result').click(function() {
@@ -107,7 +113,7 @@ $('.player-result, .opponent-result').change(function() {
     // $(this).hide();
     //
     // var currentGame = $('#current-game').val();
-    // checkResults(currentGame);
+    // toggleFinishBtn(currentGame);
 // });
 
 var games = $('.game');
@@ -120,14 +126,14 @@ showGame(0);
 $(gamePaginationLinks).addClass('disabled');
 $(gamePaginationLinks[0]).removeClass('disabled');
 
-// checkResults(0);
+// toggleFinishBtn(0);
 
 // $('.player-result, .opponent-result').change(function() {
 //   var currentGame = $('#current-game').val();
-//   checkResults(currentGame);
+//   toggleFinishBtn(currentGame);
 // });
 
-function checkResults(gameIndex) {
+function toggleFinishBtn(gameIndex) {
   var resultFelds = $(games[gameIndex]).find('.player-result, .opponent-result');
   var played = $(games[gameIndex]).find('.played');
   if (resultFelds.length != played.length) {
@@ -139,44 +145,11 @@ function checkResults(gameIndex) {
 }
 
 $(finishGameBtns).click(function() {
-    var tournamentId = document.getElementsByName('tournament')[0].value;
-    var part = document.getElementsByName('part')[0].value;
-    var squadId = document.getElementsByName('currentSquad')[0].value;
-
     var currentGame = $('#current-game').val();
-    var players = $(games[currentGame]).find('.player, .opponent');
-    for (var i = 0; i < players.length; ++i) {
-        var playerId = players[i].querySelector('.player-id').value;
-        var playerResult = players[i].querySelector('.player-result').value;
-        var playerOldResult = players[i].querySelector('.player-result').old_value;
-        var playerBonus = players[i].querySelector('.player-bonus').innerHTML.trim();
-        // setResult(playerId, tournamentId, part, squadId, playerResult, playerOldResult, playerBonus, players[i]);
-        // $(players[i].querySelector('.player-result')).addClass('played');
-
-    }
-
-    if (currentGame == gamesCount - 1) {
-      // location.href = '/' + tournamentId + '/run/' + part + '/rest/' + squadId;
-
-      $.ajax({
-              type: 'POST',
-              url: '/' + tournamentId + '/run/' + part + '/rest/' + squadId,
-              data: null,
-              headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-              success: function (data) {
-                document.body = data;
-              },
-              error: function (data) {
-                document.body.innerHTML = data.responseText;
-              }
-            });
-    }
-    else {
-      $('#current-game').val(++currentGame);
-      $(this).hide();
-      showGame(currentGame);
-      $(gamePaginationLinks[currentGame]).removeClass('disabled');
-    }
+    $('#current-game').val(++currentGame);
+    $(this).hide();
+    showGame(currentGame);
+    $(gamePaginationLinks[currentGame]).removeClass('disabled');
 });
 
 var paginationLinks = $('#game-pagination > li > a');
@@ -326,5 +299,5 @@ function showGame(gameIndex) {
   $(gamePaginationLinks).removeClass('active');
   $(gamePaginationLinks[gameIndex]).addClass('active');
 
-  checkResults(gameIndex);
+  toggleFinishBtn(gameIndex);
 }
