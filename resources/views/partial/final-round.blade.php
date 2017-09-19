@@ -26,7 +26,7 @@
                        old_value="{{$playedGames[$players[$j]->id][$roundIndex]->result or ''}}"
                        onfocus="this.old_value = this.value">
                 <span class="opponent-bonus input-group-addon">
-                    {{$playedGames[$players[$j]->id][$roundIndex]->bonus or ''}}
+                    {{$playedGames[$players[$j]->id][$roundIndex]->bonus or '0'}}
                 </span>
                 {{--<span class="input-group-btn">--}}
                     {{--<button class="btn btn-secondary post-opponent-result" type="button">--}}
@@ -41,7 +41,7 @@
                     {{--</button>--}}
                 {{--</span>--}}
                 <span class="opponent-bonus input-group-addon">
-                    {{$playedGames[$players[$h]->id][$roundIndex]->bonus or ''}}
+                    {{$playedGames[$players[$h]->id][$roundIndex]->bonus or '0'}}
                 </span>
                 <input type="number"
                        id="opponent-{{$players[$h]->id}}"
