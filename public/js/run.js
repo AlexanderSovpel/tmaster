@@ -130,7 +130,7 @@ $(gamePaginationLinks[0]).removeClass('disabled');
 function checkResults(gameIndex) {
   var resultFelds = $(games[gameIndex]).find('.player-result, .opponent-result');
   var played = $(games[gameIndex]).find('.played');
-  if(resultFelds.length != played.length) {
+  if (resultFelds.length != played.length) {
     $(finishGameBtns[gameIndex]).prop('disabled', true);
   }
   else {
@@ -155,15 +155,15 @@ $(finishGameBtns).click(function() {
 
     }
 
-    // if ($(currentGame).val() == gamesCount) {
-      // location.href('/' + tournamentId + '/run/' + part + '/rest/' + squadId);
-    // }
-    // else {
-      $(currentGame).val(++currentGame);
+    if ($(currentGame).val() == gamesCount) {
+      location.href('/' + tournamentId + '/run/' + part + '/rest/' + squadId);
+    }
+    else {
+      $('#current-game').val(++currentGame);
       $(this).hide();
       showGame(currentGame);
       $(gamePaginationLinks[currentGame]).removeClass('disabled');
-    // }
+    }
 });
 
 var paginationLinks = $('#game-pagination > li > a');
