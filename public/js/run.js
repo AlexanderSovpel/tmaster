@@ -111,6 +111,7 @@ $('.player-result, .opponent-result').change(function() {
 // });
 
 var games = $('.game');
+var gamesCount = games.length;
 var gamePaginationLinks = $('#game-pagination').children();
 var finishGameBtns = $('.finish-game');
 finishGameBtns.prop('disabled', true);
@@ -149,15 +150,21 @@ $(finishGameBtns).click(function() {
         var playerResult = players[i].querySelector('.player-result').value;
         var playerOldResult = players[i].querySelector('.player-result').old_value;
         var playerBonus = players[i].querySelector('.player-bonus').innerHTML.trim();
-        setResult(playerId, tournamentId, part, squadId, playerResult, playerOldResult, playerBonus, players[i]);
+        // setResult(playerId, tournamentId, part, squadId, playerResult, playerOldResult, playerBonus, players[i]);
         // $(players[i].querySelector('.player-result')).addClass('played');
+
     }
 
-    $('#current-game').val(++currentGame);
+    $(currentGame).val(++currentGame);
 
-    $(this).hide();
-    showGame(currentGame);
-    $(gamePaginationLinks[currentGame]).removeClass('disabled');
+    if ($(currentGame).val() == gamesCount - 1) {
+      location.href('/' + tournamentId + '/run/' + part + '/rest/' + squadId);
+    }
+    else {
+      $(this).hide();
+      showGame(currentGame);
+      $(gamePaginationLinks[currentGame]).removeClass('disabled');
+    }
 });
 
 var paginationLinks = $('#game-pagination > li > a');

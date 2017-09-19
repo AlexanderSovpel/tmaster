@@ -45,7 +45,7 @@
       @if ($gameIndex != $tournament->qualification->entries - 1)
       <button type="button" class="btn finish-game">завершить игру</button>
       @else
-      <button type="submit" class="btn finish-game">показать результаты</button>
+      <button type="button" class="btn finish-game">показать результаты</button>
       @endif
   </form>
 </section>
