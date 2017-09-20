@@ -249,7 +249,7 @@ $('#random-draw').click(function(e) {
   });
 
   for (var i = 0; i < drawPlayers.length; ++i) {
-    drawPlayers[i].querySelector('.lane').value = lanes[i].split('-')[0];
+    drawPlayers[i].querySelector('.lane-val').value = lanes[i].split('-')[0];
     drawPlayers[i].querySelector('.position').value = lanes[i].split('-')[1];
   }
 });

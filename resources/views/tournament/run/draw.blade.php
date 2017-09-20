@@ -22,7 +22,7 @@
             @foreach($players as $player)
                 <tr class="draw-player">
                     <td>{{"$player->surname $player->name"}}</td>
-                    <td><input type="text" name="lane[]" class="form-control input lane" value=""></td>
+                    <td><input type="text" name="lane[]" class="form-control input lane-val" value=""></td>
                     <td><input type="text" name="position[]" class="form-control input position" value=""></td>
                 </tr>
             @endforeach
