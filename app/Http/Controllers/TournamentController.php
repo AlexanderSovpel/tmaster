@@ -208,18 +208,7 @@ class TournamentController extends Controller
 
             $player->lane = $request->lane[$index];
             $player->position = $request->position[$index];
-            echo "<p>$index. " . $player->surname . ": ". $player->lane . "</p>";
         }
-
-        // $players = array();
-        // foreach ($currentSquad->players as $player) {
-        //   $players[] = $player;
-        // }
-        //
-        // usort($players, function($playerA, $playerB) {
-        //   return ($playerA->lane < $playerB->lane);
-        // });
-
 
         return view('tournament.run.game', [
             'tournament' => $tournament,
