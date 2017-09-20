@@ -212,10 +212,12 @@ class TournamentController extends Controller
         foreach ($currentSquad->players as $player) {
           $players[] = $player;
         }
-        
+
         usort($players, function($playerA, $playerB) {
           return ($playerA->lane < $playerB->lane);
         });
+
+        sort($lanes);
 
         return view('tournament.run.game', [
             'tournament' => $tournament,
@@ -223,8 +225,8 @@ class TournamentController extends Controller
             'stage' => 'game',
             'currentSquad' => $currentSquad,
             'currentSquadId' => $currentSquadId,
-            // 'players' => $currentSquad->players,
-            'players' => $players,
+            'players' => $currentSquad->players,
+            // 'players' => $players,
             'playedGames' => $playedGames,
             'lanes' => $lanes
         ]);
