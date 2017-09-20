@@ -31,6 +31,12 @@ $('.player-result, .opponent-result').change(function() {
   var min = parseInt($(this).attr('min'));
   var result = parseInt($(this).val());
 
+  var player = $(this).parent()[0];
+  var playerId = player.querySelector('.player-id, .opponent-id').value;
+  var playerResult = player.querySelector('.player-result, .opponent-result').value;
+  var playerOldResult = player.querySelector('.player-result, .opponent-result').old_value;
+  var playerBonus = player.querySelector('.player-bonus, .opponent-bonus').innerHTML.trim();
+
   if (!Number.isNaN(result)) {
       if ($(this).val() > max) {
           $(this).val(max);
@@ -47,15 +53,10 @@ $('.player-result, .opponent-result').change(function() {
       $(this).val(min);
   }
 
-  var player = $(this).parent()[0];
   if (part == 'rr') {
       countBonus(player);
   }
 
-  var playerId = player.querySelector('.player-id, .opponent-id').value;
-  var playerResult = player.querySelector('.player-result, .opponent-result').value;
-  var playerOldResult = player.querySelector('.player-result, .opponent-result').old_value;
-  var playerBonus = player.querySelector('.player-bonus, .opponent-bonus').innerHTML.trim();
   setResult(playerId, tournamentId, part, squadId, playerResult, playerOldResult, playerBonus, players[i]);
 });
 
@@ -231,3 +232,24 @@ function showGame(gameIndex) {
 
   toggleFinishBtn(gameIndex);
 }
+
+$('#random-draw').click(function(e) {
+  e.preventDefault();
+
+  var drawPlayers = $('.draw-player');
+  var lanes = array();
+  var lanesCount = Math.floor(drawPlayers.length / 2);
+
+  for (var i = 1; i <= lanesCount; ++i) {
+    lanes.push(i + '-' + 1);
+    lanes.push(i + '-' + 2);
+  }
+  lanes.sort(function(a, b) {
+    return Math.random() - 0.5;
+  });
+
+  for (var i = 0; i < drawPlayers.length; ++i) {
+    drawPlayers[i].querySelector('.lane').value = lanes[i].split('-')[0];
+    drawPlayers[i].querySelector('.position').value = lanes[i].split('-')[1];
+  }
+});
