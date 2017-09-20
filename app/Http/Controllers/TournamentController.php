@@ -206,6 +206,7 @@ class TournamentController extends Controller
 
             $player->lane = $request->lane[$index];
             $player->position = $request->position[$index];
+            echo "<p>" . $player->surname . ": ". $player->lane . "</p>";
         }
 
         // $players = array();
@@ -217,7 +218,7 @@ class TournamentController extends Controller
         //   return ($playerA->lane < $playerB->lane);
         // });
 
-        sort($lanes);
+        // sort($lanes);
 
         return view('tournament.run.game', [
             'tournament' => $tournament,
