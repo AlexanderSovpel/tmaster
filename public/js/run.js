@@ -237,7 +237,7 @@ $('#random-draw').click(function(e) {
   e.preventDefault();
 
   var drawPlayers = $('.draw-player');
-  var lanes = array();
+  var lanes = [];
   var lanesCount = Math.floor(drawPlayers.length / 2);
 
   for (var i = 1; i <= lanesCount; ++i) {
