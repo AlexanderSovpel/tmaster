@@ -191,6 +191,8 @@ class TournamentController extends Controller
         $tournament = Tournament::find($tournamentId);
         $currentSquad = Squad::find($currentSquadId);
         $lanes = array_values(array_unique($request->input('lane')));
+        sort($lanes);
+
         $currentSquad->lanes = implode(',', $lanes);
         $currentSquad->save();
 
@@ -206,7 +208,7 @@ class TournamentController extends Controller
 
             $player->lane = $request->lane[$index];
             $player->position = $request->position[$index];
-            echo "<p>" . $player->surname . ": ". $player->lane . "</p>";
+            echo "<p>$index. " . $player->surname . ": ". $player->lane . "</p>";
         }
 
         // $players = array();
@@ -218,7 +220,6 @@ class TournamentController extends Controller
         //   return ($playerA->lane < $playerB->lane);
         // });
 
-        // sort($lanes);
 
         return view('tournament.run.game', [
             'tournament' => $tournament,
