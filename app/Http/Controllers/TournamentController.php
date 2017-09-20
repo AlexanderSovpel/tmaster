@@ -208,14 +208,14 @@ class TournamentController extends Controller
             $player->position = $request->position[$index];
         }
 
-        $players = array();
-        foreach ($currentSquad->players as $player) {
-          $players[] = $player;
-        }
-
-        usort($players, function($playerA, $playerB) {
-          return ($playerA->lane < $playerB->lane);
-        });
+        // $players = array();
+        // foreach ($currentSquad->players as $player) {
+        //   $players[] = $player;
+        // }
+        //
+        // usort($players, function($playerA, $playerB) {
+        //   return ($playerA->lane < $playerB->lane);
+        // });
 
         sort($lanes);
 
