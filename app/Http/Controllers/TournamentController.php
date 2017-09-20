@@ -208,13 +208,19 @@ class TournamentController extends Controller
             $player->position = $request->position[$index];
         }
 
+        $players = $currentSquad->players;
+        usort($players, function($playerA, $playerB) {
+          return ($playerA->lane < $playerB->lane);
+        });
+
         return view('tournament.run.game', [
             'tournament' => $tournament,
             'part' => 'q',
             'stage' => 'game',
             'currentSquad' => $currentSquad,
             'currentSquadId' => $currentSquadId,
-            'players' => $currentSquad->players,
+            // 'players' => $currentSquad->players,
+            'players' => $players,
             'playedGames' => $playedGames,
             'lanes' => $lanes
         ]);
