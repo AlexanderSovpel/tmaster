@@ -8,8 +8,8 @@
         <h3>Дорожка {{$lane}}</h3>
         <div class="lane-players">
         @foreach($players as $player)
-          @if($player->lane == $lane)
-          {{--@if($player->lane == $lanes[$laneIndex])--}}
+          {{--@if($player->lane == $lane)--}}
+          @if($player->lane == $lanes[$laneIndex])
           <div class="input-group player">
               <input type="hidden" class="player-id input-group-addon" value="{{$player->id}}">
               <label for="player-{{$player->id}}" class="input-group-addon player-name">
