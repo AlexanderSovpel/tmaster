@@ -166,33 +166,33 @@ class TournamentController extends Controller
         if ($request->input('confirmed')) {
             $currentSquad = Squad::find($currentSquadId);
             foreach ($currentSquad->players as $key => $player) {
-                if (in_array($player->id, $request->input('confirmed'))) {
-                    // SquadPlayers::where('player_id', $player->id)
-                    //     ->where('squad_id', $currentSquadId)
-                    //     ->delete();
-                    // unset($currentSquad->players[$key]);
-                    $squadPlayer = SquadPlayers::where('player_id', $player->id)
+                if (!in_array($player->id, $request->input('confirmed'))) {
+                    SquadPlayers::where('player_id', $player->id)
                         ->where('squad_id', $currentSquadId)
-                        ->first();
-                    $squadPlayer->present = true;
-                    $squadPlayer->save();
+                        ->delete();
+                    unset($currentSquad->players[$key]);
+                    // $squadPlayer = SquadPlayers::where('player_id', $player->id)
+                    //     ->where('squad_id', $currentSquadId)
+                    //     ->first();
+                    // $squadPlayer->present = true;
+                    // $squadPlayer->save();
                 }
             }
 
-            $presentPlayers = DB::table('users')
-              ->join('squad_players', 'users.id', '=', 'squad_players.player_id')
-              ->select('users.*')
-              ->where('squad_players.squad_id' , '=', $currentSquadId)
-              ->where('squad_players.present', '=', true)
-              ->orderBy('users.surname', 'ASC')
-              ->get();
+            // $presentPlayers = DB::table('users')
+            //   ->join('squad_players', 'users.id', '=', 'squad_players.player_id')
+            //   ->select('users.*')
+            //   ->where('squad_players.squad_id' , '=', $currentSquadId)
+            //   ->where('squad_players.present', '=', true)
+            //   ->orderBy('users.surname', 'ASC')
+            //   ->get();
 
             return view('tournament.run.draw', [
                 'tournament' => Tournament::find($tournamentId),
                 'part' => 'q',
                 'stage' => 'draw',
-                // 'players' => $currentSquad->players()->orderBy('surname', 'ASC')->get(),
-                'players' => $presentPlayers,
+                'players' => $currentSquad->players()->orderBy('surname', 'ASC')->get(),
+                // 'players' => $presentPlayers,
                 'currentSquadId' => $currentSquad->id
             ]);
         } else {
