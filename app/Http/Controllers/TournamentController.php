@@ -167,14 +167,13 @@ class TournamentController extends Controller
             $currentSquad = Squad::find($currentSquadId);
             foreach ($currentSquad->players as $key => $player) {
                 if (!in_array($player->id, $request->input('confirmed'))) {
-                    // SquadPlayers::where('player_id', $player->id)
-                        // ->where('squad_id', $currentSquadId)
-                        // ->delete();
-                    // unset($currentSquad->players[$key]);
-                    unset($player);
+                    SquadPlayers::where('player_id', $player->id)
+                        ->where('squad_id', $currentSquadId)
+                        ->delete();
+                    unset($currentSquad->players[$key]);
                     // $squadPlayer = SquadPlayers::where('player_id', $player->id)
-                    //     ->where('squad_id', $currentSquadId)
-                    //     ->first();
+                        // ->where('squad_id', $currentSquadId)
+                        // ->first();
                     // $squadPlayer->present = true;
                 }
             }
