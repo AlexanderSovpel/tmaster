@@ -11,7 +11,7 @@
                 <p class="date">{{date('j.m.Y', strtotime($squad->date))}}, {{date('H:i', strtotime($squad->start_time))}} &ndash; {{date('H:i', strtotime($squad->end_time))}}</p>
                 <p class="players-label">Заявки:</p>
                 <ol class="players-list">
-                    @foreach($squad->players()->withTrashed()->get() as $player)
+                    @foreach($squad->players as $player)
                       <li>{{$player->surname}} {{$player->name}}</li>
                       @if (\Illuminate\Support\Facades\Auth::check() && !$tournament->finished)
                         @if ($player->id == \Illuminate\Support\Facades\Auth::id())
