@@ -171,7 +171,7 @@ class TournamentController extends Controller
                         // ->where('squad_id', $currentSquadId)
                         // ->delete();
                     // unset($currentSquad->players[$key]);
-                    $player->delete();
+                    unset($player);
                     // $squadPlayer = SquadPlayers::where('player_id', $player->id)
                     //     ->where('squad_id', $currentSquadId)
                     //     ->first();
