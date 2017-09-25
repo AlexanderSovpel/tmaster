@@ -9,7 +9,7 @@
         <div class="lane-players">
         @foreach($players as $player)
           {{--@if($player->lane == $lane)--}}
-          {{$player->lane}}
+          <p>Player's lane: {{$player->lane}}<p>
           @if($player->lane == $lanes[$laneIndex])
           <div class="input-group player">
               <input type="hidden" class="player-id input-group-addon" value="{{$player->id}}">
