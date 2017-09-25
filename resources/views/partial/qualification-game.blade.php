@@ -4,11 +4,9 @@
       {{ csrf_field() }}
       @foreach($lanes as $laneIndex => $lane)
       <article class="lane">
-        {{-- <h3>Дорожка {{$lanes[$laneIndex]}}</h3> --}}
         <h3>Дорожка {{$lane}}</h3>
         <div class="lane-players">
         @foreach($players as $player)
-          {{--@if($player->lane == $lane)--}}
           @if($playersLanes[$player->id] == $lane)
           <div class="input-group player">
               <input type="hidden" class="player-id input-group-addon" value="{{$player->id}}">
@@ -33,11 +31,6 @@
                     +0
                 @endif
               </span>
-              {{--<span class="input-group-btn">--}}
-                  {{--<button class="btn btn-secondary post-result" type="button">--}}
-                      {{--<span class="glyphicon glyphicon-ok"></span>--}}
-                  {{--</button>--}}
-              {{--</span>--}}
           </div>
           @endif
         @endforeach
