@@ -209,6 +209,7 @@ class TournamentController extends Controller
             $player->lane = $request->lane[$index];
             echo $player->lane . " ";
             $player->position = $request->position[$index];
+            $player->save();
         }
 
         return view('tournament.run.game', [
