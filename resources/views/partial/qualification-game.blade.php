@@ -5,10 +5,11 @@
       @foreach($lanes as $laneIndex => $lane)
       <article class="lane">
         {{-- <h3>Дорожка {{$lanes[$laneIndex]}}</h3> --}}
-        <h3>Дорожка {{$lane}}</h3>
+        <h3>{{$laneIndex}} Дорожка {{$lane}}</h3>
         <div class="lane-players">
         @foreach($players as $player)
           {{--@if($player->lane == $lane)--}}
+          {{$lane}}
           @if($player->lane == $lanes[$laneIndex])
           <div class="input-group player">
               <input type="hidden" class="player-id input-group-addon" value="{{$player->id}}">
