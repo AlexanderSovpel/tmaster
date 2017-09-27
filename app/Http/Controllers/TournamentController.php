@@ -177,9 +177,8 @@ class TournamentController extends Controller
                     if ($squadPlayer) {
                       $squadPlayer->present = true;
                       $squadPlayer->save();
+                      echo $player->id . " is " . $squadPlayer->present;
                     }
-
-                    echo $player->id . " is " . $squadPlayer->present;
                 }
             }
 
