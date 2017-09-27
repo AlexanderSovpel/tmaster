@@ -177,25 +177,25 @@ class TournamentController extends Controller
                     if ($squadPlayer) {
                       $squadPlayer->present = true;
                       $squadPlayer->save();
-                      echo $player->id . " is " . $squadPlayer->present;
+                      // echo $player->id . " is " . $squadPlayer->present;
                     }
                 }
             }
 
-            // $presentPlayers = DB::table('users')
-            //   ->join('squad_players', 'users.id', '=', 'squad_players.player_id')
-            //   ->select('users.*')
-            //   ->where('squad_players.squad_id' , '=', $currentSquadId)
-            //   ->where('squad_players.present', '=', true)
-            //   ->orderBy('users.surname', 'ASC')
-            //   ->get();
+            $presentPlayers = DB::table('users')
+              ->join('squad_players', 'users.id', '=', 'squad_players.player_id')
+              ->select('users.*')
+              ->where('squad_players.squad_id' , '=', $currentSquadId)
+              ->where('squad_players.present', '=', true)
+              ->orderBy('users.surname', 'ASC')
+              ->get();
 
             return view('tournament.run.draw', [
                 'tournament' => Tournament::find($tournamentId),
                 'part' => 'q',
                 'stage' => 'draw',
-                'players' => $currentSquad->players()->orderBy('surname', 'ASC')->get(),
-                // 'players' => $presentPlayers,
+                // 'players' => $currentSquad->players()->orderBy('surname', 'ASC')->get(),
+                'players' => $presentPlayers,
                 'currentSquadId' => $currentSquad->id
             ]);
         } else {
