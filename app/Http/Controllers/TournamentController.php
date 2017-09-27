@@ -175,8 +175,8 @@ class TournamentController extends Controller
                         ->where('squad_id', $currentSquadId)
                         ->first();
                     echo $player->id . " is present";
-                    // $squadPlayer->present = true;
-                    // $squadPlayer->save();
+                    $squadPlayer->present = true;
+                    $squadPlayer->save();
                 }
             }
 
