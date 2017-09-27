@@ -174,6 +174,7 @@ class TournamentController extends Controller
                     $squadPlayer = SquadPlayers::where('player_id', $player->id)
                         ->where('squad_id', $currentSquadId)
                         ->first();
+                    echo $player->id . " is present";
                     // $squadPlayer->present = true;
                     // $squadPlayer->save();
                 }
