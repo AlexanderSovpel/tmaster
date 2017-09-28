@@ -15,18 +15,19 @@
                     $squadPlayers = App\SquadPlayers::where('squad_id', $squad->id)->get();
                   @endphp
                     @foreach($squad->players as $playerIndex => $player)
-                      <li>{{$player->surname}} {{$player->name}}</li>
+                      <li>{{$player->surname}} {{$player->name}}
                       @if ($squad->finished && $squadPlayers[$playerIndex]->present)
-                      <span class="glyphicon glyphicon-ok"></span>
+                        <span class="glyphicon glyphicon-ok"></span>
                       @endif
-                      @if (\Illuminate\Support\Facades\Auth::check() && !$tournament->finished)
+                      </li>
+                      @if (\Illuminate\Support\Facades\Auth::check() && !$squad->finished)
                         @if ($player->id == \Illuminate\Support\Facades\Auth::id())
                           <form action="/{{$tournament->id}}/removeApplication/{{$player->id}}" method="post">
                               {{ csrf_field() }}
                               <input type="hidden" name="currentSquad" value="{{$squad->id}}">
                               <button type="submit" class="remove-btn btn-link">Отозвать заявку</button>
                           </form>
-                        @elseif(\Illuminate\Support\Facades\Auth::user()->is_admin && !$tournament->finished)
+                        @elseif(\Illuminate\Support\Facades\Auth::user()->is_admin && !$squad->finished)
                           <form action="/{{$tournament->id}}/removeApplication/{{$player->id}}" method="post">
                               {{ csrf_field() }}
                               <input type="hidden" name="currentSquad" value="{{$squad->id}}">
