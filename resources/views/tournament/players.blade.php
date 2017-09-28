@@ -12,7 +12,7 @@
                 <p class="players-label">Заявки:</p>
                 <ol class="players-list">
                   @php
-                    $squadPlayers = SquadPlayers::where('squad_id', $squad->id)->get();
+                    $squadPlayers = App\SquadPlayers::where('squad_id', $squad->id)->get();
                   @endphp
                     @foreach($squad->players as $playerIndex => $player)
                       <li>{{$player->surname}} {{$player->name}}</li>
