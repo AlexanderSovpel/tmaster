@@ -488,7 +488,13 @@ class TournamentController extends Controller
       $qPlayersId = array();
       foreach ($tournament->squads as $squad) {
         foreach ($squad->players as $player) {
-          $qPlayersId[] = $player->id;
+          $squadPlayer = SquadPlayers::where('player_id', $player->id)
+              ->where('squad_id', $squad->id)
+              ->first();
+
+          if ($squadPlayer->present) {
+            $qPlayersId[] = $player->id;
+          }
         }
       }
 
