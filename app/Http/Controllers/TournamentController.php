@@ -167,29 +167,33 @@ class TournamentController extends Controller
         if ($request->input('confirmed')) {
             $currentSquad = Squad::find($currentSquadId);
             $presentPlayers = array();
+
+            $sp = SquadPlayers::where('squad_id', $currentSquadId)->get();
+            foreach ($sp as $s) {
+              echo "<p>" . $s->player_id . "</p>";
+            }
+            
             foreach ($currentSquad->players as $key => $player) {
+
+              $squadPlayer = SquadPlayers::where('player_id', $player->id)
+                  ->where('squad_id', $currentSquadId)
+                  ->first();
+
                 if (in_array($player->id, $request->input('confirmed'))) {
                     // SquadPlayers::where('player_id', $player->id)
                         // ->where('squad_id', $currentSquadId)
                         // ->delete();
                     // unset($currentSquad->players[$key]);
 
-                    $squadPlayer = SquadPlayers::where('player_id', $player->id)
-                        ->where('squad_id', $currentSquadId)
-                        ->first();
-                    // if ($squadPlayer) {
-                      $squadPlayer->present = true;
-                      $squadPlayer->save();
-                      echo $player->id . " is " . $squadPlayer->present;
-                    // }
-
-                    $sp = SquadPlayers::where('squad_id', $currentSquadId)->get();
-                    foreach ($sp as $s) {
-                      echo "<p>" . $s->player_id . "</p>";
-                    }
-
+                    $squadPlayer->present = true;
                     $presentPlayers[] = $player;
                 }
+                else {
+                  $squadPlayer->present = false;
+                }
+
+                $squadPlayer->save();
+                echo "<p>" . $squadPlayer->player_id . " is " . $squadPlayer->present . "</p>";
             }
 
             return view('tournament.run.draw', [
