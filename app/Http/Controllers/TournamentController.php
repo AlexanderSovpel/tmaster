@@ -166,6 +166,7 @@ class TournamentController extends Controller
     {
         if ($request->input('confirmed')) {
             $currentSquad = Squad::find($currentSquadId);
+            $presentPlayers = array();
             foreach ($currentSquad->players as $key => $player) {
                 if (in_array($player->id, $request->input('confirmed'))) {
                     // SquadPlayers::where('player_id', $player->id)
@@ -176,21 +177,15 @@ class TournamentController extends Controller
                     $squadPlayer = SquadPlayers::where('player_id', $player->id)
                         ->where('squad_id', $currentSquadId)
                         ->first();
-                    if ($squadPlayer) {
+                    // if ($squadPlayer) {
                       $squadPlayer->present = true;
                       $squadPlayer->save();
                       // echo $player->id . " is " . $squadPlayer->present;
-                    }
+                    // }
+
+                    $presentPlayers[] = $player;
                 }
             }
-
-            $presentPlayers = DB::table('users')
-              ->join('squad_players', 'users.id', '=', 'squad_players.player_id')
-              ->select('users.*')
-              ->where('squad_players.squad_id' , '=', $currentSquadId)
-              ->where('squad_players.present', '=', false)
-              ->orderBy('users.surname', 'ASC')
-              ->get();
 
             return view('tournament.run.draw', [
                 'tournament' => Tournament::find($tournamentId),
