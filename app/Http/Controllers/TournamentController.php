@@ -452,21 +452,27 @@ class TournamentController extends Controller
       $sResults = array();
 
       foreach ($squad->players as $player) {
-        $sPlayers[] = $player;
-
-        $squadGames = Game::where('tournament_id', $tournament->id)
-            ->where('player_id', $player->id)
-            ->where('part', 'q')
-            ->where('squad_id', $squad->id)
-            ->get();
-        $sGames[$player->id] = $squadGames;
-
-        $squadResult = $qResult = Result::where('tournament_id', $tournament->id)
-            ->where('player_id', $player->id)
-            ->where('part', 'q')
+        $squadPlayer = SquadPlayers::where('player_id', $player->id)
             ->where('squad_id', $squad->id)
             ->first();
-        $sResults[$player->id] = $squadResult;
+
+        if ($squadPlayer->present) {
+          $sPlayers[] = $player;
+
+          $squadGames = Game::where('tournament_id', $tournament->id)
+              ->where('player_id', $player->id)
+              ->where('part', 'q')
+              ->where('squad_id', $squad->id)
+              ->get();
+          $sGames[$player->id] = $squadGames;
+
+          $squadResult = $qResult = Result::where('tournament_id', $tournament->id)
+              ->where('player_id', $player->id)
+              ->where('part', 'q')
+              ->where('squad_id', $squad->id)
+              ->first();
+          $sResults[$player->id] = $squadResult;
+        }
       }
 
       $this->sortPlayersByResult($sPlayers, $tournament->id, 'q', $squad->id);
