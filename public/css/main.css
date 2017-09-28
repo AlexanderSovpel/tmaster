@@ -804,6 +804,11 @@ tr:nth-child(2n) {
   display: block;
 }
 
+#shuffle {
+  float: right;
+  margin-top: -40px;
+}
+
 .qualification-games,
 .round-robin-games,
 .lanes {

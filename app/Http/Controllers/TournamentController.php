@@ -213,26 +213,29 @@ class TournamentController extends Controller
         $currentSquad->lanes = implode(',', $lanes);
         $currentSquad->save();
 
-        $playedGames = array();
         $presentPlayers = array();
-        foreach ($currentSquad->players()->orderBy('surname', 'ASC')->get() as $index => $player) {
+        foreach ($currentSquad->players()->orderBy('surname', 'ASC')->get() as $player) {
           $squadPlayer = SquadPlayers::where('player_id', $player->id)
               ->where('squad_id', $currentSquadId)
               ->first();
           if ($squadPlayer->present) {
-            $games = $player->games
-                ->where('tournament_id', $tournamentId)
-                ->where('part', 'q')
-                ->where('squad_id', $currentSquadId);
-            foreach ($games as $game) {
-                $playedGames[$player->id][] = $game;
-            }
-
-            $player->lane = $request->lane[$index];
-            $player->position = $request->position[$index];
-            $playersLanes[$player->id] = $request->lane[$index];
             $presentPlayers[] = $player;
           }
+        }
+
+        $playedGames = array();
+        foreach($presentPlayers as $index => $player) {
+          $games = $player->games
+              ->where('tournament_id', $tournamentId)
+              ->where('part', 'q')
+              ->where('squad_id', $currentSquadId);
+          foreach ($games as $game) {
+              $playedGames[$player->id][] = $game;
+          }
+
+          $player->lane = $request->lane[$index];
+          $player->position = $request->position[$index];
+          $playersLanes[$player->id] = $request->lane[$index];
         }
 
         return view('tournament.run.game', [

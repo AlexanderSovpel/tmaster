@@ -5,7 +5,7 @@
     <div class="panel-heading">
       <h1>Жеребьёвка</h1>
       <a id="random-draw" class="" href="#">
-        <span class="glyphicon glyphicon-random"></span>
+        <span class="glyphicon glyphicon-random" id="shuffle"></span>
       </a>
     </div>
     <form action="/{{$tournament->id}}/run/{{$part}}/game{{isset($currentSquadId) ? '/'.$currentSquadId : ''}}" method="post" class="panel-body">
