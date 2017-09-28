@@ -214,7 +214,12 @@ class TournamentController extends Controller
         $currentSquad->save();
 
         $playedGames = array();
+        $presentPlayers = array();
         foreach ($currentSquad->players()->orderBy('surname', 'ASC')->get() as $index => $player) {
+          $squadPlayer = SquadPlayers::where('player_id', $player->id)
+              ->where('squad_id', $currentSquadId)
+              ->first();
+          if ($squadPlayer->present) {
             $games = $player->games
                 ->where('tournament_id', $tournamentId)
                 ->where('part', 'q')
@@ -226,6 +231,8 @@ class TournamentController extends Controller
             $player->lane = $request->lane[$index];
             $player->position = $request->position[$index];
             $playersLanes[$player->id] = $request->lane[$index];
+            $presentPlayers[] = $player;
+          }
         }
 
         return view('tournament.run.game', [
@@ -234,7 +241,8 @@ class TournamentController extends Controller
             'stage' => 'game',
             'currentSquad' => $currentSquad,
             'currentSquadId' => $currentSquadId,
-            'players' => $currentSquad->players,
+            // 'players' => $currentSquad->players,
+            'players' => $presentPlayers,
             'playedGames' => $playedGames,
             'lanes' => $lanes,
             'playersLanes' => $playersLanes
