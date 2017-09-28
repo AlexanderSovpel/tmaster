@@ -11,6 +11,9 @@
                 <p class="date">{{date('j.m.Y', strtotime($squad->date))}}, {{date('H:i', strtotime($squad->start_time))}} &ndash; {{date('H:i', strtotime($squad->end_time))}}</p>
                 <p class="players-label">Заявки:</p>
                 <ol class="players-list">
+                  @php
+                    $squadPlayers = SquadPlayers::where('squad_id', $squad->id)->get();
+                  @endphp
                     @foreach($squad->players as $playerIndex => $player)
                       <li>{{$player->surname}} {{$player->name}}</li>
                       @if ($squad->finished && $squadPlayers[$playerIndex]->present)

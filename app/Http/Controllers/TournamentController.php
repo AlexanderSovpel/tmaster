@@ -59,10 +59,8 @@ class TournamentController extends Controller
     public function getTournamentPlayers($id)
     {
         $tournament = Tournament::find($id);
-        $squadPlayers = SquadPlayers::where('squad_id', $squad->id)->get();
 
-        return view('tournament.players', ['tournament' => $tournament,
-          'squadPlayers' => $squadPlayers]);
+        return view('tournament.players', ['tournament' => $tournament]);
     }
 
     public function getApplication($id)
