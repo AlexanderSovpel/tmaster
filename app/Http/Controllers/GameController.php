@@ -4,22 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Game;
 use App\Result;
+use App\Tournament;
 use Illuminate\Http\Request;
 
 class GameController extends Controller
 {
     public function setResult(Request $request)
     {
+        $tournament = Tournament::find($request->input('tournament_id'));
+        $maxHandicap = $tournament->handicap->max_game;
+        $gameResult = $request->input('result');
+
+        if ($request->input('part') == 'q') {
+          if ($gameResult + $request->input('bonus') > $maxHandicap) {
+            $gameResult = $maxHandicap;
+          }
+        }
+
         $game = new Game(['player_id' => $request->input('player_id'),
             'tournament_id' => $request->input('tournament_id'),
             'part' => $request->input('part'),
             'squad_id' => $request->input('squad_id'),
-            'result' => $request->input('result'),
+            'result' => $gameResult,
             'bonus' => $request->input('bonus'),
             'date' => date("Y-m-d")]);
         $game->save();
 
-        $result = $this->countResult($request);
+        $result = $this->countBlockResult($request);
 
         return array($game, $result);
     }
@@ -35,11 +46,21 @@ class GameController extends Controller
             ->where('result', $request->input('oldResult'))
             ->first();
 
-        $game->result = $request->input('newResult');
+        $tournament = Tournament::find($request->input('tournament_id'));
+        $maxHandicap = $tournament->handicap->max_game;
+        $gameResult = $request->input('newResult');
+
+        if ($request->input('part') == 'q') {
+          if ($gameResult + $request->input('bonus') > $maxHandicap) {
+            $gameResult = $maxHandicap;
+          }
+        }
+
+        $game->result = $gameResult;
         $game->bonus = $request->input('bonus');
         $game->save();
 
-        $result = $this->countResult($request);
+        $result = $this->countBlockResult($request);
 
         return array($game, $result);
     }
@@ -68,12 +89,12 @@ class GameController extends Controller
         $game->bonus = $request->input('newBonus');
         $game->save();
 
-        $result = $this->countResult($request);
+        $result = $this->countBlockResult($request);
 
         return array($game, $result);
     }
 
-    private function countResult(Request $request) {
+    private function countBlockResult(Request $request) {
       $games = Game::where('player_id', $request->player_id)
           ->where('tournament_id', $request->tournament_id)
           ->where('part', $request->part)

@@ -9,7 +9,7 @@ var wizardSteps = $('.bs-wizard-step');
 if (stage == stages[2]) {
     for (var i = 0; i < players.length; ++i) {
         var playerId = players[i].querySelector('.player-id').value;
-        var blockSum = fillBlockSum(playerId, tournamentId, part, squadId);
+        // var blockSum = fillBlockSum(playerId, tournamentId, part, squadId);
     }
 }
 
@@ -33,7 +33,7 @@ $('.player-result, .opponent-result').change(function() {
 
   var player = $(this).parent()[0];
   var playerId = player.querySelector('.player-id, .opponent-id').value;
-  var playerResult = player.querySelector('.player-result, .opponent-result').value;
+  // var playerResult = player.querySelector('.player-result, .opponent-result').value;
   var playerOldResult = player.querySelector('.player-result, .opponent-result').old_value;
   var playerBonus = player.querySelector('.player-bonus, .opponent-bonus').innerHTML.trim();
 
@@ -57,7 +57,7 @@ $('.player-result, .opponent-result').change(function() {
       countBonus(player);
   }
 
-  setResult(playerId, tournamentId, part, squadId, playerResult, playerOldResult, playerBonus, players[i]);
+  setResult(playerId, tournamentId, part, squadId, $(this).val(), playerOldResult, playerBonus, players[i]);
 });
 
 var games = $('.game');
@@ -132,35 +132,35 @@ function setResult(playerId, tournamentId, part, squadId, playerResult, playerOl
     }
 }
 
-function fillBlockSum(playerId, tournamentId, part, squad) {
-  var blockSum = 0;
-    var params = '?' +
-        'player_id=' + playerId + '&' +
-        'tournament_id=' + tournamentId + '&' +
-        'part=' + part + '&' +
-        'squad_id=' + squad;
+// function fillBlockSum(playerId, tournamentId, part, squad) {
+//   var blockSum = 0;
+//     var params = '?' +
+//         'player_id=' + playerId + '&' +
+//         'tournament_id=' + tournamentId + '&' +
+//         'part=' + part + '&' +
+//         'squad_id=' + squad;
+//
+//     $.get('/sumBlock' + params, function (data) {
+//         blockSum = data;
+//         $('#sum_result_' + playerId).html(blockSum);
+//         var gamesCount = $('.player-id[value=' + playerId + ']').parent().find(".played").length;
+//         fillBlockAvg(blockSum, gamesCount, playerId);
+//         // return data;
+//     }).fail(function(data) {
+//         console.log(data);
+//     });
+//
+//     return blockSum;
+// }
 
-    $.get('/sumBlock' + params, function (data) {
-        blockSum = data;
-        $('#sum_result_' + playerId).html(blockSum);
-        var gamesCount = $('.player-id[value=' + playerId + ']').parent().find(".played").length;
-        fillBlockAvg(blockSum, gamesCount, playerId);
-        // return data;
-    }).fail(function(data) {
-        console.log(data);
-    });
-
-    return blockSum;
-}
-
-function fillBlockAvg(blockSum, gamesCount, playerId) {
-    var blockAvg = blockSum / gamesCount;
-
-    if (isNaN(blockAvg))
-        blockAvg = 0;
-
-    var avg = $('#avg_result_' + playerId).html(blockAvg.toFixed(2));
-}
+// function fillBlockAvg(blockSum, gamesCount, playerId) {
+//     var blockAvg = blockSum / gamesCount;
+//
+//     if (isNaN(blockAvg))
+//         blockAvg = 0;
+//
+//     var avg = $('#avg_result_' + playerId).html(blockAvg.toFixed(2));
+// }
 
 function countBonus(player) {
     var opponent;
