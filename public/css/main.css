@@ -501,6 +501,10 @@ thead {
     width: 100%;
     float: none;
 }
+
+.present-mark {
+  float: right;
+}
 /*END Players*/
 
 /*Apply*/

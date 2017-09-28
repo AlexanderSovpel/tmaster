@@ -17,7 +17,7 @@
                     @foreach($squad->players as $playerIndex => $player)
                       <li>{{$player->surname}} {{$player->name}}
                       @if ($squad->finished && $squadPlayers[$playerIndex]->present)
-                        <span class="glyphicon glyphicon-ok"></span>
+                        <span class="glyphicon glyphicon-ok present-mark"></span>
                       @endif
                       </li>
                       @if (\Illuminate\Support\Facades\Auth::check() && !$squad->finished)
