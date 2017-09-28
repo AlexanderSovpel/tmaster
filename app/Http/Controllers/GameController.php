@@ -11,21 +11,21 @@ class GameController extends Controller
 {
     public function setResult(Request $request)
     {
-        $tournament = Tournament::find($request->input('tournament_id'));
-        $maxHandicap = $tournament->handicap->max_game;
-        $gameResult = $request->input('result');
-
-        if ($request->input('part') == 'q') {
-          if ($gameResult + $request->input('bonus') > $maxHandicap) {
-            $gameResult = $maxHandicap;
-          }
-        }
+        // $tournament = Tournament::find($request->input('tournament_id'));
+        // $maxHandicap = $tournament->handicap->max_game;
+        // $gameResult = $request->input('result');
+        //
+        // if ($request->input('part') == 'q') {
+        //   if ($gameResult + $request->input('bonus') > $maxHandicap) {
+        //     $gameResult = $maxHandicap;
+        //   }
+        // }
 
         $game = new Game(['player_id' => $request->input('player_id'),
             'tournament_id' => $request->input('tournament_id'),
             'part' => $request->input('part'),
             'squad_id' => $request->input('squad_id'),
-            'result' => $gameResult,
+            'result' => $request->input('result'),
             'bonus' => $request->input('bonus'),
             'date' => date("Y-m-d")]);
         $game->save();
@@ -46,17 +46,17 @@ class GameController extends Controller
             ->where('result', $request->input('oldResult'))
             ->first();
 
-        $tournament = Tournament::find($request->input('tournament_id'));
-        $maxHandicap = $tournament->handicap->max_game;
-        $gameResult = $request->input('newResult');
+        // $tournament = Tournament::find($request->input('tournament_id'));
+        // $maxHandicap = $tournament->handicap->max_game;
+        // $gameResult = $request->input('newResult');
+        //
+        // if ($request->input('part') == 'q') {
+        //   if ($gameResult + $request->input('bonus') > $maxHandicap) {
+        //     $gameResult = $maxHandicap;
+        //   }
+        // }
 
-        if ($request->input('part') == 'q') {
-          if ($gameResult + $request->input('bonus') > $maxHandicap) {
-            $gameResult = $maxHandicap;
-          }
-        }
-
-        $game->result = $gameResult;
+        $game->result = $request->input('newResult');
         $game->bonus = $request->input('bonus');
         $game->save();
 
@@ -95,6 +95,9 @@ class GameController extends Controller
     }
 
     private function countBlockResult(Request $request) {
+      $tournament = Tournament::find($request->input('tournament_id'));
+      $maxHandicap = $tournament->handicap->max_game;
+
       $games = Game::where('player_id', $request->player_id)
           ->where('tournament_id', $request->tournament_id)
           ->where('part', $request->part)
@@ -104,7 +107,12 @@ class GameController extends Controller
       $avg = 0;
       $sum = 0;
       foreach ($games as $game) {
-        $sum += $game->result + $game->bonus;
+        if ($request->part == 'q' && $game->result + $game->bonus > $maxHandicap) {
+          $sum += $maxHandicap;
+        }
+        else {
+          $sum += $game->result + $game->bonus;
+        }
       }
       $avg = round($sum / count($games), 2);
 
@@ -128,22 +136,22 @@ class GameController extends Controller
     }
 
 // зачем эта функция?
-    public function sumBlock(Request $request)
-    {
-        $games = Game::where('player_id', $request->input('player_id'))
-            ->where('tournament_id', $request->input('tournament_id'))
-            ->where('part', $request->input('part'));
-
-        if ($request->input('part') == 'q' && $request->input('squad_id') != '') {
-            $games = $games->where('squad_id', $request->input('squad_id'))->get();
-        } else {
-            $games = $games->get();
-        }
-
-        $result = 0;
-        foreach ($games as $game) {
-            $result += $game->result + $game->bonus;
-        }
-        return $result;
-    }
+    // public function sumBlock(Request $request)
+    // {
+    //     $games = Game::where('player_id', $request->input('player_id'))
+    //         ->where('tournament_id', $request->input('tournament_id'))
+    //         ->where('part', $request->input('part'));
+    //
+    //     if ($request->input('part') == 'q' && $request->input('squad_id') != '') {
+    //         $games = $games->where('squad_id', $request->input('squad_id'))->get();
+    //     } else {
+    //         $games = $games->get();
+    //     }
+    //
+    //     $result = 0;
+    //     foreach ($games as $game) {
+    //         $result += $game->result + $game->bonus;
+    //     }
+    //     return $result;
+    // }
 }
