@@ -187,7 +187,7 @@ class TournamentController extends Controller
               ->join('squad_players', 'users.id', '=', 'squad_players.player_id')
               ->select('users.*')
               ->where('squad_players.squad_id' , '=', $currentSquadId)
-              ->where('squad_players.present', '=', true)
+              ->where('squad_players.present', '=', false)
               ->orderBy('users.surname', 'ASC')
               ->get();
 
