@@ -11,8 +11,11 @@
                 <p class="date">{{date('j.m.Y', strtotime($squad->date))}}, {{date('H:i', strtotime($squad->start_time))}} &ndash; {{date('H:i', strtotime($squad->end_time))}}</p>
                 <p class="players-label">Заявки:</p>
                 <ol class="players-list">
-                    @foreach($squad->players as $player)
+                    @foreach($squad->players as $playerIndex => $player)
                       <li>{{$player->surname}} {{$player->name}}</li>
+                      @if ($squad->finished && $squadPlayers[$playerIndex]->present)
+                      <span class="glyphicon glyphicon-ok"></span>
+                      @endif
                       @if (\Illuminate\Support\Facades\Auth::check() && !$tournament->finished)
                         @if ($player->id == \Illuminate\Support\Facades\Auth::id())
                           <form action="/{{$tournament->id}}/removeApplication/{{$player->id}}" method="post">

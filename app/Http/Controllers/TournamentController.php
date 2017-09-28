@@ -59,8 +59,10 @@ class TournamentController extends Controller
     public function getTournamentPlayers($id)
     {
         $tournament = Tournament::find($id);
+        $squadPlayers = SquadPlayers::where('squad_id', $squad->id)->get();
 
-        return view('tournament.players', ['tournament' => $tournament]);
+        return view('tournament.players', ['tournament' => $tournament,
+          'squadPlayers' => $squadPlayers]);
     }
 
     public function getApplication($id)
@@ -168,11 +170,6 @@ class TournamentController extends Controller
             $currentSquad = Squad::find($currentSquadId);
             $presentPlayers = array();
 
-            $sp = SquadPlayers::where('squad_id', $currentSquadId)->get();
-            foreach ($sp as $s) {
-              echo "<p>" . $s->player_id . "</p>";
-            }
-            
             foreach ($currentSquad->players as $key => $player) {
 
               $squadPlayer = SquadPlayers::where('player_id', $player->id)
@@ -184,7 +181,6 @@ class TournamentController extends Controller
                         // ->where('squad_id', $currentSquadId)
                         // ->delete();
                     // unset($currentSquad->players[$key]);
-
                     $squadPlayer->present = true;
                     $presentPlayers[] = $player;
                 }
@@ -193,7 +189,6 @@ class TournamentController extends Controller
                 }
 
                 $squadPlayer->save();
-                echo "<p>" . $squadPlayer->player_id . " is " . $squadPlayer->present . "</p>";
             }
 
             return view('tournament.run.draw', [
