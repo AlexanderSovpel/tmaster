@@ -2,17 +2,19 @@
 @section('process')
 <div class="qualification-games">
   <input type="hidden" name="current_game" id="current-game" value="0">
-  @php
+  {{--@php
     $lanesTmp = $lanes;
-  @endphp
+  @endphp--}}
 
   @for($gameIndex = 0; $gameIndex < $tournament->qualification->entries; ++$gameIndex)
     @include('partial.qualification-game', ['gameIndex' => $gameIndex])
 
     @php
-      array_push($lanesTmp, array_shift($lanesTmp));
       foreach($players as $index => $player) {
-        $playersLanes[$player->id] = $lanesTmp[$index / 2];
+        $lanesTmp = $lanes;
+        $laneIndex = array_search($playersLanes[$index], $lanesTmp);
+        array_push($lanesTmp, array_shift($lanesTmp));
+        $playersLanes[$index] = $lanesTmp[$laneIndex];
       }
     @endphp
   @endfor

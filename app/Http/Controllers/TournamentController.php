@@ -235,7 +235,7 @@ class TournamentController extends Controller
 
           // $player->lane = $request->lane[$index];
           // $player->position = $request->position[$index];
-          $playersLanes[$player->id] = $request->lane[$index];
+          $playersLanes[$index] = $request->lane[$index];
         }
 
         return view('tournament.run.game', [
