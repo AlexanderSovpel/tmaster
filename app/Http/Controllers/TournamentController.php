@@ -169,16 +169,11 @@ class TournamentController extends Controller
             $presentPlayers = array();
 
             foreach ($currentSquad->players as $key => $player) {
-
               $squadPlayer = SquadPlayers::where('player_id', $player->id)
                   ->where('squad_id', $currentSquadId)
                   ->first();
 
                 if (in_array($player->id, $request->input('confirmed'))) {
-                    // SquadPlayers::where('player_id', $player->id)
-                        // ->where('squad_id', $currentSquadId)
-                        // ->delete();
-                    // unset($currentSquad->players[$key]);
                     $squadPlayer->present = true;
                     $presentPlayers[] = $player;
                 }
@@ -188,12 +183,12 @@ class TournamentController extends Controller
 
                 $squadPlayer->save();
             }
+            session(['players' => $presentPlayers]);
 
             return view('tournament.run.draw', [
                 'tournament' => Tournament::find($tournamentId),
                 'part' => 'q',
                 'stage' => 'draw',
-                // 'players' => $currentSquad->players()->orderBy('surname', 'ASC')->get(),
                 'players' => $presentPlayers,
                 'currentSquadId' => $currentSquad->id
             ]);
@@ -213,18 +208,18 @@ class TournamentController extends Controller
         $currentSquad->lanes = implode(',', $lanes);
         $currentSquad->save();
 
-        $presentPlayers = array();
-        foreach ($currentSquad->players()->orderBy('surname', 'ASC')->get() as $player) {
-          $squadPlayer = SquadPlayers::where('player_id', $player->id)
-              ->where('squad_id', $currentSquadId)
-              ->first();
-          if ($squadPlayer->present) {
-            $presentPlayers[] = $player;
-          }
-        }
+        $players = session('players');
+        // foreach ($currentSquad->players()->orderBy('surname', 'ASC')->get() as $player) {
+        //   $squadPlayer = SquadPlayers::where('player_id', $player->id)
+        //       ->where('squad_id', $currentSquadId)
+        //       ->first();
+        //   if ($squadPlayer->present) {
+        //     $presentPlayers[] = $player;
+        //   }
+        // }
 
         $playedGames = array();
-        foreach($presentPlayers as $index => $player) {
+        foreach($players as $index => $player) {
           $games = $player->games
               ->where('tournament_id', $tournamentId)
               ->where('part', 'q')
@@ -245,7 +240,7 @@ class TournamentController extends Controller
             'currentSquad' => $currentSquad,
             'currentSquadId' => $currentSquadId,
             // 'players' => $currentSquad->players,
-            'players' => $presentPlayers,
+            'players' => $players,
             'playedGames' => $playedGames,
             'lanes' => $lanes,
             'playersLanes' => $playersLanes
@@ -346,19 +341,31 @@ class TournamentController extends Controller
     {
         $tournament = Tournament::find($tournamentId);
         $players = session('players');
+        $presentPlayers = array();
+
         foreach ($players as $key => $player) {
-            if (!in_array($player->id, $request->input('confirmed'))) {
-                unset($players[$key]);
+          $squadPlayer = SquadPlayers::where('player_id', $player->id)
+              ->where('squad_id', $currentSquadId)
+              ->first();
+
+            if (in_array($player->id, $request->input('confirmed'))) {
+              $squadPlayer->present = true;
+              $presentPlayers[] = $player;
             }
+            else {
+              $squadPlayer->present = false;
+            }
+
+            $squadPlayer->save();
         }
-        $players = array_values($players);
-        session(['players' => $players]);
+        // $players = $presentPlayers;
+        session(['players' => $presentPlayers]);
 
         return view('tournament.run.draw', [
             'tournament' => $tournament,
             'part' => 'rr',
             'stage' => 'draw',
-            'players' => $players
+            'players' => $presentPlayers
         ]);
     }
 
@@ -368,6 +375,8 @@ class TournamentController extends Controller
         $playersCount = count($players);
         $playedGames = array();
         $lanes = array_values(array_unique($request->input('lane')));
+        sort($lanes);
+        $playersLanes = array();
 
         // foreach ($players as $index => $player) {
         for ($i = 0; $i < $playersCount; ++$i) {
@@ -379,8 +388,9 @@ class TournamentController extends Controller
                 $playedGames[$players[$i]->id][] = $game;
             }
 
-            $players[$i]->lane = $request->lane[$i];
-            $players[$i]->position = $request->position[$i];
+            // $players[$i]->lane = $request->lane[$i];
+            // $players[$i]->position = $request->position[$i];
+            $playersLanes[$index] = $request->lane[$i];
         }
 
         $roundCount = ($playersCount % 2) ? $playersCount : $playersCount - 1;
@@ -393,7 +403,8 @@ class TournamentController extends Controller
             'lastPlayerIndex' => $playersCount - 1,
             'roundCount' => $roundCount,
             'playedGames' => $playedGames,
-            'lanes' => $lanes
+            'lanes' => $lanes,
+            'playersLanes' => $playersLanes
         ]);
     }
 
