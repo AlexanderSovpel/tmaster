@@ -20,7 +20,7 @@
                      played
                      @endif
                      "
-                     min="0" max="{{$tournament->handicap->max_value}}"
+                     min="0" max="300"
                      value="{{$playedGames[$player->id][$gameIndex]->result or ''}}"
                      old_value="{{$playedGames[$player->id][$gameIndex]->result or ''}}"
                      onfocus="this.old_value = this.value">

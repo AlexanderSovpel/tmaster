@@ -11,16 +11,6 @@ class GameController extends Controller
 {
     public function setResult(Request $request)
     {
-        // $tournament = Tournament::find($request->input('tournament_id'));
-        // $maxHandicap = $tournament->handicap->max_game;
-        // $gameResult = $request->input('result');
-        //
-        // if ($request->input('part') == 'q') {
-        //   if ($gameResult + $request->input('bonus') > $maxHandicap) {
-        //     $gameResult = $maxHandicap;
-        //   }
-        // }
-
         $game = new Game(['player_id' => $request->input('player_id'),
             'tournament_id' => $request->input('tournament_id'),
             'part' => $request->input('part'),
@@ -45,16 +35,6 @@ class GameController extends Controller
             ->where('squad_id', $request->input('squad_id'))
             ->where('result', $request->input('oldResult'))
             ->first();
-
-        // $tournament = Tournament::find($request->input('tournament_id'));
-        // $maxHandicap = $tournament->handicap->max_game;
-        // $gameResult = $request->input('newResult');
-        //
-        // if ($request->input('part') == 'q') {
-        //   if ($gameResult + $request->input('bonus') > $maxHandicap) {
-        //     $gameResult = $maxHandicap;
-        //   }
-        // }
 
         $game->result = $request->input('newResult');
         $game->bonus = $request->input('bonus');

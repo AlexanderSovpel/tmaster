@@ -233,8 +233,8 @@ class TournamentController extends Controller
               $playedGames[$player->id][] = $game;
           }
 
-          $player->lane = $request->lane[$index];
-          $player->position = $request->position[$index];
+          // $player->lane = $request->lane[$index];
+          // $player->position = $request->position[$index];
           $playersLanes[$player->id] = $request->lane[$index];
         }
 

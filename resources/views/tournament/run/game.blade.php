@@ -12,7 +12,7 @@
     @php
       array_push($lanesTmp, array_shift($lanesTmp));
       foreach($players as $index => $player) {
-        $player->lane = $lanesTmp[$index / 2];
+        $playersLanes[$player->id] = $lanesTmp[$index / 2];
       }
     @endphp
   @endfor
