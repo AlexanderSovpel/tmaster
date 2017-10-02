@@ -57,6 +57,17 @@ $('.add-player-btn').click(function() {
   });
 });
 
+$('.no-application-player-btn').click(function() {
+  var tournamentId = document.querySelector("[name=tournament]").value;
+  var squadId = document.querySelector("[name='currentSquad']").value;
+  var url = '/' + tournamentId + '/' + squadId + '/getPlayers';
+  $.get(url, function(data) {
+    $('.error').after(data);
+  }).fail(function(data) {
+    console.log(data.responseText);
+  });
+});
+
 function closeApply() {
   $('#popup').remove();
 }
