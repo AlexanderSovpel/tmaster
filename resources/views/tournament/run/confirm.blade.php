@@ -3,7 +3,7 @@
 @section('process')
   <article class="panel panel-default part">
     <div class="panel-heading"><h1>Регистрация участников</h1></div>
-    <form action="/{{$tournament->id}}/run/{{$part}}/draw{{isset($currentSquadId) ? '/'.$currentSquadId : ''}}" method="post" class="panel-body">
+    <form action="/{{$tournament->id}}/run/{{$part}}/draw{{isset($currentSquad) ? '/'.$currentSquad->id : ''}}" method="post" class="panel-body">
         {{ csrf_field() }}
         <table>
           <thead>
@@ -25,6 +25,9 @@
             @endforeach
           </tbody>
         </table>
+        @if ($currentSquad->players()->count() < $currentSquad->max_players)
+          <a href="#" class="add-player-btn">добавить участника</a>
+        @endif
         <button type="submit" class="btn">начать жеребьёвку</button>
     </form>
   </article>

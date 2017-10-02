@@ -158,7 +158,7 @@ class TournamentController extends Controller
             'part' => 'q',
             'stage' => 'conf',
             'players' => $currentSquad->players()->orderBy('surname', 'ASC')->get(),
-            'currentSquadId' => $currentSquadId
+            'currentSquad' => $currentSquad
         ]);
     }
 
