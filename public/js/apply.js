@@ -62,7 +62,7 @@ $('.no-application-player-btn').click(function() {
   var squadId = document.querySelector("[name='currentSquad']").value;
   var url = '/' + tournamentId + '/' + squadId + '/getPlayers';
   $.get(url, function(data) {
-    $('.error').after(data);
+    $('.container').after(data);
   }).fail(function(data) {
     console.log(data.responseText);
   });
