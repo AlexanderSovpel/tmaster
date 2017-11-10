@@ -345,19 +345,22 @@ class TournamentController extends Controller
         $presentPlayers = array();
 
         foreach ($players as $key => $player) {
-          $squadPlayer = SquadPlayers::where('player_id', $player->id)
-              ->where('squad_id', $currentSquadId)
-              ->first();
+          // $squadPlayer = SquadPlayers::where('player_id', $player->id)
+          //     ->where('squad_id', $currentSquadId)
+          //     ->first();
 
             if (in_array($player->id, $request->input('confirmed'))) {
-              $squadPlayer->present = true;
+              // $squadPlayer->present = true;
+              $player->present = true;
               $presentPlayers[] = $player;
             }
             else {
-              $squadPlayer->present = false;
+              // $squadPlayer->present = false;
+              $player->present = false;
             }
 
-            $squadPlayer->save();
+            // $squadPlayer->save();
+            $player->save();
         }
         // $players = $presentPlayers;
         session(['players' => $presentPlayers]);
