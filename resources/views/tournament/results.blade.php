@@ -33,9 +33,9 @@
           @include('partial.qualification-results')
       </div>
       @if (isset($tournament->roundRobin))
-      <div id="final-results" class="result-table" hidden>
+      <!-- <div id="final-results" class="result-table" hidden>
           @include('partial.final-results')
-      </div>
+      </div> -->
       @endif
       <div id="all-results" class="result-table" hidden>
           @include('partial.all-results')
