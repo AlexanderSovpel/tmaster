@@ -606,11 +606,11 @@ class TournamentController extends Controller
           $roundCount = ($tournament->roundRobin->players % 2) ? $tournament->roundRobin->players : $tournament->roundRobin->players - 1;
         }
 
-        foreach ($qResults as $key => $value) {
-          # code...
-          echo "<p>".$value->sum."</p>";
-          echo "<p>".$key."</p>";
-        }
+        // foreach ($qResults as $key => $value) {
+        //   # code...
+        //   echo "<p>".$value->sum."</p>";
+        //   echo "<p>".$key."</p>";
+        // }
 
         $allResults = $fResults;
         foreach ($qResults as $key => $result) {
