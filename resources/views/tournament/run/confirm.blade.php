@@ -25,7 +25,7 @@
             @endforeach
           </tbody>
         </table>
-        @if ($currentSquad->players()->count() < $currentSquad->max_players)
+        @if (isset($currentSquad) && $currentSquad->players()->count() < $currentSquad->max_players)
           <a href="#" class="no-application-player-btn pull-right">добавить участника</a>
         @endif
         <button type="submit" class="btn">начать жеребьёвку</button>
