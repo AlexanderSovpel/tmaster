@@ -603,7 +603,9 @@ class TournamentController extends Controller
         $roundCount = 0;
         if (isset($tournament->roundRobin)) {
           list($fPlayers, $fGames, $fResults) = $this->getRoundRobinResults($tournament);
-          $roundCount = ($tournament->roundRobin->players % 2) ? $tournament->roundRobin->players : $tournament->roundRobin->players - 1;
+          // $roundCount = ($tournament->roundRobin->players % 2) ? $tournament->roundRobin->players : $tournament->roundRobin->players - 1;
+          $fPlayersCount = count($fPlayers);
+          $roundCount = ($fPlayersCount % 2) ? $fPlayersCount : $fPlayersCount - 1;
         }
 
         // foreach ($qResults as $key => $value) {
