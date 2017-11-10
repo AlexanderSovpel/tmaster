@@ -605,6 +605,7 @@ class TournamentController extends Controller
         foreach ($fPlayers as $key => $value) {
           # code...
           echo "<p>".$value->id."</p>";
+          echo "<p>".$key."</p>";
         }
 
         $allResults = $fResults;
