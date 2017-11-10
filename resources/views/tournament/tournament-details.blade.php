@@ -48,11 +48,13 @@
             <p class="control-label col-md-6">Вступительный взнос</p>
             <p class="detail col-md-6">{{$tournament->qualification->fee}} BYN</p>
             <p class="control-label col-md-6">Контактное лицо</p>
+            @if($tournament->contact)
             <p class="detail col-md-6">
                 {{$tournament->contact->surname}} {{$tournament->contact->name}}<br>
                 {{$tournament->contact->phone}}<br>
                 {{$tournament->contact->email}}
             </p>
+            @endif
         </div>
         <div class="clearfix"></div>
         <p class="penalty">
