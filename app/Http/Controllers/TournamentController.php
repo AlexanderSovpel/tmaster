@@ -602,9 +602,9 @@ class TournamentController extends Controller
           list($fPlayers, $fGames, $fResults) = $this->getRoundRobinResults($tournament);
           $roundCount = ($tournament->roundRobin->players % 2) ? $tournament->roundRobin->players : $tournament->roundRobin->players - 1;
         }
-        foreach ($qPlayers as $key => $value) {
+        foreach ($qResults as $key => $value) {
           # code...
-          echo "<p>".$value->id."</p>";
+          echo "<p>".$value->sum."</p>";
           echo "<p>".$key."</p>";
         }
 
