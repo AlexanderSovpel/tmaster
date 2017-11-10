@@ -620,20 +620,20 @@ class TournamentController extends Controller
             return ($resultA->sum < $resultB->sum);
         });
 
-        // return view('tournament.results', [
-        //     'tournament' => $tournament,
-        //     'sPlayers' => $sPlayers,
-        //     'sGames' => $sGames,
-        //     'sResults' => $sResults,
-        //     'qPlayers' => $qPlayers,
-        //     'qGames' => $qGames,
-        //     'qResults' => $qResults,
-        //     'fPlayers' => $fPlayers,
-        //     'fGames' => $fGames,
-        //     'fResults' => $fResults,
-        //     'roundCount' => $roundCount,
-        //     'allResults' => $allResults
-        // ]);
+        return view('tournament.results', [
+            'tournament' => $tournament,
+            'sPlayers' => $sPlayers,
+            'sGames' => $sGames,
+            'sResults' => $sResults,
+            'qPlayers' => $qPlayers,
+            'qGames' => $qGames,
+            'qResults' => $qResults,
+            'fPlayers' => $fPlayers,
+            'fGames' => $fGames,
+            'fResults' => $fResults,
+            'roundCount' => $roundCount,
+            'allResults' => $allResults
+        ]);
     }
 
     public function newTournament()
