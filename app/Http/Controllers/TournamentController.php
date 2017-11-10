@@ -351,16 +351,16 @@ class TournamentController extends Controller
 
             if (in_array($player->id, $request->input('confirmed'))) {
               // $squadPlayer->present = true;
-              $player->present = true;
+              // $player->present = true;
               $presentPlayers[] = $player;
             }
             else {
               // $squadPlayer->present = false;
-              $player->present = false;
+              // $player->present = false;
             }
 
             // $squadPlayer->save();
-            $player->save();
+            // $player->save();
         }
         // $players = $presentPlayers;
         session(['players' => $presentPlayers]);
