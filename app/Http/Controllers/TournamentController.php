@@ -394,7 +394,7 @@ class TournamentController extends Controller
 
             // $players[$i]->lane = $request->lane[$i];
             // $players[$i]->position = $request->position[$i];
-            $playersLanes[$index] = $request->lane[$i];
+            $playersLanes[] = $request->lane[$i];
         }
 
         $roundCount = ($playersCount % 2) ? $playersCount : $playersCount - 1;
