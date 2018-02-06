@@ -19,24 +19,13 @@ class TournamentController extends Controller
 {
     private $tournaments;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         // $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        // $tournaments = Tournament::all()->sortByDesc('id');
         $tournaments = Tournament::join('squads', 'squads.tournament_id', '=', 'tournaments.id')
           ->orderBy('squads.date', 'DESC')
           ->select('tournaments.*')
@@ -210,14 +199,6 @@ class TournamentController extends Controller
         $currentSquad->save();
 
         $players = session('players');
-        // foreach ($currentSquad->players()->orderBy('surname', 'ASC')->get() as $player) {
-        //   $squadPlayer = SquadPlayers::where('player_id', $player->id)
-        //       ->where('squad_id', $currentSquadId)
-        //       ->first();
-        //   if ($squadPlayer->present) {
-        //     $presentPlayers[] = $player;
-        //   }
-        // }
 
         $playedGames = array();
         foreach($players as $index => $player) {
@@ -229,8 +210,6 @@ class TournamentController extends Controller
               $playedGames[$player->id][] = $game;
           }
 
-          // $player->lane = $request->lane[$index];
-          // $player->position = $request->position[$index];
           $playersLanes[$index] = $request->lane[$index];
         }
 
@@ -240,7 +219,6 @@ class TournamentController extends Controller
             'stage' => 'game',
             'currentSquad' => $currentSquad,
             'currentSquadId' => $currentSquadId,
-            // 'players' => $currentSquad->players,
             'players' => $players,
             'playedGames' => $playedGames,
             'lanes' => $lanes,
@@ -345,24 +323,10 @@ class TournamentController extends Controller
         $presentPlayers = array();
 
         foreach ($players as $key => $player) {
-          // $squadPlayer = SquadPlayers::where('player_id', $player->id)
-          //     ->where('squad_id', $currentSquadId)
-          //     ->first();
-
             if (in_array($player->id, $request->input('confirmed'))) {
-              // $squadPlayer->present = true;
-              // $player->present = true;
               $presentPlayers[] = $player;
             }
-            else {
-              // $squadPlayer->present = false;
-              // $player->present = false;
-            }
-
-            // $squadPlayer->save();
-            // $player->save();
         }
-        // $players = $presentPlayers;
         session(['players' => $presentPlayers]);
 
         return view('tournament.run.draw', [
@@ -382,7 +346,6 @@ class TournamentController extends Controller
         sort($lanes);
         $playersLanes = array();
 
-        // foreach ($players as $index => $player) {
         for ($i = 0; $i < $playersCount; ++$i) {
             $games = Game::where('player_id', $players[$i]->id)
                 ->where('tournament_id', $tournamentId)
@@ -392,8 +355,6 @@ class TournamentController extends Controller
                 $playedGames[$players[$i]->id][] = $game;
             }
 
-            // $players[$i]->lane = $request->lane[$i];
-            // $players[$i]->position = $request->position[$i];
             $playersLanes[] = $request->lane[$i];
         }
 
@@ -543,7 +504,6 @@ class TournamentController extends Controller
               ->get();
           $qGames[$player->id] = $bestSquadGames;
         }
-        #echo $player . ' - ' . $bestSquadGames . ' - ' . $bestSquadResult . '<br>';
       }
 
       $this->sortPlayersByResult($qPlayers, $tournament->id, 'q', null);
@@ -573,7 +533,6 @@ class TournamentController extends Controller
 
         $rrResults[$playerId] = $result;
 
-        #echo $roundRobinPlayer . ' - ' . $roundRobinGames . ' - ' . $result . '<br>';
       }
 
       $this->sortPlayersByResult($rrPlayers, $tournament->id, 'rr', null);
@@ -603,16 +562,9 @@ class TournamentController extends Controller
         $roundCount = 0;
         if (isset($tournament->roundRobin)) {
           list($fPlayers, $fGames, $fResults) = $this->getRoundRobinResults($tournament);
-          // $roundCount = ($tournament->roundRobin->players % 2) ? $tournament->roundRobin->players : $tournament->roundRobin->players - 1;
           $fPlayersCount = count($fPlayers);
           $roundCount = ($fPlayersCount % 2) ? $fPlayersCount : $fPlayersCount - 1;
         }
-
-        // foreach ($qResults as $key => $value) {
-        //   # code...
-        //   echo "<p>".$value->sum."</p>";
-        //   echo "<p>".$key."</p>";
-        // }
 
         $allResults = $fResults;
         foreach ($qResults as $key => $result) {
@@ -690,7 +642,6 @@ class TournamentController extends Controller
             'description' => $request->description,
             'handicap_id' => $handicap->id,
             'qualification_id' => $qualification->id,
-            // 'roundrobin_id' => $roundRobin->id,
             'contact_id' => $contact->id,
             'finished' => false
         ]);
@@ -722,7 +673,6 @@ class TournamentController extends Controller
             $squad->save();
         }
 
-        // return redirect('/');
         return $newTournament;
     }
 
@@ -815,5 +765,4 @@ class TournamentController extends Controller
     $tournament->save();
     return redirect('/');
   }
-
 }

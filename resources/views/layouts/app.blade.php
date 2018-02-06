@@ -84,7 +84,6 @@
                     </g>
                   </svg>
                   БФБ
-                    <!-- {{ config('app.name', 'T-Master') }} -->
                 </a>
             </div>
 
