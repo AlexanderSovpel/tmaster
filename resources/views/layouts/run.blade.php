@@ -80,9 +80,8 @@
                     <a href="#" class="bs-wizard-dot"></a>
                 </div>
             </div>
-            <article class="part panel panel-default">
-                @yield('process')
-            </article>
+            
+            @yield('process')
         </div>
     </div>
 @endsection

@@ -262,7 +262,13 @@
                 </div>
             </div> -->
             <div class="form-group roundrobin">
-                <h3>Round Robin</h3>
+              <div class="form-group row">
+                  <label class="control-label col-md-6">Round Robin</label>
+                  <div class="checkbox col-md-6">
+                      <label><input type="checkbox" id="allow-reentry" name="allow_reentry" value="true" checked>разрешены</label>
+                  </div>
+              </div>
+
                 <div class="form-group row">
                     <label for="rr-players" class="control-label col-md-6">Количество участников</label>
                     <input type="number" name="rr_players" id="rr-players" class="form-control col-md-6" value="6"

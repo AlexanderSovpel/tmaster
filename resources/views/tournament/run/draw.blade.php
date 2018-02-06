@@ -1,6 +1,7 @@
 @extends('layouts.run')
 
 @section('process')
+<article class="panel panel-default part">
     <div class="panel-heading"><h1>Жеребьёвка</h1></div>
     <form action="/{{$tournament->id}}/run/{{$part}}/game/{{$currentSquadId or ''}}" method="get" class="panel-body">
         {{ csrf_field() }}
@@ -16,12 +17,13 @@
             @foreach($players as $player)
                 <tr>
                     <td>{{"$player->surname $player->name"}}</td>
-                    <td><input type="text" name="lane_{{$player->id}}" class="form-control input" value=""></td>
-                    <td><input type="text" name="position_{{$player->id}}" class="form-control input" value=""></td>
+                    <td><input type="text" name="lane[]" class="form-control input" value=""></td>
+                    <td><input type="text" name="position[]" class="form-control input" value=""></td>
                 </tr>
             @endforeach
           </tbody>
         </table>
         <button type="submit" class="btn">начать игру</button>
     </form>
+  </article>
 @endsection

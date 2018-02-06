@@ -83,11 +83,7 @@
 <ol class="breadcrumb">
   <li><a href="/{{$tournament->id}}/players">Участники</a></li>
   <li>
-  @if($tournament->finished)
     <a href="/{{$tournament->id}}/results">Результаты</a>
-  @else
-    Результаты
-  @endif
   </li>
 </ol>
 </article>

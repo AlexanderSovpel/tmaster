@@ -12,25 +12,20 @@
       <th class="player-avg">Средний</th>
     </tr>
   </thead>
-    <!-- @php
-      $players = $fPlayers;
-    @endphp -->
-    @foreach($fPlayers as $key => $player)
+  @foreach($roundRobin->players as $i => $player)
         <tr class="player">
             <input type="hidden" class="player-id" value="{{$player->id}}">
-            <td class="position">{{$key + 1}}</td>
+            <td class="position">{{$i + 1}}</td>
             <td class="player-name">{{$player->surname ." ". $player->name}}</td>
-            <td class="qualification-result">{{(isset($qResults[$player->id]->sum)) ? $qResults[$player->id]->sum : $qResults[$player->id]}}</td>
-            @foreach ($fGames[$player->id] as $game)
+            <td class="qualification-result">{{(isset($qualification->results[$player->id]->sum)) ? $qualification->results[$player->id]->sum : $qualification->results[$player->id]}}</td>
+            @for ($j = 0; $j < $roundCount; ++$j)
               <td class="player-result">
-                @if(isset($game))
-                {{$game->result}}
-                @endif
+                {{$roundRobin->games[$player->id][$j]->result or ''}}
               </td>
-              <td class="player-bonus">+{{$game->bonus}}</td>
-            @endforeach
-            <td id="sum_result_{{$player->id}}" class="player-sum">{{$fResults[$player->id]->sum}}</td>
-            <td id="avg_result_{{$player->id}}" class="player-avg">{{$fResults[$player->id]->avg}}</td>
+              <td class="player-bonus">+{{$roundRobin->games[$player->id][$j]->bonus or ''}}</td>
+            @endfor
+            <td id="sum_result_{{$player->id}}" class="player-sum">{{$roundRobin->results[$player->id]->sum or ''}}</td>
+            <td id="avg_result_{{$player->id}}" class="player-avg">{{isset($roundRobin->results[$player->id]) ? number_format($roundRobin->results[$player->id]->avg, 2, ',', ' ') : ''}}</td>
         </tr>
     @endforeach
 </table>
