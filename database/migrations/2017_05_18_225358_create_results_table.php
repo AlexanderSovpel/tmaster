@@ -13,6 +13,7 @@ class CreateResultsTable extends Migration
      */
     public function up()
     {
+      if (!Schema::hasTable('results')) {
         Schema::create('results', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('tournament_id');
@@ -22,6 +23,7 @@ class CreateResultsTable extends Migration
             $table->double('avg');
             $table->timestamps();
         });
+      }
     }
 
     /**

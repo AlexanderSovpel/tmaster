@@ -11,26 +11,42 @@ use App\User;
 
 class UserController extends Controller
 {
-    public function showAccount()
-    {
-        $user = Auth::user();
-        $today = new DateTime();
-        $birthday = new DateTime($user->birthday);
-        $age = $birthday->diff($today)->format('%y лет');
-        $user->age = $age;
-        return view('account', [
-            'user' => $user,
-        ]);
+  public function __construct()
+  {
+      // $this->middleware('auth');
+  }
+
+  public function showAccount(int $playerId = null)
+  {
+    if ($playerId != null) {
+      $user = User::find($playerId);
+    }
+    else {
+      $user = Auth::user();
     }
 
-    public function getStatistic()
+    $today = new DateTime();
+    $birthday = new DateTime($user->birthday);
+    $age = $birthday->diff($today)->format('%y лет');
+    $user->age = $age;
+    
+    return view('account', [
+      'user' => $user,
+    ]);
+  }
+
+    public function getStatistic($playerId)
     {
-        $user = Auth::user();
+        if ($playerId) {
+          $user = User::find($playerId);
+        }
+        else {
+          $user = Auth::user();
+        }
 
         $dates = array();
         $tournaments = array();
         foreach ($user->games as $game) {
-          // echo $game->date;
             if (!in_array($game->tournament_id, $tournaments)) {
                 $dates[] = $game->date;
                 $tournaments[] = $game->tournament_id;
@@ -69,25 +85,33 @@ class UserController extends Controller
         $user->email = $request->email;
 
         if ($request->hasFile('avatar')) {
-            $avatarLink = 'avatar_' . $user->id . '.' . $request->file('avatar')->getClientOriginalExtension();
-            // $path = $request->file('avatar')->storeAs('avatars', $avatarLink);
-            $path = $request->file('avatar')->move(public_path('img/avatars'), $avatarLink);
-            // $url = Storage::url($avatarLink);
-            $user->avatar = $avatarLink;
+            $avatarName = 'avatar_' . $user->id . '.' . $request->file('avatar')->getClientOriginalExtension();
+            // Storage::disk('s3')->put('avatars/'.$avatarName, $request->file('avatar'));
+            $path = $request->file('avatar')->storeAs('avatars', $avatarName, 's3');
+            $avatarUrl = Storage::disk('s3')->url($avatarName);
+            $user->avatar = $avatarName;
+            // $user->avatar = $path;
+            // $path = $request->file('avatar')->move(public_path('img/avatars'), $avatarLink);
+            // $user->avatar = $avatarLink;
+
         }
 
         if ($request->new_password) {
             if (Hash::check($request->old_password, $user->getAuthPassword())) {
                 if ($request->new_password == $request->password_confirm) {
                     $user->password = bcrypt($request->new_password);
-                    echo "password changed!";
                 }
             }
         }
 
         $user->save();
 
-        return redirect('/account');
+        return redirect('/'.$user->id.'/account');
+    }
+
+    public function getContact($id) {
+      $admin = User::find($id);
+      return json_encode($admin);
     }
 
     public function getPlayers() {
@@ -131,5 +155,12 @@ class UserController extends Controller
         $tempName = 'tempAvatar.' . $request->file('tempImg')->getClientOriginalExtension();;
         $request->file('tempImg')->storeAs('public', $tempName);
         return Storage::url($tempName);
+    }
+
+    public function toggleAdmin($playerId) {
+      $player = User::find($playerId);
+      ($player->is_admin) ? $player->is_admin = false : $player->is_admin = true;
+      $player->save();
+      return $player;
     }
 }

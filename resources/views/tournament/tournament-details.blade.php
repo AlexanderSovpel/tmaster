@@ -26,8 +26,10 @@
             </ul>
           </div>
           @endif
+
           <div class="clearfix"></div>
         </div>
+        <div class="panel-body">
         <p class="description">{{$tournament->description}}</p>
         <p class="decree">
             Соревнования проводятся в соответствии с Положением о рейтинговых соревнованиях, этапах Чемпионата Беларуси
@@ -35,17 +37,24 @@
         </p>
         <div class="details row">
             <p class="control-label col-md-6">Даты проведения</p>
-            <p class="detail col-md-6">{{date('j.m.Y', strtotime($tournament->squads()->orderBy('date', 'ASC')->orderBy('start_time', 'ASC')->first()->date))}} &mdash; {{date('j.m.Y', strtotime($tournament->roundRobin->date))}}</p>
+            <p class="detail col-md-6">
+              {{date('j.m.Y', strtotime($tournament->squads()->orderBy('date', 'ASC')->orderBy('start_time', 'ASC')->first()->date))}} &mdash;
+              {{(isset($tournament->roundRobin)) ?
+                date('j.m.Y', strtotime($tournament->roundRobin->date)) :
+                date('j.m.Y', strtotime($tournament->squads()->orderBy('date', 'DESC')->orderBy('start_time', 'DESC')->first()->date))}}
+            </p>
             <p class="control-label col-md-6">Место проведения</p>
             <p class="detail col-md-6">{{$tournament->location}}</p>
             <p class="control-label col-md-6">Вступительный взнос</p>
             <p class="detail col-md-6">{{$tournament->qualification->fee}} BYN</p>
             <p class="control-label col-md-6">Контактное лицо</p>
+            @if($tournament->contact)
             <p class="detail col-md-6">
                 {{$tournament->contact->surname}} {{$tournament->contact->name}}<br>
                 {{$tournament->contact->phone}}<br>
                 {{$tournament->contact->email}}
             </p>
+            @endif
         </div>
         <div class="clearfix"></div>
         <p class="penalty">
@@ -64,23 +73,24 @@
         @endphp
         <ul class="schedule">
             @foreach($days as $key => $day)
-              <li class="schedule-day">{{date('j.m.Y', strtotime($day))}}:
+                <li class="schedule-day">{{date('j.m.Y', strtotime($day))}}:
                     <ul>
-                      @foreach($tournament->squads()->orderBy('date', 'ASC')->orderBy('start_time', 'ASC')->get() as $index => $squad)
+                        @foreach($tournament->squads()->orderBy('date', 'ASC')->orderBy('start_time', 'ASC')->get() as $index => $squad)
                             @if($squad->date == $day)
-                              <li class="schedule-time">
-                                  <span class="time">{{date('H:i', strtotime($squad->start_time))}}-{{date('H:i', strtotime($squad->end_time))}}</span>
-                                  {{$index + 1}}-ая группа, {{$squad->max_players}}
-                                  участников, {{$tournament->qualification->games * $tournament->qualification->entries}}
-                                  игр квалификации
-                              </li>
+                                <li class="schedule-time">
+                                    <span class="time">{{date('H:i', strtotime($squad->start_time))}}-{{date('H:i', strtotime($squad->end_time))}}</span>
+                                    {{$index + 1}}-ая группа, {{$squad->max_players}}
+                                    участников, {{$tournament->qualification->games * $tournament->qualification->entries}}
+                                    игр квалификации
+                                </li>
                             @endif
                         @endforeach
                     </ul>
                 </li>
             @endforeach
+            @if(isset($tournament->roundrobin))
             <li class="schedule-day">
-              {{date('j.m.Y', strtotime($tournament->roundrobin->date))}}:
+                {{date('j.m.Y', strtotime($tournament->roundrobin->date))}}:
                 <ul>
                     <li class="schedule-time">
                         <span class="time">{{date('H:i', strtotime($tournament->roundrobin->start_time))}}
@@ -89,20 +99,20 @@
                     </li>
                 </ul>
             </li>
+            @endif
         </ul>
-        @if(!$tournament->finished)
-          @if(\Illuminate\Support\Facades\Auth::user()->is_admin)
+        @if(!$tournament->finished && \Illuminate\Support\Facades\Auth::check())
+            @if($user->is_admin)
             <a href="/{{$tournament->id}}/run/q/conf/{{$tournament->squads[0]->id}}" class="tournament-btn-lg btn">начать соревнование</a>
-          @else
+            @else
             <a href="/{{$tournament->id}}/apply" class="btn tournament-btn-lg">подать заявку</a>
-          @endif
+            @endif
         @endif
         <div class="clearfix"></div>
         <ol class="breadcrumb">
-            <li><a href="/{{$tournament->id}}/players">Участники</a></li>
-            <li>
-              <a href="/{{$tournament->id}}/results">Результаты</a>
-            </li>
+            <li><a href="/{{$tournament->id}}/players">Заявки</a></li>
+            <li><a href="/{{$tournament->id}}/results">Результаты</a></li>
         </ol>
+      </div>
     </article>
 @endsection

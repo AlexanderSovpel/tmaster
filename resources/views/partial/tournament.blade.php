@@ -19,10 +19,12 @@
   </div>
   @endif
 
-  <p class="date">{{date('j.m.Y',
-    strtotime($tournament->squads()->orderBy('date', 'ASC')
-    ->orderBy('start_time', 'ASC')->first()->date))}} &mdash; {{date('j.m.Y',
-    strtotime($tournament->roundRobin->date))}}</p>
+  <p class="date">
+    {{date('j.m.Y', strtotime($tournament->squads()->orderBy('date', 'ASC')->orderBy('start_time', 'ASC')->first()->date))}} &mdash;
+    {{(isset($tournament->roundRobin)) ?
+      date('j.m.Y', strtotime($tournament->roundRobin->date)) :
+      date('j.m.Y', strtotime($tournament->squads()->orderBy('date', 'DESC')->orderBy('start_time', 'DESC')->first()->date))}}
+    </p>
 
   @if(!$tournament->finished)
   <p class='tournament-open'>регистрация открыта</p>
@@ -53,6 +55,7 @@
     </div>
   </div>
 
+  @if(isset($tournament->roundRobin))
   <div class="info row">
     <p class="info-label col-md-6">Финал</p>
     <p class="info-data col-md-6">{{date('j.m.Y',
@@ -60,6 +63,7 @@
       {{date('H:i', strtotime($tournament->roundRobin->start_time))}} &ndash;
       {{date('H:i', strtotime($tournament->roundRobin->end_time))}}</p>
   </div>
+  @endif
 
   <div class="info row">
     <p class="info-label col-md-6">Место проведения</p>
@@ -81,7 +85,7 @@
 @endif
 
 <ol class="breadcrumb">
-  <li><a href="/{{$tournament->id}}/players">Участники</a></li>
+  <li><a href="/{{$tournament->id}}/players">Заявки</a></li>
   <li>
     <a href="/{{$tournament->id}}/results">Результаты</a>
   </li>

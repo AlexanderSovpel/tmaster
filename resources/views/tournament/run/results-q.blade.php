@@ -2,12 +2,15 @@
 
 @section('process')
 <article class="panel panel-default part">
-<h1>Квалификация - Результаты</h1>
-<form action="/{{$tournament->id}}/run/rr/conf/" method="get">
-    {{ csrf_field() }}
-    <!-- <input type="hidden" name="players" value="{{json_encode($qPlayers)}}"> -->
-    @include('partial.qualification-results')
-    <button type="submit" class="btn">начать финал</button>
-</form>
+  <div class="panel-header"><h1>Квалификация - Результаты</h1></div>
+  <form action="/{{$tournament->id}}/run/rr/conf/" method="get" class="panel-body">
+      {{ csrf_field() }}
+      @include('partial.qualification-results')
+      @if (isset($tournament->roundRobin))
+      <button type="submit" class="btn">начать финал</button>
+      @else
+      <button type="submit" class="btn">завершить соревнование</button>
+      @endif
+  </form>
 </article>
 @endsection

@@ -15,11 +15,9 @@ class CreateSquadPlayersTable extends Migration
     {
         if (!Schema::hasTable('squad_players')) {
             Schema::create('squad_players', function (Blueprint $table) {
-//            common
                 $table->increments('id');
                 $table->integer('squad_id');
                 $table->integer('player_id');
-
                 $table->timestamps();
             });
         }

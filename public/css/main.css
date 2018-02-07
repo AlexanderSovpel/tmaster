@@ -451,6 +451,8 @@ thead {
 .squads {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
 }
 
 .squad {
@@ -499,6 +501,10 @@ thead {
 .squad .apply-form {
     width: 100%;
     float: none;
+}
+
+.present-mark {
+  float: right;
 }
 /*END Players*/
 
@@ -723,6 +729,11 @@ tr:nth-child(2n) {
 .remove-squad {
   float: right;
 }
+
+#has-roundrobin {
+  margin-top: 22px;
+  margin-bottom: 11px;
+}
 /* END New Tournament */
 
 /*Running Game*/
@@ -794,6 +805,11 @@ tr:nth-child(2n) {
   display: block;
 }
 
+#shuffle {
+  float: right;
+  margin-top: -40px;
+}
+
 .qualification-games,
 .round-robin-games,
 .lanes {
@@ -813,7 +829,6 @@ tr:nth-child(2n) {
 }
 
 .finish-game {
-  width: 50%;
   margin: 20px auto 0px;
 }
 

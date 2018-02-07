@@ -12,9 +12,14 @@
     </tr>
   </thead>
   <tbody>
-    @foreach($qualification->players as $i => $player)
+    @if(count($qPlayers) === 0)
         <tr class="player">
-            <input type="hidden" class="player-id" value="{{$player->id}}">
+            <td colspan="100">No results yet</td>
+        </tr>
+    @endif
+    @foreach($qPlayers as $i => $player)
+        <tr class="player">
+            <input type="hidden" class="player-id" value="{{$qPlayers[$i]->id}}">
             <td class="position">
               @if($i < $tournament->qualification->finalists)
               <span class="label label-success">{{$i + 1}}</span>
@@ -22,23 +27,28 @@
               <span class="label label-info">{{$i + 1}}</span>
               @endif
             </td>
-            <td class="player-name">{{$player->surname ." ". $player->name}}</td>
+            <td class="player-name">{{$qPlayers[$i]->surname ." ". $qPlayers[$i]->name}}</td>
             @for ($j = 0; $j < $tournament->qualification->entries; ++$j)
             <td class="player-result">
-              @if (isset($qualification->games[$player->id][$j]))
-              {{$qualification->games[$player->id][$j]->result}}
+              @if (isset($qGames[$qPlayers[$i]->id][$j]))
+              <button type="button" data-toggle="modal" data-target="#changeResult"
+                data-id="{{$qGames[$qPlayers[$i]->id][$j]->id}}"
+                data-result="{{$qGames[$qPlayers[$i]->id][$j]->result}}"
+                data-bonus="{{$qGames[$qPlayers[$i]->id][$j]->bonus}}">
+              {{$qGames[$qPlayers[$i]->id][$j]->result}}
+              </button>
               @endif
             </td>
             @endfor
-            <td id="handicap_{{$qualification->players[$i]->id}}" class="player-bonus">
-                @if($qualification->players[$i]->gender == $tournament->handicap->type)
+            <td id="handicap_{{$qPlayers[$i]->id}}" class="player-bonus">
+                @if($qPlayers[$i]->gender == $tournament->handicap->type)
                     {{$tournament->handicap->value}}
                 @else
                     {{0}}
                 @endif
             </td>
-            <td id="sum_result_{{$qualification->players[$i]->id}}" class="player-sum">{{(isset($qualification->results[$player->id])) ? $qualification->results[$player->id]->sum : ''}}</td>
-            <td id="avg_result_{{$qualification->players[$i]->id}}" class="player-avg">{{(isset($qualification->results[$player->id])) ? number_format($qualification->results[$player->id]->avg, 2, ',', ' ') : ''}}</td>
+            <td id="sum_result_{{$qPlayers[$i]->id}}" class="player-sum">{{(isset($qResults[$qPlayers[$i]->id])) ? $qResults[$qPlayers[$i]->id]->sum : ''}}</td>
+            <td id="avg_result_{{$qPlayers[$i]->id}}" class="player-avg">{{(isset($qResults[$qPlayers[$i]->id])) ? number_format($qResults[$qPlayers[$i]->id]->avg, 2, ',', ' ') : ''}}</td>
         </tr>
     @endforeach
   </tbody>

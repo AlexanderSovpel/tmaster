@@ -1,117 +1,118 @@
-var squad = document.getElementById('squad');
+(function() {
+
+var tournamentId = $('#tournament-id').val();
+
+var squad = $('#squad');
 if (squad) {
-    squad.onchange = getPlayersList;
-    getPlayersList();
+  squad.change(getPlayersList);
+  getPlayersList();
 }
 
 $('#apply-button').click(function (e) {
   e.preventDefault();
-  var tournamentId = $('#tournament-id').val();
-  var squad = {
-      squad: $('#squad').val()
+  var body = {
+    squad: $('#squad').val()
   };
 
   $.ajax({
-      type: 'POST',
-      url: '/' + tournamentId + '/sendApplication',
-      data: squad,
-      headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-      success: function (data) {
-          $('.error').html(data);
-          getPlayersList();
-      }
+    type: 'POST',
+    url: '/' + tournamentId + '/sendApplication',
+    data: body,
+    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+    success: function (data) {
+      $('.message').html(data);
+      getPlayersList();
+    }
+
   }).fail(function (data) {
-      $('.error').html(data.responseText);
+    $('.message').html(data.responseText);
   });
 });
 
-var playersApplyBtn = document.querySelector('.players-tournament-btn');
-$(playersApplyBtn).click(function (e) {
-    e.preventDefault();
-    var tournamentId = $('#tournament-id').val();
-    var squad = {
-        squad: $(this).siblings("[name='squad']").val()
-    };
+$('.players-tournament-btn').click(function (e) {
+  e.preventDefault();
+  var body = {
+    squad: $(this).siblings("[name='squad']").val()
+  };
 
-    $.ajax({
-        type: 'POST',
-        url: '/' + tournamentId + '/sendApplication',
-        data: squad,
-        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        success: function (data) {
-            $('.error').html(data);
-            location.reload();
-        }
-    }).fail(function (data) {
-        $('.error').html(data.responseText);
-    });
+  $.ajax({
+    type: 'POST',
+    url: '/' + tournamentId + '/sendApplication',
+    data: body,
+    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+    success: function (data) {
+      $('.message').html(data);
+      location.reload();
+    }
+
+  }).fail(function (data) {
+    $('.message').html(data.responseText);
+  });
 });
 
-function getPlayersList() {
-    var selectedSquad = squad.options[squad.selectedIndex].value;
+$('.add-player-btn').click(function() {
+  var squadId = $(this).siblings("[name='squad_id']").val();
+  $.get('/' + tournamentId + '/' + squadId + '/getPlayers', function(data) {
+    $('.message').after(data);
 
-    $.get('/getSquadFilling/' + selectedSquad, function (data) {
-      var response = JSON.parse(data);
-      $('#fill').html(response.playersCount + '/' + response.maxPlayers);
-      $('#players').empty();
-      for (var i = 0; i < response.players.length; ++i) {
-        $('#players').append('<li>' + response.players[i].surname + ' ' +
-          response.players[i].name + '</li>');
-      }
-    }).fail(function(data) {
-        $('.error').html(data);
-    });
-}
-
-var addPlayerBtn = document.querySelector('.add-player-btn');
-if (addPlayerBtn) {
-  $('.add-player-btn').click(function() {
-    var tournamentId = document.querySelector('#tournament-id').value;
-    var squadId = $(this).siblings("[name='squad_id']").val();
-    var url = '/' + tournamentId + '/' + squadId + '/getPlayers';
-    $.get(url, function(data) {
-      $(addPlayerBtn).after(data);
-      // console.log(data);
-    }).fail(function(data) {
-      console.log(data.responseText);
-    });
+  }).fail(function(data) {
+    console.error(data.responseText);
   });
-}
+});
+
+$('.no-application-player-btn').click(function() {
+  var squadId = document.querySelector("[name='currentSquad']").value;
+  $.get('/' + tournamentId + '/' + squadId + '/getPlayers', function(data) {
+    $('.container').after(data);
+
+  }).fail(function(data) {
+    console.error(data.responseText);
+  });
+});
 
 function closeApply() {
   $('#popup').remove();
 }
 
-function sendApplication() {
-  var tournamentId = $('#tournament-id').val();
-  var params = {
-      squad: $('#apply-squad').val(),
-      player_id: $('#player-select').val()
-  };
+function getPlayersList() {
+  var selectedSquad = squad[0].options[squad[0].selectedIndex].value;
 
-  $.ajax({
-      type: 'POST',
-      url: '/' + tournamentId + '/sendApplication',
-      data: params,
-      headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-      success: function (data) {
-        closeApply();
-          $('.error').html(data);
-          location.reload();
-      }
-  }).fail(function (data) {
-      $('.error').html(data.responseText);
+  $.get('/getSquadFilling/' + selectedSquad, function (data) {
+    var response = JSON.parse(data);
+
+    $('#fill').html(response.playersCount + '/' + response.maxPlayers);
+    $('#players').empty();
+
+    for (var i = 0; i < response.players.length; ++i) {
+      $('#players').append('<li>' + response.players[i].surname + ' ' +
+        response.players[i].name + '</li>');
+    }
+
+  }).fail(function(data) {
+    $('.message').html(data);
   });
 }
 
-// var players = document.querySelectorAll('.player');
-// for (var i = 0; i < players.length; ++i) {
-//     var playerId = players[i].querySelector('.player-id').value;
-//     var tournamentId = document.getElementsByName('tournament')[0].value;
-//     var part = document.getElementsByName('part')[0].value;
-//     var squadId = document.getElementsByName('currentSquad')[0].value;
-//
-//     var blockSum = fillBlockSum(playerId, tournamentId, part, squadId);
-//     var gamesCount = players[i].querySelectorAll(".played").length;
-//     fillBlockAvg(blockSum, gamesCount, playerId);
-// }
+function sendApplication() {
+  var body = {
+    squad: $('#apply-squad').val(),
+    player_id: $('#player-select').val()
+  };
+
+  $.ajax({
+    type: 'POST',
+    url: '/' + tournamentId + '/sendApplication',
+    data: body,
+    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+    success: function (data) {
+      closeApply();
+      $('.message').html(data);
+      location.reload();
+    }
+
+  }).fail(function (data) {
+    $('.message').html(data.responseText);
+  });
+}
+
+})();

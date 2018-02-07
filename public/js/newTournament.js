@@ -1,3 +1,5 @@
+(function() {
+
 var newTournamentForm = document.getElementById('new-tournament');
 if (newTournamentForm) {
   sessionStorage.setItem('currentStep', 0);
@@ -11,6 +13,14 @@ if (newTournamentForm) {
       formFields[i].value = sessionStorage.getItem(formFields[i].name)
     }
   }
+
+  $('#allow-reentry').change(function() {
+    checkReentry();
+  });
+
+  $('#has-roundrobin').change(function() {
+    checkRoundRobin();
+  });
 
   var contactPerson = document.querySelector('#contact-person');
   $(contactPerson).change(function() {
@@ -46,6 +56,8 @@ if (newTournamentForm) {
           qualification_entries: $('#qualification-entries').val(),
           qualification_finalists: $('#qualification-finalists').val(),
 
+          has_roundrobin: $('#has-roundrobin').val(),
+
           rr_players: $('#rr-players').val(),
           rr_win_bonus: $('#rr-win-bonus').val(),
           rr_draw_bonus: $('#rr-draw-bonus').val(),
@@ -71,7 +83,8 @@ if (newTournamentForm) {
         },
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         success: function (data) {
-            location.replace('/');
+          console.log(data);
+          location.replace('/');
         }
     }).fail(function (data) {
         console.log(data.responseText);
@@ -125,10 +138,9 @@ if (newTournamentForm) {
 
     nextStepBtn.onclick = function () {
       var currentStepDiv = $('.creation-step')[currentStep.value];
-      var currentStepFields = $(currentStepDiv).find('.form-control');
-      for(var i = 0; i < currentStepFields.length; ++i) {
-        if (!currentStepFields[i].value) {
-          console.log('not all fields are filled!');
+      var currentStepRequired = $(currentStepDiv).find('.required');
+      for(var i = 0; i < currentStepRequired.length; ++i) {
+        if (!currentStepRequired[i].value) {
           $('#error').html('<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><span>Заполните все поля!</span></div>');
           return;
         }
@@ -167,6 +179,14 @@ if (editTournament) {
   $('.bs-wizard-step').addClass('complete');
   $('.bs-wizard-step').removeClass('disabled');
 
+  $('#has-roundrobin').change(function() {
+    checkRoundRobin();
+  });
+
+  $('#allow-reentry').change(function() {
+    checkReentry();
+  });
+
   var currentStep = editTournament.querySelector('#step');
   var steps = editTournament.querySelectorAll('.creation-step');
   var nextStepBtn = editTournament.querySelector('#next-step');
@@ -183,7 +203,6 @@ if (editTournament) {
       if (!$(this).hasClass('disabled')) {
         $(wizardSteps).removeClass('active');
         $(this).addClass('active');
-        // $(this).removeClass('complete');
         currentStep.value = step;
         showStep(steps, step);
         toggleStepBtnVisibility(editTournament);
@@ -209,10 +228,9 @@ if (editTournament) {
 
   nextStepBtn.onclick = function () {
     var currentStepDiv = $('.creation-step')[currentStep.value];
-    var currentStepFields = $(currentStepDiv).find('.form-control');
-    for(var i = 0; i < currentStepFields.length; ++i) {
-      if (!currentStepFields[i].value) {
-        console.log('not all fields are filled!');
+    var currentStepRequired = $(currentStepDiv).find('.required');
+    for(var i = 0; i < currentStepRequired.length; ++i) {
+      if (!currentStepRequired[i].value) {
         $('#error').html('<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><span>Заполните все поля!</span></div>');
         return;
       }
@@ -232,8 +250,41 @@ if (editTournament) {
       showStep(steps, currentStep.value);
       toggleStepBtnVisibility(editTournament);
   };
+
+  checkRoundRobin();
+  checkReentry();
 }
 
+
+function checkRoundRobin() {
+  if ($('#has-roundrobin').prop('checked')) {
+    $('#rr-players').parent().show();
+    $('#rr-win-bonus').parent().show();
+    $('#rr-draw-bonus').parent().show();
+    $('#rr-date').prop('disabled', false);
+    $('#rr-start-time').prop('disabled', false);
+    $('#rr-end-time').prop('disabled', false);
+  }
+  else {
+    $('#rr-players').parent().hide();
+    $('#rr-win-bonus').parent().hide();
+    $('#rr-draw-bonus').parent().hide();
+    $('#rr-date').prop('disabled', true);
+    $('#rr-start-time').prop('disabled', true);
+    $('#rr-end-time').prop('disabled', true);
+  }
+}
+
+function checkReentry() {
+  if ($('#allow-reentry').prop('checked')) {
+    $('#reentries-amount').prop('disabled', false);
+    $('#reentry-fee').prop('disabled', false);
+  }
+  else {
+    $('#reentries-amount').prop('disabled', true);
+    $('#reentry-fee').prop('disabled', true);
+  }
+}
 
 var addSquadBtn = document.getElementById('add-squad');
 var squadsCount = document.getElementById('squads-count');
@@ -263,7 +314,6 @@ for (var i = 0; i < removeSquadBtns.length; ++i) {
 function removeSquad(squad) {
     $(squad).parent().remove();
     $('#squads-count').val($('#squads-count').val() - 1);
-    // --squadsCount.value;
 }
 
 function showStep(steps, step) {
@@ -304,7 +354,6 @@ function toggleStepBtnVisibility(form, isNew) {
     }
     else {
       $(prevStepBtn).show();
-      // $(saveBtn).show();
     }
     (currentStep == steps.length - 1) ? $(nextStepBtn).hide() : $(nextStepBtn).show();
     if (isNew) {
@@ -324,3 +373,5 @@ $('#contact-person').change(function() {
   $('#contact-phone').val($(this.options[this.selectedIndex]).data('phone'));
   $('#contact-email').val($(this.options[this.selectedIndex]).data('email'));
 });
+
+})();

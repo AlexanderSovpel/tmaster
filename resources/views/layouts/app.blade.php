@@ -14,7 +14,6 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Cuprum" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/jquery.Jcrop.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -85,7 +84,6 @@
                     </g>
                   </svg>
                   БФБ
-                    <!-- {{ config('app.name', 'T-Master') }} -->
                 </a>
             </div>
 
@@ -111,7 +109,7 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="/account">Профиль</a></li>
+                                <li><a href="/{{Auth::user()->id}}/account">Профиль</a></li>
                                 <li><a href="/account/edit">Настройки</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li>
@@ -142,12 +140,12 @@
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/resultTabs.js') }}"></script>
+@yield('scripts')
+<!-- <script src="{{ asset('js/resultTabs.js') }}"></script>
 <script src="{{ asset('js/apply.js') }}"></script>
 <script src="{{ asset('js/newTournament.js') }}"></script>
 <script src="{{ asset('js/statistics.js') }}"></script>
 <script src="{{ asset('js/run.js') }}"></script>
-<script src="{{ asset('js/jquery.Jcrop.js') }}"></script>
-<script src="{{ asset('js/account.js') }}"></script>
+<script src="{{ asset('js/account.js') }}"></script> -->
 </body>
 </html>

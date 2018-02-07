@@ -8,6 +8,11 @@
     </tr>
   </thead>
   <tbody>
+    @if(count($allResults) === 0)
+      <tr class="player">
+        <td colspan="100">No results yet</td>
+      </tr>
+    @endif
     @foreach($allResults as $key => $result)
       <tr class="player">
           <td class="position">{{$key + 1}}</td>
@@ -15,7 +20,7 @@
         <td id="sum_result_{{$result->player->id}}" class="player-sum">{{$result->sum}}</td>
         <td id="part_{{$result->player->id}}" class="player-avg">
           @if ($result->part == 'q')
-          <span class="label label-info">кв-ия</span>
+          <span class="label label-info">квалификация</span>
           @elseif($result->part == 'rr')
           <span class="label label-success">финал</span>
           @endif

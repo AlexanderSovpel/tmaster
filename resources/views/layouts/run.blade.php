@@ -18,6 +18,7 @@
                         class="list-group-item"
                         @endif
                 >Квалификация
+                  @if(count($tournament->squads) > 1)
                     <ul class="list-group">
                         @for($i = 0; $i < count($tournament->squads); ++$i)
                             <li
@@ -30,11 +31,20 @@
                                     @else
                                     class="list-group-item"
                                     @endif
-                            >Поток {{$i + 1}}</li>
+                            >Поток {{$i + 1}}
+                            @if ($tournament->qualification->games > 1)
+                            <ul class="list-group">
+                            @for($j = 0; $j < $tournament->qualification->games; ++$j)
+                              <li class="list-group-item">Блок {{$j + 1}}</li>
+                            @endfor
+                            </ul>
+                            @endif
+                          </li>
                         @endfor
                     </ul>
+                  @endif
                 </li>
-                @if ($tournament->roundRobin->players)
+                @if (isset($tournament->roundRobin))
                 <li
                         @if ($part == 'rr')
                         class="list-group-item active"
@@ -80,8 +90,12 @@
                     <a href="#" class="bs-wizard-dot"></a>
                 </div>
             </div>
-            
+
             @yield('process')
         </div>
     </div>
+@endsection
+
+@section('scripts')
+<script src="{{ asset('js/run.js') }}"></script>
 @endsection

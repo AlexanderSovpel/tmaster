@@ -12,28 +12,33 @@
     </tr>
   </thead>
   <tbody>
-    @foreach($squad->players as $i => $player)
+    @if(count($sPlayers[$squadId]) === 0)
+        <tr class="player">
+            <td colspan="100">No results yet</td>
+        </tr>
+    @endif
+    @for($i = 0; $i < count($sPlayers[$squadId]); ++$i)
         <tr class="player">
             <td>{{$i + 1}}</td>
-            <input type="hidden" class="player-id" value="{{$player->id}}">
-            <td>{{$player->surname ." ". $player->name}}</td>
+            <input type="hidden" class="player-id" value="{{$sPlayers[$squadId][$i]->id}}">
+            <td>{{$sPlayers[$squadId][$i]->surname ." ". $sPlayers[$squadId][$i]->name}}</td>
             @for ($j = 0; $j < $tournament->qualification->entries; ++$j)
                 <td>
-                @if(isset($squad->games[$player->id][$j]))
-                {{$squad->games[$player->id][$j]->result}}
-                @endif
+                    @if(isset($sGames[$squadId][$sPlayers[$squadId][$i]->id][$j]))
+                        {{$sGames[$squadId][$sPlayers[$squadId][$i]->id][$j]->result}}
+                    @endif
                 </td>
             @endfor
-            <td id="handicap_{{$player->id}}" class="player-bonus">
-                @if($player->gender == $tournament->handicap->type)
+            <td id="handicap_{{$sPlayers[$squadId][$i]->id}}" class="player-bonus">
+                @if($sPlayers[$squadId][$i]->gender == $tournament->handicap->type)
                     {{$tournament->handicap->value}}
                 @else
                     {{0}}
                 @endif
             </td>
-            <td id="sum_result_{{$player}}">{{$squad->results[$player->id]->sum or ''}}</td>
-            <td id="avg_result_{{$player}}">{{isset($squad->results[$player->id]) ? number_format($squad->results[$i]->avg, 2, ',', ' ') : ''}}</td>
+            <td id="sum_result_{{$sPlayers[$squadId][$i]->id}}">{{(isset($sResults[$squadId][$sPlayers[$squadId][$i]->id])) ? $sResults[$squadId][$sPlayers[$squadId][$i]->id]->sum : 0}}</td>
+            <td id="avg_result_{{$sPlayers[$squadId][$i]->id}}">{{(isset($sResults[$squadId][$sPlayers[$squadId][$i]->id])) ? number_format($sResults[$squadId][$sPlayers[$squadId][$i]->id]->avg, 2, ',', ' ') : 0}}</td>
         </tr>
-    @endforeach
+    @endfor
   </tbody>
 </table>

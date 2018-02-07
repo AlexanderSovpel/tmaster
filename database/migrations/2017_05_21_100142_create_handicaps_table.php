@@ -13,13 +13,16 @@ class CreateHandicapsTable extends Migration
      */
     public function up()
     {
+      if (!Schema::hasTable('handicaps')) {
         Schema::create('handicaps', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('tournament_id')->unsigned();
             $table->string('type')->default('женский')->nullable();
             $table->integer('value')->default(8);
             $table->integer('max_game')->default(300);
             $table->timestamps();
         });
+      }
     }
 
     /**

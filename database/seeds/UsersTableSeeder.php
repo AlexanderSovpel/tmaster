@@ -58,5 +58,16 @@ class UsersTableSeeder extends Seeder
             'gender' => 'женский',
             'email' => 'harperkelly@gmail.com'
         ]);
+
+        DB::table('users')->insert([
+            'name' => 'Василий',
+            'surname' => 'Пупкин',
+            'birthday' => '1988-08-12',
+            'gender' => 'мужской',
+            'email' => 'vpupkin@gmail.com',
+            'password' => bcrypt('qwerty'),
+            'phone' => '+375292222222',
+            'is_admin' => true
+        ]);
     }
 }
