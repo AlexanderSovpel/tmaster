@@ -12,7 +12,12 @@
     </tr>
   </thead>
   <tbody>
-    @for($i = 0; $i < count($qPlayers); ++$i)
+    @if(count($qPlayers) === 0)
+        <tr class="player">
+            <td colspan="100">No results yet</td>
+        </tr>
+    @endif
+    @foreach($qPlayers as $i => $player)
         <tr class="player">
             <input type="hidden" class="player-id" value="{{$qPlayers[$i]->id}}">
             <td class="position">
@@ -45,6 +50,6 @@
             <td id="sum_result_{{$qPlayers[$i]->id}}" class="player-sum">{{(isset($qResults[$qPlayers[$i]->id])) ? $qResults[$qPlayers[$i]->id]->sum : ''}}</td>
             <td id="avg_result_{{$qPlayers[$i]->id}}" class="player-avg">{{(isset($qResults[$qPlayers[$i]->id])) ? number_format($qResults[$qPlayers[$i]->id]->avg, 2, ',', ' ') : ''}}</td>
         </tr>
-    @endfor
+    @endforeach
   </tbody>
 </table>

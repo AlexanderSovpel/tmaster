@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use App\User;
 
 class UserController extends Controller
@@ -16,22 +16,24 @@ class UserController extends Controller
       // $this->middleware('auth');
   }
 
-    public function showAccount($playerId)
-    {
-        if ($playerId) {
-          $user = User::find($playerId);
-        }
-        else {
-          $user = Auth::user();
-        }
-        $today = new DateTime();
-        $birthday = new DateTime($user->birthday);
-        $age = $birthday->diff($today)->format('%y лет');
-        $user->age = $age;
-        return view('account', [
-            'user' => $user,
-        ]);
+  public function showAccount(int $playerId = null)
+  {
+    if ($playerId != null) {
+      $user = User::find($playerId);
     }
+    else {
+      $user = Auth::user();
+    }
+
+    $today = new DateTime();
+    $birthday = new DateTime($user->birthday);
+    $age = $birthday->diff($today)->format('%y лет');
+    $user->age = $age;
+    
+    return view('account', [
+      'user' => $user,
+    ]);
+  }
 
     public function getStatistic($playerId)
     {
@@ -43,19 +45,21 @@ class UserController extends Controller
         }
 
         $dates = array();
+        $tournaments = array();
         foreach ($user->games as $game) {
-            if (!in_array($game->date, $dates)) {
+            if (!in_array($game->tournament_id, $tournaments)) {
                 $dates[] = $game->date;
+                $tournaments[] = $game->tournament_id;
             }
         }
 
         $statistic = array();
-        foreach ($dates as $date) {
+        foreach ($dates as $index => $date) {
             $s = new \stdClass();
             $s->date = $date;
-            $s->min = $user->games()->where('date', $date)->min('result');
-            $s->max = $user->games()->where('date', $date)->max('result');
-            $s->avg = round($user->games()->where('date', $date)->avg('result'), 2);
+            $s->min = $user->games()->where('tournament_id', $tournaments[$index])->min('result');
+            $s->max = $user->games()->where('tournament_id', $tournaments[$index])->max('result');
+            $s->avg = round($user->games()->where('tournament_id', $tournaments[$index])->avg('result'), 2);
             $statistic[] = $s;
         }
 

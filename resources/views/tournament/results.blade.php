@@ -62,3 +62,7 @@
     </div>
   </div>
 @endsection
+
+@section('scripts')
+<script src="https://tmaster.herokuapp.com/js/resultTabs.js"></script>
+@endsection

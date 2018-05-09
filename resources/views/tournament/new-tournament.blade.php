@@ -258,3 +258,7 @@
     </form>
     <div id="error"></div>
 @endsection
+
+@section('scripts')
+<script src="https://tmaster.herokuapp.com/js/newTournament.js"></script>
+@endsection

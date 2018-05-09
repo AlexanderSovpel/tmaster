@@ -31,3 +31,8 @@
         </div>
     </div>
 @endsection
+
+@section('scripts')
+<script src="https://tmaster.herokuapp.com/js/account.js"></script>
+<script src="https://tmaster.herokuapp.com/js/statistics.js"></script>
+@endsection

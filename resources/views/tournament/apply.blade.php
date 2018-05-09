@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 @include('partial.breadcrumb', ['page' => 'Подача заявки'])
-<div class="error"></div>
+<div class="message"></div>
 <article class="apply panel panel-default">
     <div class="panel-heading"><h1>Подача заявки</h1></div>
     <form action="{{url("$tournament->id/sendApplication")}}" method="post" class="">
@@ -37,4 +37,8 @@
         <div class="clearfix"></div>
         </form>
     </article>
+@endsection
+
+@section('scripts')
+<script src="https://tmaster.herokuapp.com/js/apply.js"></script>
 @endsection

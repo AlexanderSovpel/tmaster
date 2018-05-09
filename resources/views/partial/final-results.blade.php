@@ -12,10 +12,16 @@
       <th class="player-avg">Средний</th>
     </tr>
   </thead>
-    @foreach($fPlayers as $key => $player)
+  <tbody>
+  @if(count($fPlayers) === 0)
+    <tr class="player">
+      <td colspan="100">No results yet</td>
+    </tr>
+  @endif
+  @foreach($fPlayers as $i => $player)
         <tr class="player">
             <input type="hidden" class="player-id" value="{{$player->id}}">
-            <td class="position">{{$key + 1}}</td>
+            <td class="position">{{$i + 1}}</td>
             <td class="player-name">{{$player->surname ." ". $player->name}}</td>
             <td class="qualification-result">{{(isset($qResults[$player->id]->sum)) ? $qResults[$player->id]->sum : $qResults[$player->id]}}</td>
             @for ($j = 0; $j < $roundCount; ++$j)
@@ -28,4 +34,5 @@
             <td id="avg_result_{{$player->id}}" class="player-avg">{{isset($fResults[$player->id]) ? number_format($fResults[$player->id]->avg, 2, ',', ' ') : ''}}</td>
         </tr>
     @endforeach
+  </tbody>
 </table>

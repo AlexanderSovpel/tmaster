@@ -66,7 +66,7 @@ return [
 
         'avatars' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/avatars'),
+            'root' => public_path() . 'img/avatars',
             'visibility' => 'public',
         ],
 

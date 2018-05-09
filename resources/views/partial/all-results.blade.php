@@ -8,6 +8,11 @@
     </tr>
   </thead>
   <tbody>
+    @if(count($allResults) === 0)
+      <tr class="player">
+        <td colspan="100">No results yet</td>
+      </tr>
+    @endif
     @foreach($allResults as $key => $result)
       <tr class="player">
           <td class="position">{{$key + 1}}</td>

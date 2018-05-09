@@ -1,3 +1,5 @@
+(function() {
+
 $(document).ready(function() {
   var playerId;
   $('[data-toggle=modal]').click(function () {
@@ -14,3 +16,5 @@ $(document).ready(function() {
     });
   });
 });
+
+})();

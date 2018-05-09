@@ -57,3 +57,7 @@
     <div class="clearfix"></div>
     <div class="error"></div>
 @endsection
+
+@section('scripts')
+<script src="https://tmaster.herokuapp.com/js/apply.js"></script>
+@endsection

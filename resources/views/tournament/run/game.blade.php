@@ -2,9 +2,6 @@
 @section('process')
 <div class="qualification-games">
   <input type="hidden" name="current_game" id="current-game" value="0">
-  {{--@php
-    $lanesTmp = $lanes;
-  @endphp--}}
 
   @for($gameIndex = 0; $gameIndex < $tournament->qualification->entries; ++$gameIndex)
     @include('partial.qualification-game', ['gameIndex' => $gameIndex])

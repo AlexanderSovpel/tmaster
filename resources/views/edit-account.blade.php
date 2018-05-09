@@ -21,13 +21,13 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="surname" class="col-md-6 control-label">Фамилия</label>
-                            <div class="col-md-6">
-                                <input id="surname" type="text" class="form-control" name="surname"
-                                       value="{{ $user->surname }}" required autofocus>
-                            </div>
-                        </div>
+                <div class="form-group">
+                    <label for="surname" class="col-md-4 control-label">Фамилия</label>
+                    <div class="col-md-8">
+                        <input id="surname" type="text" class="form-control" name="surname"
+                               value="{{ $user->surname }}" required autofocus>
+                    </div>
+                </div>
 
                         <div class="form-group">
                             <label for="birthday" class="col-md-6 control-label">Изображение профиля</label>
@@ -38,29 +38,29 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-md-6 control-label">Пол</label>
-                            <div class="col-md-6">
-                                <label>
-                                    <input type="radio" name="gender"
-                                           value="мужской" {{($user->gender == 'мужской') ? 'checked' : ''}}>мужской
-                                </label>
-                            </div>
-                            <div class="col-md-6">
-                                <label>
-                                    <input type="radio" name="gender"
-                                           value="женский" {{($user->gender == 'женский') ? 'checked' : ''}}>женский
-                                </label>
-                            </div>
-                        </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Пол</label>
+                    <div class="col-md-8">
+                        <label>
+                            <input type="radio" name="gender"
+                                   value="мужской" {{($user->gender == 'мужской') ? 'checked' : ''}}>мужской
+                        </label>
+                    </div>
+                    <div class="col-md-8">
+                        <label>
+                            <input type="radio" name="gender"
+                                   value="женский" {{($user->gender == 'женский') ? 'checked' : ''}}>женский
+                        </label>
+                    </div>
+                </div>
 
-                        <div class="form-group">
-                            <label for="birthday" class="col-md-6 control-label">Дата рождения</label>
-                            <div class="col-md-6">
-                                <input id="birthday" type="date" name="birthday" class="form-control" required
-                                       value="{{$user->birthday}}">
-                            </div>
-                        </div>
+                <div class="form-group">
+                    <label for="birthday" class="col-md-4 control-label">Дата рождения</label>
+                    <div class="col-md-8">
+                        <input id="birthday" type="date" name="birthday" class="form-control"
+                               value="{{$user->birthday}}">
+                    </div>
+                </div>
 
                         <div class="form-group">
                             <label for="email" class="col-md-6 control-label">Телефон</label>
@@ -113,7 +113,11 @@
                         </div>
                     </form>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+<script src="https://tmaster.herokuapp.com/js/account.js"></script>
 @endsection

@@ -1,3 +1,5 @@
+(function() {
+
 var newTournamentForm = document.getElementById('new-tournament');
 if (newTournamentForm) {
   sessionStorage.setItem('currentStep', 0);
@@ -139,7 +141,6 @@ if (newTournamentForm) {
       var currentStepRequired = $(currentStepDiv).find('.required');
       for(var i = 0; i < currentStepRequired.length; ++i) {
         if (!currentStepRequired[i].value) {
-          // console.log('not all fields are filled!');
           $('#error').html('<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><span>Заполните все поля!</span></div>');
           return;
         }
@@ -202,7 +203,6 @@ if (editTournament) {
       if (!$(this).hasClass('disabled')) {
         $(wizardSteps).removeClass('active');
         $(this).addClass('active');
-        // $(this).removeClass('complete');
         currentStep.value = step;
         showStep(steps, step);
         toggleStepBtnVisibility(editTournament);
@@ -314,7 +314,6 @@ for (var i = 0; i < removeSquadBtns.length; ++i) {
 function removeSquad(squad) {
     $(squad).parent().remove();
     $('#squads-count').val($('#squads-count').val() - 1);
-    // --squadsCount.value;
 }
 
 function showStep(steps, step) {
@@ -355,7 +354,6 @@ function toggleStepBtnVisibility(form, isNew) {
     }
     else {
       $(prevStepBtn).show();
-      // $(saveBtn).show();
     }
     (currentStep == steps.length - 1) ? $(nextStepBtn).hide() : $(nextStepBtn).show();
     if (isNew) {
@@ -375,3 +373,5 @@ $('#contact-person').change(function() {
   $('#contact-phone').val($(this.options[this.selectedIndex]).data('phone'));
   $('#contact-email').val($(this.options[this.selectedIndex]).data('email'));
 });
+
+})();

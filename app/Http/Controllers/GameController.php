@@ -114,24 +114,4 @@ class GameController extends Controller
       $result->save();
       return $result;
     }
-
-// зачем эта функция?
-    // public function sumBlock(Request $request)
-    // {
-    //     $games = Game::where('player_id', $request->input('player_id'))
-    //         ->where('tournament_id', $request->input('tournament_id'))
-    //         ->where('part', $request->input('part'));
-    //
-    //     if ($request->input('part') == 'q' && $request->input('squad_id') != '') {
-    //         $games = $games->where('squad_id', $request->input('squad_id'))->get();
-    //     } else {
-    //         $games = $games->get();
-    //     }
-    //
-    //     $result = 0;
-    //     foreach ($games as $game) {
-    //         $result += $game->result + $game->bonus;
-    //     }
-    //     return $result;
-    // }
 }

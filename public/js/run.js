@@ -1,3 +1,5 @@
+(function() {
+
 var tournamentId = document.getElementsByName('tournament')[0].value;
 var part = document.getElementsByName('part')[0].value;
 var stage = document.getElementsByName('stage')[0].value;
@@ -217,3 +219,5 @@ $('#random-draw').click(function(e) {
     drawPlayers[i].querySelector('.position').value = lanes[i].split('-')[1];
   }
 });
+
+})();

@@ -12,6 +12,11 @@
     </tr>
   </thead>
   <tbody>
+    @if(count($sPlayers[$squadId]) === 0)
+        <tr class="player">
+            <td colspan="100">No results yet</td>
+        </tr>
+    @endif
     @for($i = 0; $i < count($sPlayers[$squadId]); ++$i)
         <tr class="player">
             <td>{{$i + 1}}</td>

@@ -78,3 +78,7 @@
     </div>
   </div>
 @endsection
+
+@section('scripts')
+<script src="https://tmaster.herokuapp.com/js/players.js"></script>
+@endsection
