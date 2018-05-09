@@ -12,8 +12,8 @@
 
     <!-- Styles -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Cuprum" rel="stylesheet">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+    <link href="https://tmaster.herokuapp.com/css/app.css" rel="stylesheet">
+    <link href="https://tmaster.herokuapp.com/css/main.css" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -139,12 +139,12 @@
 <footer class="footer">&copy; 2006-2017, Белорусская Федерация Боулинга</footer>
 
 <!-- Scripts -->
-<script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/resultTabs.js') }}"></script>
-<script src="{{ asset('js/apply.js') }}"></script>
-<script src="{{ asset('js/newTournament.js') }}"></script>
-<script src="{{ asset('js/statistics.js') }}"></script>
-<script src="{{ asset('js/run.js') }}"></script>
-<script src="{{ asset('js/account.js') }}"></script>
+<script src="https://tmaster.herokuapp.com/js/app.js"></script>
+<script src="https://tmaster.herokuapp.com/js/resultTabs.js"></script>
+<script src="https://tmaster.herokuapp.com/js/apply.js'"></script>
+<script src="https://tmaster.herokuapp.com/js/newTournament.js'"></script>
+<script src="https://tmaster.herokuapp.com/js/statistics.js'"></script>
+<script src="https://tmaster.herokuapp.com/js/run.js'"></script>
+<script src="https://tmaster.herokuapp.com/js/account.js'"></script>
 </body>
 </html>
