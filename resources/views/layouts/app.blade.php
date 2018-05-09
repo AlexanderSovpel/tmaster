@@ -141,11 +141,5 @@
 <!-- Scripts -->
 <script src="https://tmaster.herokuapp.com/js/app.js"></script>
 @yield('scripts')
-<!-- <script src="https://tmaster.herokuapp.com/js/resultTabs.js"></script>
-<script src="https://tmaster.herokuapp.com/js/apply.js'"></script>
-<script src="https://tmaster.herokuapp.com/js/newTournament.js'"></script>
-<script src="https://tmaster.herokuapp.com/js/statistics.js'"></script>
-<script src="https://tmaster.herokuapp.com/js/run.js'"></script>
-<script src="https://tmaster.herokuapp.com/js/account.js'"></script> -->
 </body>
 </html>
